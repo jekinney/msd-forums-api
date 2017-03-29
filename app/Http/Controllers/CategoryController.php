@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Thread;
 use App\Category;
+use App\Fractal\Threads;
 use App\Fractal\Categories;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index(Category $category)
     {
-         return fractal($category->get(), new Categories)->respond();
+        return fractal($category->get(), new Categories)->respond();
     }
 
     /**
@@ -47,9 +49,12 @@ class CategoryController extends Controller
      */
     public function show($id, Category $category)
     {
-        $category = $category->with('threads', 'threads.replies')->find($id);
+        $catData = $category->with('threads')->find($id);
 
-        return fractal($category, new Categories)->parseIncludes('threads')->respond();
+        $category = fractal($catData, new Categories);
+        $threads = fractal($catData->threads, new Threads);
+
+        return response()->json(collect(['category' => $category, 'threads' => $threads]));
     }
 
     /**

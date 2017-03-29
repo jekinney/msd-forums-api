@@ -21,6 +21,7 @@ class Categories extends TransformerAbstract
 			'name' => $category->name,
 			'description' => $category->hide_description? $category->descrioption:null,
 			'hidden' => $category->hidden? true:false,
+            'threads_count' => $category->threads->count(),
 		];
 	}
 

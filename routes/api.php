@@ -4,6 +4,8 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1/forums', 'middleware' => 'cors'], function() {
 
+	Route::get('/forum/setup', 'ForumController@index');
+
 	Route::get('/categories', 'CategoryController@index');
 	Route::get('/category/{id}', 'CategoryController@show');
 	Route::post('/category', 'CategoryController@store');
@@ -16,6 +18,7 @@ Route::group(['prefix' => 'v1/forums', 'middleware' => 'cors'], function() {
 	Route::put('/channel/{channel}', 'ChannelController@update');
 	Route::delete('/channel/{channel}', 'ChannelController@destroy');
 
+	Route::get('/threads/newest', 'ThreadController@newest');
 	Route::get('/threads', 'ThreadController@index');
 	Route::get('/thread/{thread}', 'ThreadController@show');
 	Route::post('/thread', 'ThreadController@store');

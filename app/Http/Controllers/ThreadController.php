@@ -15,18 +15,21 @@ class ThreadController extends Controller
      */
     public function index(Thread $thread)
     {
-        return fractal($thread->with('category')->withCount('replies')->latest()->limit(20)->get(), new Threads)->respond();
+        return fractal($thread->with('category')->withCount('replies')->latest()->get(), new Threads)
+                ->respond();
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function newest(Thread $thread)
     {
-        //
+        return fractal($thread->with('category')->withCount('replies')->latest()->limit(20)->get(), new Threads)
+                ->respond();
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -34,9 +37,29 @@ class ThreadController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Thread $thread)
     {
-        //
+        if($request->has('id')) {
+            $thread->find($request->id)->update([
+                'category_id' => $request->category_id,
+                'channel_id' => $request->channel_id,
+                'user_id' => 1,
+                'slug' => str_slug($request->title),
+                'title' => $request->title,
+                'body' => $request->body,
+            ]);
+        } else {
+            $thread->create([
+                'category_id' => $request->category_id,
+                'channel_id' => $request->channel_id,
+                'user_id' => 1,
+                'slug' => str_slug($request->title),
+                'title' => $request->title,
+                'body' => $request->body,
+            ]);
+        }
+
+        return response()->json('success');
     }
 
     /**
