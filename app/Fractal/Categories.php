@@ -20,7 +20,7 @@ class Categories extends TransformerAbstract
 			'id' => $category->id,
 			'name' => $category->name,
 			'description' => $category->hide_description? $category->descrioption:null,
-			'hidden' => $category->hidden? true:false,
+			'hidden' => $category->is_hidden,
             'threads_count' => $category->threads->count(),
 		];
 	}

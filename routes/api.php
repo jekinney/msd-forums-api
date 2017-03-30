@@ -2,15 +2,15 @@
 
 use Illuminate\Http\Request;
 
-Route::group(['prefix' => 'v1/forums', 'middleware' => 'cors'], function() {
+Route::group(['prefix' => 'v1/forums'], function() {
 
 	Route::get('/forum/setup', 'ForumController@index');
 
-	Route::get('/categories', 'CategoryController@index');
+	Route::get('/categories/active', 'CategoryController@index');
+	Route::get('categories/hidden', 'CategoryController@hidden');
 	Route::get('/category/{id}', 'CategoryController@show');
-	Route::post('/category', 'CategoryController@store');
-	Route::put('/category/{category}', 'CategoryController@update');
-	Route::delete('/category/{category}', 'CategoryController@destroy');
+	Route::post('/category/store', 'CategoryController@store');
+	Route::delete('/category/{id}', 'CategoryController@destroy');
 
 	Route::get('channels', 'ChannelController@index');
 	Route::get('channel/{id}', 'ChannelController@show');

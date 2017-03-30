@@ -18,6 +18,7 @@ class CreateChannelsTable extends Migration
             $table->string('slug')->index();
             $table->string('name');
             $table->boolean('hidden')->default(0);
+            $table->integer('display_order')->default(0);
             $table->timestamps();
         });
     }

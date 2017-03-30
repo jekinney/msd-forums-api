@@ -17,17 +17,12 @@ class CategoryController extends Controller
      */
     public function index(Category $category)
     {
-        return fractal($category->get(), new Categories)->respond();
+        return fractal($category->active(), new Categories)->respond();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function hidden(Category $category) 
     {
-        //
+        return fractal($category->hidden(), new Categories)->respond();
     }
 
     /**
@@ -36,9 +31,14 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
-        //
+        $category->addOrUpdate($request);
+
+        $active = fractal($category->active(), new Categories);
+        $hidden = fractal($category->hidden(), new Categories);
+
+        return response()->json(['active' => $active, 'hidden' => $hidden]);
     }
 
     /**
@@ -86,8 +86,13 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id, Category $category)
     {
-        //
+        $category->toggleHidden($id);
+
+        $active = fractal($category->active(), new Categories);
+        $hidden = fractal($category->hidden(), new Categories);
+
+        return response()->json(['active' => $active, 'hidden' => $hidden]);
     }
 }

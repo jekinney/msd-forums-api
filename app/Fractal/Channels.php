@@ -19,7 +19,7 @@ class Channels extends TransformerAbstract
 		return [
 			'id' => $channel->id,
 			'name' => $channel->name,
-			'hidden' => $channel->hidden? true:false,
+			'hidden' => $channel->is_hidden,
 		];
 	}
 

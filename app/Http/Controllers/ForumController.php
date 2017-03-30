@@ -12,9 +12,9 @@ use Illuminate\Http\Request;
 
 class ForumController extends Controller
 {
-    public function index()
+    public function index(Category $category)
     {
-    	$categories =fractal(Category::get(), new Categories);
+    	$categories =fractal($category->active(), new Categories);
     	$threads = fractal(Thread::with('category')->withCount('replies')->latest()->limit(20)->get(), new Threads);
     	$channels = fractal(Channel::get(), new Channels);
 

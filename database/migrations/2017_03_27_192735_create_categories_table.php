@@ -20,6 +20,7 @@ class CreateCategoriesTable extends Migration
             $table->string('description')->default('none');
             $table->boolean('hide_description')->default(0);
             $table->boolean('hidden')->default(0);
+            $table->integer('display_order')->default(0);
             $table->timestamps();
         });
     }
