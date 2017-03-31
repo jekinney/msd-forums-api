@@ -7,9 +7,9 @@ Route::group(['prefix' => 'v1/forums'], function() {
 	Route::get('/forum/setup', 'ForumController@index');
 
 	Route::get('/categories/active', 'CategoryController@index');
-	Route::get('categories/hidden', 'CategoryController@hidden');
+	Route::get('/categories/hidden', 'CategoryController@hidden');
 	Route::get('/category/{id}', 'CategoryController@show');
-	Route::post('/category/store', 'CategoryController@store');
+	Route::post('/category', 'CategoryController@store');
 	Route::delete('/category/{id}', 'CategoryController@destroy');
 
 	Route::get('channels', 'ChannelController@index');
@@ -19,14 +19,15 @@ Route::group(['prefix' => 'v1/forums'], function() {
 	Route::delete('/channel/{channel}', 'ChannelController@destroy');
 
 	Route::get('/threads/newest', 'ThreadController@newest');
+	Route::get('/threads/hidden', 'ThreadController@hidden');
 	Route::get('/threads', 'ThreadController@index');
-	Route::get('/thread/{thread}', 'ThreadController@show');
+	Route::get('/thread/{slug}', 'ThreadController@show');
 	Route::post('/thread', 'ThreadController@store');
 	Route::put('/thread/{thread}', 'ThreadController@update');
-	Route::delete('/thread/{thread}', 'ThreadController@destroy');
+	Route::delete('/thread/{id}', 'ThreadController@destroy');
 
 
-	Route::post('/reply', 'ReplyController@store');
+	Route::get('/replies/hidden', 'ReplyController@hidden');
 	Route::put('/reply', 'ReplyController@update');
 	Route::post('/reply', 'ReplyController@store');
 	Route::put('/reply/{reply}', 'ReplyController@update');

@@ -20,6 +20,7 @@ class Threads extends TransformerAbstract
 	{
 		return [
 			'id' => $thread->id,
+            'slug' => $thread->slug,
 			'title' => $thread->title,
 			'body' => $thread->body,
 			'reported' => $thread->reported,

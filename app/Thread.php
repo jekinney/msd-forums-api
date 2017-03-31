@@ -32,4 +32,9 @@ class Thread extends Model
     {
         return $this->morphMany(Attachment::class, 'attachable');
     }
+
+    public function hidden() 
+    {
+        return $this->where('hidden', 1)->get();
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Reply;
+use App\Fractal\Replies;
 use Illuminate\Http\Request;
 
 class ReplyController extends Controller
@@ -12,19 +13,9 @@ class ReplyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function hidden(Reply $reply)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return fractal($reply->hidden(), new Replies)->respond();
     }
 
     /**
@@ -33,9 +24,15 @@ class ReplyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Reply $reply)
     {
-        //
+        $reply->create([
+            'thread_id' => $request->thread_id,
+            'user_id' => 1,
+            'reply' => $request->body,
+        ]);
+
+        return response()->json([], 200);
     }
 
     /**

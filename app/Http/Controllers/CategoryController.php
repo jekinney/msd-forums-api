@@ -20,7 +20,12 @@ class CategoryController extends Controller
         return fractal($category->active(), new Categories)->respond();
     }
 
-    public function hidden(Category $category) 
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function hidden(Category $category)
     {
         return fractal($category->hidden(), new Categories)->respond();
     }
@@ -35,10 +40,7 @@ class CategoryController extends Controller
     {
         $category->addOrUpdate($request);
 
-        $active = fractal($category->active(), new Categories);
-        $hidden = fractal($category->hidden(), new Categories);
-
-        return response()->json(['active' => $active, 'hidden' => $hidden]);
+        return response()->json(200);
     }
 
     /**
@@ -49,12 +51,12 @@ class CategoryController extends Controller
      */
     public function show($id, Category $category)
     {
-        $catData = $category->with('threads')->find($id);
+        $catData = $category->with('threads')->findOrFail($id);
 
         $category = fractal($catData, new Categories);
         $threads = fractal($catData->threads, new Threads);
 
-        return response()->json(collect(['category' => $category, 'threads' => $threads]));
+        return response()->json(['category' => $category, 'threads' => $threads]);
     }
 
     /**

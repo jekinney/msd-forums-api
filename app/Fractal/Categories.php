@@ -19,7 +19,7 @@ class Categories extends TransformerAbstract
 		return [
 			'id' => $category->id,
 			'name' => $category->name,
-			'description' => $category->hide_description? $category->descrioption:null,
+			'description' => $category->hide_description,
 			'hidden' => $category->is_hidden,
             'threads_count' => $category->threads->count(),
 		];

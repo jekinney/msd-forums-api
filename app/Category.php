@@ -52,7 +52,7 @@ class Category extends Model
 			'name' => $request->name,
 			'description' => $request->description,
 			'hide_description' => $request->has('hide_description')? false:false,
-			'hidden' => $request->has('hidden')? false:true,
+			'is_hidden' => $request->hidden,
 			'display_order' => $request->has('display_order')? $request->display_order:$this->count() + 1,
     	];
     }

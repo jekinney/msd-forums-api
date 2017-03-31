@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
-    protected $fillable = ['user_id', 'thread_id', 'body', 'hidden', 'reported'];
+    protected $fillable = ['user_id', 'thread_id', 'reply', 'hidden', 'reported'];
 
     public function user()
     {
@@ -21,5 +21,10 @@ class Reply extends Model
     public function attachments()
     {
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+    public function hidden()
+    {
+        return $this->where('hidden', 1)->get();
     }
 }

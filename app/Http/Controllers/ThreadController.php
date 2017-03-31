@@ -30,6 +30,15 @@ class ThreadController extends Controller
                 ->respond();
     }
 
+       /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function hidden(Thread $thread)
+    {
+        return fractal($thread->hidden(), new Threads)->respond();
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -68,9 +77,9 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show(Thread $thread)
+    public function show($slug, Thread $thread)
     {
-        return fractal($thread->load('replies'), new Threads)->parseIncludes('replies')->respond();
+        return fractal($thread->with('replies')->where('slug', $slug)->first(), new Threads)->parseIncludes('replies')->respond();
     }
 
     /**
@@ -99,11 +108,16 @@ class ThreadController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @param int $id
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Thread $thread)
+    public function destroy($id, Thread $thread)
     {
-        //
+        $thread = $thread->find($id);
+        $thread->hidden = $thread->hidden? false:true;
+        $thread->save();
+
+        return fractal($thread->fresh(), new Threads)->respond();
     }
 }
