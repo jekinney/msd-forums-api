@@ -48,6 +48,7 @@ class Category extends Model
     protected function dataArray($request)
     {
     	return [
+            'category_id' => $request->category_id,
     		'slug' => str_slug($request->name),
 			'name' => $request->name,
 			'description' => $request->description,

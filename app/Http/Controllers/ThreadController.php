@@ -48,27 +48,9 @@ class ThreadController extends Controller
      */
     public function store(Request $request, Thread $thread)
     {
-        if($request->has('id')) {
-            $thread->find($request->id)->update([
-                'category_id' => $request->category_id,
-                'channel_id' => $request->channel_id,
-                'user_id' => 1,
-                'slug' => str_slug($request->title),
-                'title' => $request->title,
-                'body' => $request->body,
-            ]);
-        } else {
-            $thread->create([
-                'category_id' => $request->category_id,
-                'channel_id' => $request->channel_id,
-                'user_id' => 1,
-                'slug' => str_slug($request->title),
-                'title' => $request->title,
-                'body' => $request->body,
-            ]);
-        }
+        $thread = $thread->addOrUpdate($request);
 
-        return response()->json('success');
+        return fractal($thread->fresh(), new Threads)->respond();
     }
 
     /**
