@@ -20,6 +20,7 @@ class Channels extends TransformerAbstract
 			'id' => $channel->id,
 			'name' => $channel->name,
 			'hidden' => $channel->is_hidden,
+            'order' => $channel->order,
 		];
 	}
 

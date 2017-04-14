@@ -14,7 +14,7 @@ class Threads extends TransformerAbstract
      */
     protected $availableIncludes = ['replies'];
 
-    protected $defaultIncludes = ['basicCategory'];
+    protected $defaultIncludes = ['channel'];
 
 	public function transform(Thread $thread)
 	{
@@ -42,12 +42,12 @@ class Threads extends TransformerAbstract
     }
 
     /**
-     * Include category
+     * Include channel
      *
      * @return League\Fractal\ItemResource
      */
-    public function includeBasicCategory(Thread $thread)
+    public function includeChannel(Thread $thread)
     {
-        return $this->item($thread->category, new BasicCategory);
+        return $this->item($thread->channel, new Channel);
     }
 }
