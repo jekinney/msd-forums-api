@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "mystic-gradient-117116",
+  "private_key_id": "ac1112d17954da071b295e7378a529393119773c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCxo9tV/fQNQXXa\nrEfaUejhNxOYvbU7NsAyrpcsn1IlECwrOpSox+64E76L54Z9cVWYOFQIAKNjGIyI\nHLSFntVKdAQGQXBXqHD3w8RRe8CuQxrilWjr00uznsAg+yfFbXVFbzJAcMfwEHBH\n/36mW3DylEJ8KQAApp8GmiOg+q2HJ5WKTHRk+SVCMMLUZyB5RTYeudBtZONlDrwP\n9zqs9wC9HNP7US3iu9VvE8jlSbJXQ0l9u03N0XlGnVUb5JQRgi7UJiNHyM2j2RPN\nbd2wFqtvPb3zT0gMivnUVgm/RHvmlkfqqsa26EKkeOcFE7C+C+x/KOcY1HBmswoD\nM88y1p7XAgMBAAECggEAeD9N+xDUQqDcMXFLlkq6FLIertdENdgjFGvA47DZf0NK\nUtztwq7MNokPBE9uZ73vTgJbR6t+7law0nZz8LuK8EJGcyGa9YuNJPq9Ctd1n8DH\nEzhGdNRsOyOsNOcujeNBbgYOgzaU8Tl/eA1IYz4k3+BifP+YA9jGb0ap9Y+bJZAR\nckr+6kWInqQn45RYXrwv79WRWSWWMsHFYnM35CL85Da2X7F+/mqueIrP28PUa/bq\n3D3FMKyomnRSNcRSNOlmdYxARM3Ol091Ezh2ZyxQgQSdR8Hh4f6SqJclY70XvOSE\nIJdnUoIpnYnZvYiuz9XMxFSK3OKsGhLKYNCsG1TCiQKBgQDnHLp7Ieo5YnnHVoaw\nlWacOQnbCn8nHwhVQFrrrCNZQOVRMKdjDoT0VIBJmFazwY2t+Q2nxBIaR5dCfSzK\nDuf4owTLW+e+cJwj2xoIchtEJIno7x9LHiQq18NwEgc+y6dnupjA2J2dwSsTbkyN\npKzuBlRmfn7oWswHJ2093K/e0wKBgQDExQPTby1xTNN67jv1a7YfWmlfL4itWsgt\nOxznZXLwcnvyT7pJUgmwypDFcEdIv9mWiY/2Vr1KxQkglw0xmihCDP2l0W0ntQSa\nS7pWfllCCnPD9NY3nmPTwI3Ve85Bmb7sEZq+4o8bAHLQdYf55mVj3yzawQu50bTu\nd7I//pblbQKBgFPeihH7Ocu/X+AmF1TnssgIrvntcj1ZNqXxZ81Ut7NBKLbxCB2b\nfEZKkA+lF/m9yNOUqQ7zyXn99vdrA6EEDcyeJDREUvI6XX9pmKXt+tUcyWtds6aH\n9qoRiNwXvsdcEpFDFwIM2g4Qtrgjc+aHFzZ9140mZJmfsaD6/trPRod/AoGAOG+9\nii4wHXgIjBC6d8i+Ar4ezONIU1hfY8G5p5DMZ7SeYkCF0LPL/b4LyeVLPM1x7iBk\nfyYfwstCs+s/KIPrmg45zg6EPUhJGqwvtNEmbq+qxoB51JgET97Bj4KkBOLBBNqD\nxM4cd4UoaSvcpUt0tzFynweRgmloeKEyKfKuev0CgYAVZv6acx3Fgd+CHNCJpMXN\nPUAr59jhob04e3oduoCbkx9ofUvoXzn3lpY2rXUm8B3sxONcRraQWhqEREY8tEXM\n5Ls4Xnw1No5GP5cS5SOLSFpMy6MKTOteX+YcZFfjCrcoDu4bF3k0p/Bega3zUD0P\nOJcFblbNTdh0m7lsF0JR/g==\n-----END PRIVATE KEY-----\n",
+  "client_email": "forums@mystic-gradient-117116.iam.gserviceaccount.com",
+  "client_id": "117818698723020612208",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/forums%40mystic-gradient-117116.iam.gserviceaccount.com"
+}

@@ -33,9 +33,11 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Attachment $attachment)
     {
-        //
+        $path = $attachment->uploadFile($request);
+
+        return response()->json($path);
     }
 
     /**
