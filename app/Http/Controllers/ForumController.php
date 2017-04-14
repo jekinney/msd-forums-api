@@ -14,10 +14,9 @@ class ForumController extends Controller
 {
     public function index(Category $category)
     {
-    	$categories =fractal($category->active(), new Categories);
-    	$threads = fractal(Thread::with('category')->withCount('replies')->latest()->limit(20)->get(), new Threads);
+    	$threads = fractal(Thread::with('channel')->withCount('replies')->latest()->paginate(10), new Threads);
     	$channels = fractal(Channel::get(), new Channels);
 
-    	return response()->json(collect(['categories' => $categories, 'threads' => $threads, 'channels' => $channels]));
+    	return response()->json(collect(['threads' => $threads, 'channels' => $channels]));
     }
 }
