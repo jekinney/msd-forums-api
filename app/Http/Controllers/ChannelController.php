@@ -113,6 +113,6 @@ class ChannelController extends Controller
         $channel->is_hidden = $channel->is_hidden? false:true;
         $channel->save();
 
-        return respond()->json([], 200);
+        return response()->json([], 200);
     }
 }
