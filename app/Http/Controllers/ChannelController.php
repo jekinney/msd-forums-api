@@ -35,7 +35,7 @@ class ChannelController extends Controller
      */
     public function create(Channel $channel)
     {
-        return response()->json(['channel_count' => $channels->get(['id'])->count()]);
+        return response()->json(['channel_count' => $channel->get(['id'])->count()]);
     }
 
     /**
@@ -72,10 +72,11 @@ class ChannelController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param int $id
      * @param  \App\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function edit(Channel $channel)
+    public function edit($id, Channel $channel)
     {
         return fractal($channel->find($id), new Channels)->respond();
     }
