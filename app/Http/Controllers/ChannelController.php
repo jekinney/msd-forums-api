@@ -90,7 +90,7 @@ class ChannelController extends Controller
      */
     public function update(Request $request, Channel $channel)
     {
-        $channel = $channel->find($reques->id);
+        $channel = $channel->find($request->id);
         $channel->update([
             'slug' => str_slug($request->name),
             'name' => $request->name,
