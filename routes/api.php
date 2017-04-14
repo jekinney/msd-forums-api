@@ -12,8 +12,8 @@ Route::group(['prefix' => 'v1/forums'], function() {
 	Route::get('channel/{id}', 'ChannelController@show');
 	Route::get('channel/{id}/edit', 'ChannelController@edit');
 	Route::post('/channel', 'ChannelController@store');
-	Route::put('/channel/{channel}', 'ChannelController@update');
-	Route::delete('/channel/{channel}', 'ChannelController@destroy');
+	Route::put('/channel/', 'ChannelController@update');
+	Route::delete('/channel/{id}', 'ChannelController@destroy');
 
 	Route::get('/threads/newest', 'ThreadController@newest');
 	Route::get('/threads/hidden', 'ThreadController@hidden');
