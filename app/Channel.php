@@ -6,12 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Channel extends Model
 {
-    protected $fillable = ['slug', 'name', 'is_hidden'];
+    protected $fillable = ['slug', 'name', 'is_hidden', 'order'];
 
     protected $casts = ['is_hidden' => 'boolean'];
 
     public function threads()
     {
-    	return $this->belongsToMany(Thread::class);
+    	return $this->hasMany(Thread::class);
     }
 }

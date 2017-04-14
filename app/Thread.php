@@ -6,21 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
 {
-    protected $fillable = ['user_id', 'category_id', 'slug', 'title', 'body', 'hidden', 'reports'];
+    protected $fillable = ['user_id', 'channel_id', 'slug', 'title', 'body', 'is_hidden', 'reports'];
 
     public function user()
     {
     	return $this->belongsTo(User::class);
     }
 
-    public function category()
+    public function channel()
     {
-    	return $this->belongsTo(Category::class);
-    }
-
-    public function channels()
-    {
-    	return $this->belongsToMany(Channel::class);
+    	return $this->belongsTo(Channel::class);
     }
 
     public function replies()

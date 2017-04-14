@@ -18,7 +18,7 @@ class CreateRepliesTable extends Migration
             $table->integer('user_id')->index();
             $table->integer('thread_id')->index();
             $table->text('reply');
-            $table->boolean('hidden')->default(0);
+            $table->boolean('is_hidden')->default(0);
             $table->integer('reported')->default(0);
             $table->timestamps();
         });

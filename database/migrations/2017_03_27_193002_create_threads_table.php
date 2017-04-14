@@ -20,7 +20,7 @@ class CreateThreadsTable extends Migration
             $table->string('slug')->index();
             $table->string('title');
             $table->text('body');
-            $table->boolean('hidden')->default(0);
+            $table->boolean('is_hidden')->default(0);
             $table->integer('reported')->default(0);
             $table->timestamps();
         });

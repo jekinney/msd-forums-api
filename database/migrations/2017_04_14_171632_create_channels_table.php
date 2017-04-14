@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCategoriesTable extends Migration
+class CreateChannelsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,12 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('channels', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('slug')->index();
+            $table->string('slug');
             $table->string('name');
-            $table->string('description')->default('none');
-            $table->boolean('hide_description')->default(0);
-            $table->boolean('hidden')->default(0);
-            $table->integer('display_order')->default(0);
+            $table->integer('order')->default(1);
+            $table->boolean('is_hidden')->default(false);
             $table->timestamps();
         });
     }
@@ -32,6 +30,6 @@ class CreateCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('channels');
     }
 }
