@@ -42,6 +42,10 @@ class DropTables extends Command
 
         $tables = DB::select('SHOW TABLES');
 
+        if(empty($tables)) {
+            exit();
+        }
+
         foreach($tables as $table) {
 
             $droplist[] = $table->$colname;
