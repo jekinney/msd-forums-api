@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Thread;
 use App\Fractal\Threads;
 use Illuminate\Http\Request;
+use App\Http\Requests\Forum\ThreadForm;
 
 class ThreadController extends Controller
 {
@@ -43,10 +44,10 @@ class ThreadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\Forum\ThreadForm  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Thread $thread)
+    public function store(ThreadForm $request, Thread $thread)
     {
         $thread = $thread->addOrUpdate($request);
 

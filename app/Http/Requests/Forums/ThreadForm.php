@@ -4,7 +4,7 @@ namespace App\Http\Requests\Forums;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateThread extends FormRequest
+class ThreadForm extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UpdateThread extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class UpdateThread extends FormRequest
     public function rules()
     {
         return [
-            //
+            'catagory_id' => 'required|numeric',
+            'title' => 'required|max:191',
+            'body' => 'required',
         ];
     }
 }
