@@ -19,10 +19,22 @@ class Attachment extends Model
         return $this->morphTo();
     }
 
-    public function uploadFile($request)
+    /**
+     * Upload image from tinymce plugin
+     */
+    public function uploadImage($request)
     {
-        $location = $request->file('file')->store('public/images/forums');
+        return str_replace('public', '', $request->file('file')->store('public/images/forums'));
+    }
 
-        return str_replace('public', '', $location);
+    /**
+    * Upload file (word, pdf, etc) attached to a thread or reply
+    */
+    public function uploadFiles($class, $request)
+    {
+        foreach($request->file('file') as $file) {
+            $class->attachments()->create(['path' => str_replace('public', '', $file->store('public/files/forums'))]);
+        }
+        return $locations;
     }
 }

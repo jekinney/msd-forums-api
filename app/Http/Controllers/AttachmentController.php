@@ -33,9 +33,22 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Attachment $attachment)
+    public function storeImage(Request $request, Attachment $attachment)
     {
-        $location = $attachment->uploadFile($request);
+        $location = $attachment->uploadImage($request);
+
+        return response()->json(['location' => $location]);
+    }
+
+     /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeFiles(Request $request, Attachment $attachment)
+    {
+        $location = $attachment->uploadFiles($request);
 
         return response()->json(['location' => $location]);
     }

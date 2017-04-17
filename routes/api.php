@@ -16,23 +16,20 @@ Route::group(['prefix' => 'v1/forums'], function() {
 	Route::put('/channel/', 'ChannelController@update');
 	Route::delete('/channel/{id}', 'ChannelController@destroy');
 
-	Route::get('/threads/newest', 'ThreadController@newest');
-	Route::get('/threads/hidden', 'ThreadController@hidden');
 	Route::get('/threads', 'ThreadController@index');
-	Route::get('/thread/{slug}', 'ThreadController@show');
-	Route::get('/thread/{slug}/edit', 'ThreadController@edit');
+	Route::get('/thread/{id}', 'ThreadController@show');
+	Route::get('/thread/{id}/edit', 'ThreadController@edit');
 	Route::post('/thread', 'ThreadController@store');
-	Route::put('/thread/{thread}', 'ThreadController@update');
+	Route::put('/thread/{id}', 'ThreadController@update');
 	Route::delete('/thread/{id}', 'ThreadController@destroy');
 
-
-	Route::get('/replies/hidden', 'ReplyController@hidden');
 	Route::get('/reply', 'ReplyController@edit');
 	Route::post('/reply', 'ReplyController@store');
 	Route::put('/reply/{id}', 'ReplyController@update');
 	Route::delete('/reply/{id}', 'ReplyController@destroy');
 
 	Route::get('/attachments', 'AttachmentController@index');
-	Route::post('/attachment', 'AttachmentController@store');
-	Route::delete('/attachment/{attachment}', 'AttachmentController@destroy');
+	Route::post('/attachment/image', 'AttachmentController@storeImage');
+	Route::post('/attachment/files', 'AttachmentController@storeIFiles');
+	Route::delete('/attachment/{id}', 'AttachmentController@destroy');
 });
