@@ -51,12 +51,13 @@ class ThreadController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param int $id
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function edit(Thread $thread)
+    public function edit($id, Thread $thread)
     {
-         return fractal($thread->where('slug', $slug)->first(), new Threads);
+         return fractal($thread->find($id), new Threads);
     }
 
     /**
