@@ -48,6 +48,6 @@ class Threads extends TransformerAbstract
      */
     public function includeChannel(Thread $thread)
     {
-        return $this->item($thread->channel, new Channel);
+        return $this->item($thread->channel, new Channels);
     }
 }
