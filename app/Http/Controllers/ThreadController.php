@@ -16,8 +16,7 @@ class ThreadController extends Controller
      */
     public function index(Thread $thread)
     {
-        return fractal($thread->newstActive(), new Threads)
-                ->respond();
+        return fractal($thread->newestActive(), new Threads)->respond();
     }
 
        /**
@@ -62,19 +61,7 @@ class ThreadController extends Controller
      */
     public function edit(Thread $thread)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Thread  $thread
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Thread $thread)
-    {
-        //
+         return fractal($thread->where('slug', $slug)->first(), new Threads);
     }
 
     /**

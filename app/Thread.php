@@ -30,7 +30,7 @@ class Thread extends Model
 
     public function hidden() 
     {
-        return $this->where('is_hidden', 1)->get();
+        return $this->where('is_hidden', 1)->paginate(10));
     }
 
     public function newestActive($amount = 10)
