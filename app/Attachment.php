@@ -21,6 +21,6 @@ class Attachment extends Model
 
     public function uploadFile($request)
     {
-        dd($request->all());
+        return $request->file('file')->store('forums/images');
     }
 }
