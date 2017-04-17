@@ -16,18 +16,7 @@ class ThreadController extends Controller
      */
     public function index(Thread $thread)
     {
-        return fractal($thread->with('category')->withCount('replies')->latest()->get(), new Threads)
-                ->respond();
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function newest(Thread $thread)
-    {
-        return fractal($thread->with('category')->withCount('replies')->latest()->limit(20)->get(), new Threads)
+        return fractal($thread->with('channel')->withCount('replies')->where('is_hidden', 0)->latest()->get(), new Threads)
                 ->respond();
     }
 
@@ -98,7 +87,7 @@ class ThreadController extends Controller
     public function destroy($id, Thread $thread)
     {
         $thread = $thread->find($id);
-        $thread->hidden = $thread->hidden? false:true;
+        $thread->is_hidden = $thread->is_hidden? false:true;
         $thread->save();
 
         return fractal($thread->fresh(), new Threads)->respond();

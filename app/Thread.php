@@ -30,7 +30,7 @@ class Thread extends Model
 
     public function hidden() 
     {
-        return $this->where('hidden', 1)->get();
+        return $this->where('is_hidden', 1)->get();
     }
 
     public function addOrUpdate($request)
@@ -46,7 +46,6 @@ class Thread extends Model
     public function dataArray($request)
     {
         return [
-            'category_id' => $request->category_id,
             'channel_id' => $request->channel_id,
             'user_id' => 1,
             'slug' => str_slug($request->title),
