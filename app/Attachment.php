@@ -21,6 +21,6 @@ class Attachment extends Model
 
     public function uploadFile($request)
     {
-        return $request->file('file')->store('forums/images');
+        return $request->file('file')->store('public/images/forums');
     }
 }
