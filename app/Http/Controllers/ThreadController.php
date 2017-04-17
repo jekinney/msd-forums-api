@@ -30,7 +30,7 @@ class ThreadController extends Controller
     {
         $thread = $thread->addOrUpdate($request);
 
-        if($thread->hasFile('file')) {
+        if($request->hasFile('file')) {
             $locations = $attachment->uploadFiles($thread, $request);
         }
 
@@ -43,9 +43,9 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($slug, Thread $thread)
+    public function show($id, Thread $thread)
     {
-        return fractal($thread->with('replies')->where('slug', $slug)->first(), new Threads)->parseIncludes('replies')->respond();
+        return fractal($thread->with('channel', 'replies')->find($id), new Threads)->parseIncludes(['channel', 'replies'])->respond();
     }
 
     /**
