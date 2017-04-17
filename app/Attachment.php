@@ -21,18 +21,6 @@ class Attachment extends Model
 
     public function uploadFile($request)
     {
-    	$upload = $request->file('file');
-    	$name = str_slug(explode('.', $upload->getClientOriginalName())[0]);
-    	$type = $upload->getClientOriginalExtension();
-
-    	if(Storage::disk('gcs')->exists('forum/'. $upload->getClientOriginalName())) {
-    		$name = $name.'-'.date('Y-m-d').'.'.$type;
-    	} else {
-    		$name = $name.'.'.$type;
-    	}
-
-    	$file = Storage::disk('gcs')->putFileAs('forum', $upload, $name, 'public');
-
-    	return Storage::disk('gcs')->url($file);
+        dd($request->all());
     }
 }
