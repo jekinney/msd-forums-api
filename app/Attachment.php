@@ -23,6 +23,6 @@ class Attachment extends Model
     {
         $location = $request->file('file')->store('public/images/forums');
 
-        return str_replace('/public', '', $location);
+        return str_replace('public', '', $location);
     }
 }
