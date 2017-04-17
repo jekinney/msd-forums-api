@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Thread;
 use App\Fractal\Threads;
 use Illuminate\Http\Request;
-use App\Http\Requests\Forum\ThreadForm;
+use App\Http\Requests\Forums\ThreadForm;
 
 class ThreadController extends Controller
 {
