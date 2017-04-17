@@ -23,7 +23,7 @@ class ForumController extends Controller
     public function hidden() 
     {
     	$threads = fractal(Thread::with('channel')->withCount('replies')->where('is_hidden', true)->latest()->paginate(10), new Threads);
-    	$channels = fractal(Reply::where('is_hidden', true)->latest()->paginate(10), new Replies);
+    	$replies = fractal(Reply::where('is_hidden', true)->latest()->paginate(10), new Replies);
 
     	return response()->json(collect(['threads' => $threads, 'replies' => $replies]));
     }
