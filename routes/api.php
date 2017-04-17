@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'v1/forums'], function() {
 
 	Route::get('/forum/setup', 'ForumController@index');
+	Route::get('/forum/hidden', 'ForumController@hidden');
 
 	Route::get('channels', 'ChannelController@index');
 	Route::get('channels/all', 'ChannelController@all');

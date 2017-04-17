@@ -24,9 +24,24 @@ class ThreadForm extends FormRequest
     public function rules()
     {
         return [
-            'catagory_id' => 'required|numeric',
+            'channel_id' => 'required|numeric',
             'title' => 'required|max:191',
             'body' => 'required',
+        ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'channel_id.required' => 'Select a channel',
+            'title.required' => 'A title is required',
+            'title.max' => 'The title is to long',
+            'body.required'  => 'A thread body is required',
         ];
     }
 }
