@@ -33,6 +33,11 @@ class Thread extends Model
         return $this->where('is_hidden', 1)->get();
     }
 
+    public function newestActive($amount = 10)
+    {
+        return $this->with('channel')->withCount('replies')->where('is_hidden', 0)->latest()->paginate($amount);
+    }
+
     public function addOrUpdate($request)
     {
         if($request->has('id')) {

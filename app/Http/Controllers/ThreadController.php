@@ -16,7 +16,7 @@ class ThreadController extends Controller
      */
     public function index(Thread $thread)
     {
-        return fractal($thread->with('channel')->withCount('replies')->where('is_hidden', 0)->latest()->get(), new Threads)
+        return fractal($thread->newstActive(), new Threads)
                 ->respond();
     }
 
