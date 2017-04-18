@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Reply;
 use App\Fractal\Replies;
 use Illuminate\Http\Request;
-use App\Http\Requests\Froums\ReplyForm;
+use App\Http\Requests\Forums\ReplyForm;
 
 class ReplyController extends Controller
 {
