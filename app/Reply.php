@@ -40,4 +40,23 @@ class Reply extends Model
         return $this->morphMany(Reported::class, 'reportable');
     }
 
+    public function updateOrCreate($request)
+    {
+        if($request->has('id')) {
+            $reply = $this->find($request->id);
+            $reply->update($this->setDataArray($request));
+            return $reply;
+        }
+
+        return $this->create($this->setDataArray($request));
+    }
+
+    protected function setDataArray($request)
+    {
+        return [
+            'thread_id' => $request->thread_id,
+            'user_id' => $request->user_id,
+            'reply' => $request->body,
+        ];
+    }
 }

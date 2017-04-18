@@ -86,7 +86,7 @@ class Thread extends Model
     {
         return [
             'channel_id' => $request->channel_id,
-            'user_id' => 1,
+            'user_id' => $request->user_id,
             'slug' => str_slug($request->title),
             'title' => $request->title,
             'body' => $request->body,

@@ -26,13 +26,7 @@ class ReplyController extends Controller
      */
     public function store(Request $request, Reply $reply)
     {
-        $reply->create([
-            'thread_id' => $request->thread_id,
-            'user_id' => 1,
-            'reply' => $request->body,
-        ]);
-
-        return response()->json([], 200);
+        return fractal($reply->updateOrCreate($request), new Replies)->respond();
     }
 
     /**
@@ -75,8 +69,12 @@ class ReplyController extends Controller
      * @param  \App\Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Reply $reply)
+    public function destroy($id, Reply $reply)
     {
-        //
+        $reply = $reply->find($id);
+        $reply->is_hidden = $reply->is_hidden? false:true;
+        $reply->save();
+
+        return fractal($reply, new Replies)->respond();
     }
 }

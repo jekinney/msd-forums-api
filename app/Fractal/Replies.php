@@ -8,6 +8,8 @@ use League\Fractal\TransformerAbstract;
 
 class Replies extends TransformerAbstract
 {
+	protected $defaultIncludes = ['author'];
+	
 	public function transform(Reply $reply)
 	{
 		return [
@@ -17,4 +19,14 @@ class Replies extends TransformerAbstract
 			'updated' => $reply->created_at != $reply->updated_at? $reply->updated_at->toDayDateTimeString():null,
 		];
 	}
+
+	/**
+     *  Include Author
+     *
+     * @return League\Fractal\ItmeResource
+     */
+    public function includeAuthor(Reply $reply)
+    {
+        return $this->item($reply->user, new Author);
+    }
 }

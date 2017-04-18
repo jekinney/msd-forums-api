@@ -14,7 +14,7 @@ class Threads extends TransformerAbstract
      */
     protected $availableIncludes = ['replies'];
 
-    protected $defaultIncludes = ['channel'];
+    protected $defaultIncludes = ['channel', 'author'];
 
 	public function transform(Thread $thread)
 	{
@@ -49,5 +49,15 @@ class Threads extends TransformerAbstract
     public function includeChannel(Thread $thread)
     {
         return $this->item($thread->channel, new Channels);
+    }
+
+    /**
+     *  Include Author
+     *
+     * @return League\Fractal\ItmeResource
+     */
+    public function includeAuthor(Thread $thread)
+    {
+        return $this->item($thread->user, new Author);
     }
 }
