@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('company')->nullable();
             $table->string('type');
-            $table->string('job');
+            $table->string('job')->nullable();
             $table->boolean('banned')->default(0);
             $table->rememberToken();
             $table->timestamps();
