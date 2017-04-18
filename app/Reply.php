@@ -56,7 +56,7 @@ class Reply extends Model
         return [
             'thread_id' => $request->thread_id,
             'user_id' => $request->user_id,
-            'reply' => $request->body,
+            'reply' => $request->reply,
         ];
     }
 }
