@@ -14,8 +14,21 @@ class ForumController extends Controller
 {
     public function index()
     {
-    	$threads = fractal(Thread::with('channel')->withCount('replies')->latest()->paginate(10), new Threads);
-    	$channels = fractal(Channel::where('is_hidden', false)->orderBy('order', 'asc')->get(), new Channels);
+    	$threads = fractal(
+            Thread::with(['channel' => function($q) { 
+                $q->where('is_hidden', false);
+            }])->withCount('replies')
+            ->latest()
+            ->paginate(10), 
+            new Threads
+        );
+
+    	$channels = fractal(
+            Channel::where('is_hidden', false)
+            ->orderBy('order', 'asc')
+            ->get(), 
+            new Channels
+        );
 
     	return response()->json(collect(['threads' => $threads, 'channels' => $channels]));
     }
