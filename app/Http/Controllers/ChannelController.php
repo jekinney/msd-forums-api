@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Channel;
 use App\Fractal\Channels;
+use App\Fractal\AllChannels;
 use Illuminate\Http\Request;
 
 class ChannelController extends Controller
@@ -25,17 +26,7 @@ class ChannelController extends Controller
      */
     public function all(Channel $channel)
     {
-        return fractal($channel->orderBy('order', 'asc')->get(), new Channels)->respond();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Channel $channel)
-    {
-        return response()->json(['channel_count' => $channel->get(['id'])->count()]);
+        return fractal($channel->orderBy('order', 'asc')->get(), new AllChannels)->respond();
     }
 
     /**
