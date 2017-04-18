@@ -40,7 +40,7 @@ class User extends Authenticatable
         return $this->create(setDataArray($request)); 
     }
 
-    protected setDataArray($request)
+    protected function setDataArray($request)
     {
         return [
             'nav_no' => $request->no,
