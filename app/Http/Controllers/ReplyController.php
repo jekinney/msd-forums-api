@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Reply;
 use App\Fractal\Replies;
 use Illuminate\Http\Request;
+use App\Http\Requests\Froums\ReplForm;
 
 class ReplyController extends Controller
 {
@@ -21,46 +22,12 @@ class ReplyController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Request\Forums\ReplyForm  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Reply $reply)
+    public function store(ReplyForm $request, Reply $reply)
     {
         return fractal($reply->updateOrCreate($request), new Replies)->respond();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Reply  $reply
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Reply $reply)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Reply  $reply
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Reply $reply)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Reply  $reply
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Reply $reply)
-    {
-        //
     }
 
     /**

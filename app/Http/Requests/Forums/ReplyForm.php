@@ -13,7 +13,7 @@ class CreateReply extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class CreateReply extends FormRequest
     public function rules()
     {
         return [
-            //
+            'user_id' => 'required|numeric'
+            'thread_id' => 'required|numeric'
+            'reply' => 'required'
         ];
     }
 }
