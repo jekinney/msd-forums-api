@@ -14,7 +14,7 @@ class Replies extends TransformerAbstract
 	{
 		return [
 			'id' => $reply->id,
-			'body' => $reply->reply,
+			'reply' => $reply->reply,
 			'hidden' => $reply->hidden? true:false,
 			'created' => $reply->created_at > Carbon::now()->addDay()? $reply->created_at->diffForHumans:$reply->created_at->toDayDateTimeString(),
 			'updated' => $reply->created_at != $reply->updated_at? $reply->updated_at->toDayDateTimeString():null,
