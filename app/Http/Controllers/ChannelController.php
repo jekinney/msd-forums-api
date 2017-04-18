@@ -26,11 +26,7 @@ class ChannelController extends Controller
      */
     public function all(Channel $channel)
     {
-        $channel = $channel->withCount('threads', 'replies')->orderBy('order', 'asc')->get();
-        return $channel->threads()->orderBy('created_at', 'desc')->first();
-
-
-        //return fractal($channel->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new AllChannels)->respond();
+        return fractal($channel->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new AllChannels)->respond();
     }
 
     /**
