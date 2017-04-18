@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Fractal;
+
 use App\Channel;
 use League\Fractal\TransformerAbstract;
 
