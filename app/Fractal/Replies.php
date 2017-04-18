@@ -13,6 +13,7 @@ class Replies extends TransformerAbstract
 	public function transform(Reply $reply)
 	{
 		return [
+			'id' => $reply->id,
 			'body' => $reply->reply,
 			'hidden' => $reply->hidden? true:false,
 			'created' => $reply->created_at > Carbon::now()->addDay()? $reply->created_at->diffForHumans:$reply->created_at->toDayDateTimeString(),
