@@ -28,4 +28,22 @@ class Channel extends Model
     {
         return $this->hasManyThrough(Reply::class, Thread::class);
     }
+
+    public function updateOrCreate($request)
+    {
+        if($request->has('id')) {
+            return $this->find($request->id)->update($this->setDataArray($request));
+        }
+
+        return $this->create($this->setDataArray($request));
+    }
+
+    protected function setDataArray($request)
+    {
+        return [
+            'slug' => str_slug($request->slug),
+            'name' => $request->name,
+            'order' => $request->order
+        ];
+    }
 }
