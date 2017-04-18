@@ -17,8 +17,8 @@ class AllChannels extends TransformerAbstract
             'order' => $channel->order,
             'thread_count' => $channel->threads_count,
             'reply_count' => $channel->replies_count,
-            'last_thread_date' => $channel->threads->select('created_at')->lastest()->first(),
-            'last_reply_date' => $channel->replies->select('created_at')->latest()->first(),
+            'last_thread_date' => $channel->threads->lastest()->first(),
+            'last_reply_date' => $channel->replies->latest()->first(),
             'editing' => false,
 		];
 	}
