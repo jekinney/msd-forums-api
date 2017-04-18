@@ -16,7 +16,7 @@ class AllChannels extends TransformerAbstract
 			'hidden' => $channel->is_hidden,
             'order' => $channel->order,
             'thread_count' => $channel->threads_count,
-            'reply_count' => $channel->threads->replies->count(),
+            'reply_count' => $channel->replies_count,
             'editing' => false,
 		];
 	}
