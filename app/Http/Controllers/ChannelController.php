@@ -100,6 +100,6 @@ class ChannelController extends Controller
         $channel->is_hidden = $channel->is_hidden? false:true;
         $channel->save();
 
-        return response()->json([], 200);
+        return fractal($channel->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new AllChannels)->respond();
     }
 }
