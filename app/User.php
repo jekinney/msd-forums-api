@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'nav_id', 'name', 'email', 'company', 'type', 'banned',
+        'nav_id', 'name', 'email', 'company', 'type', 'job', 'banned',
     ];
 
     public function threads()
@@ -47,7 +47,8 @@ class User extends Authenticatable
             'name' => $request->name,
             'email' => $request->email,
             'company' => $request->company,
-            'type' => $request->type
+            'type' => $request->type,
+            'job' => $request->job,
         ];
     }
 }
