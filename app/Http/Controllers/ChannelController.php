@@ -37,14 +37,7 @@ class ChannelController extends Controller
      */
     public function store(Request $request, Channel $channel)
     {
-        if($request->has('id')) {
-            $channel = $channel->find($request->id)
-        }
-        $channel->create([
-                'slug' => str_slug($request->name),
-                'name' => $request->name,
-                'order' => $request->order
-            ]);
+        $channel->updateOrCreate($request);
 
         return fractal($channel->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new AllChannels)->respond();
     }
