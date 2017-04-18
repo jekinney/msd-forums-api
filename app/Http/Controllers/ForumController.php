@@ -15,7 +15,7 @@ class ForumController extends Controller
     public function index()
     {
     	$threads = fractal(
-            Thread::has(['channel' => function($q) { 
+            Thread::with(['channel' => function($q) { 
                 $q->where('is_hidden', false);
             }])->withCount('replies')
             ->latest()
