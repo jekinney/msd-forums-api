@@ -12,7 +12,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'company', 'type', 'banned',
+        'nav_id', 'name', 'email', 'company', 'type', 'banned',
     ];
 
     public function threads()
@@ -28,5 +28,26 @@ class User extends Authenticatable
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
+    }
+
+    public function updateOrCreate($request)
+    {
+        if($user = $this->where('nav_id', $request->no)->first()) {
+            $user->update(setDataArray($request));
+            return $user;
+        }
+
+        return $this->create(setDataArray($request)); 
+    }
+
+    protected setDataArray($request)
+    {
+        return [
+            'nav_no' => $request->no,
+            'name' => $request->name,
+            'email' => $request->email,
+            'company' => $request->company,
+            'type' => $request->type
+        ];
     }
 }

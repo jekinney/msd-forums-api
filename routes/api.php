@@ -7,6 +7,8 @@ Route::group(['prefix' => 'v1/forums'], function() {
 	Route::get('/forum/setup', 'ForumController@index');
 	Route::get('/forum/hidden', 'ForumController@hidden');
 
+	Route::post('/user', 'UserController@store');
+
 	Route::get('channels', 'ChannelController@index');
 	Route::get('channels/all', 'ChannelController@all');
 	Route::get('channel/{id}', 'ChannelController@show');

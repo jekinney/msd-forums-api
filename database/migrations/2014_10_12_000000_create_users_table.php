@@ -18,7 +18,7 @@ class CreateUsersTable extends Migration
             $table->string('nav_id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('company');
+            $table->string('company')->nullable();
             $table->string('type');
             $table->boolean('banned')->default(0);
             $table->rememberToken();
