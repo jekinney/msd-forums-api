@@ -43,7 +43,7 @@ class User extends Authenticatable
     protected function setDataArray($request)
     {
         return [
-            'nav_no' => $request->no,
+            'nav_id' => $request->no,
             'name' => $request->name,
             'email' => $request->email,
             'company' => $request->company,
