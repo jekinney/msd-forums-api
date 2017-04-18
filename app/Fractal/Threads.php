@@ -18,19 +18,17 @@ class Threads extends TransformerAbstract
 
 	public function transform(Thread $thread)
 	{
-        if(!$thread->channel->is_hidden) {
-    		return [
-    			'id' => $thread->id,
-                'slug' => $thread->slug,
-    			'title' => $thread->title,
-    			'body' => $thread->body,
-    			'reported' => $thread->reported,
-    			'created' => $thread->created_at->toDayDateTimeString(),
-    			'updated' => $thread->created_at == $thread->updated_at? null:$thread->updated_at->toDayDateTimeString(),
-    			'hidden' => $thread->is_hidden? true:false,
-    			'reply_count' => $thread->replies_count,
-    		];
-        }
+		return [
+			'id' => $thread->id,
+            'slug' => $thread->slug,
+			'title' => $thread->title,
+			'body' => $thread->body,
+			'reported' => $thread->reported,
+			'created' => $thread->created_at->toDayDateTimeString(),
+			'updated' => $thread->created_at == $thread->updated_at? null:$thread->updated_at->toDayDateTimeString(),
+			'hidden' => $thread->is_hidden? true:false,
+			'reply_count' => $thread->replies_count,
+		];
 	}
 
 	/**
