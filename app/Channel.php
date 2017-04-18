@@ -23,4 +23,9 @@ class Channel extends Model
     {
     	return $this->hasMany(Thread::class);
     }
+
+    public function replies()
+    {
+        return $this->hasManyThrough(Reply::class, Thread::class);
+    }
 }
