@@ -18,7 +18,7 @@ class Threads extends TransformerAbstract
 
 	public function transform(Thread $thread)
 	{
-        if(!$thread->category->is_hidden) {
+        if(!$thread->channel->is_hidden) {
     		return [
     			'id' => $thread->id,
                 'slug' => $thread->slug,
