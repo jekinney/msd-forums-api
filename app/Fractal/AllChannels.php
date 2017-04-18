@@ -1,3 +1,5 @@
+<?php
+
 use App\Channel;
 use League\Fractal\TransformerAbstract;
 
