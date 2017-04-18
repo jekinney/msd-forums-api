@@ -21,7 +21,7 @@ class AllChannels extends TransformerAbstract
             'thread_count' => $channel->threads_count,
             'reply_count' => $channel->replies_count,
             'last_thread_date' => $lastThread? $lastThread->created_at->toDateTimeString():null,
-            'last_reply_date' => $lastReply? true:false,
+            'last_reply_date' => $lastReply? $lastReply->created_at->toDateTimeString():null
             'editing' => false,
 		];
 	}
