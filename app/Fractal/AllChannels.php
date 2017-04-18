@@ -18,7 +18,6 @@ class AllChannels extends TransformerAbstract
             'thread_count' => $channel->threads_count,
             'reply_count' => $channel->replies_count,
             'last_thread_date' => $channel->threads()->orderBy('created_at', 'desc')->first()->created_at->toDateTimeString(),
-            'last_reply_date' => $channel->replies()->orderBy('created_at', 'desc')->first()->created_at->toDateTimeString(),
             'editing' => false,
 		];
 	}
