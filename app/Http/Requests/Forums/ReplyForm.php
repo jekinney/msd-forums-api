@@ -4,7 +4,7 @@ namespace App\Http\Requests\Forums;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateReply extends FormRequest
+class ReplyForm extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
