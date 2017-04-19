@@ -9,7 +9,12 @@ Route::group(['prefix' => 'v1/forums'], function() {
 
 	Route::post('/user', 'UserController@store');
 
-	Route::get('channels', 'ChannelController@index');
+	Route::get('categories', 'CategoryController@index');
+	Route::get('categories/all', 'CategoryController@all');
+	Route::post('/category', 'CategoryController@store');
+	Route::delete('/category/{id}', 'CategoryController@destroy');
+
+	Route::get('channels/{category_id}', 'ChannelController@index');
 	Route::get('channels/all', 'ChannelController@all');
 	Route::get('channel/{id}', 'ChannelController@show');
 	Route::post('/channel', 'ChannelController@store');

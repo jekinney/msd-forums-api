@@ -9,13 +9,23 @@ class Channel extends Model
 	/**
 	 * Fillable fields for mass assignment
 	 */
-    protected $fillable = ['slug', 'name', 'is_hidden', 'order'];
+    protected $fillable = ['channel_id', 'slug', 'name', 'is_hidden', 'order'];
 
     /**
      * Cast table column to a type
      */
     protected $casts = ['is_hidden' => 'boolean'];
 
+    /**
+     * Relationships
+    *
+    * Get channels category
+    */
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    
     /**
     * Get all channels threads
     */
@@ -24,6 +34,9 @@ class Channel extends Model
     	return $this->hasMany(Thread::class);
     }
 
+    /**
+    * Get all channels threads
+    */
     public function replies()
     {
         return $this->hasManyThrough(Reply::class, Thread::class);
