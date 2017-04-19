@@ -17,7 +17,7 @@ class ForumController extends Controller
     	$threads = fractal(
             Thread::whereHas('channel', function($q) use($categoryId) {
                 $q->where('is_hidden', 0);
-                $q->where('category_id', $categoryId)
+                $q->where('category_id', $categoryId);
             })->withCount('replies')
             ->latest()
             ->paginate(10), 
