@@ -54,6 +54,7 @@ class Channel extends Model
     protected function setDataArray($request)
     {
         return [
+            'channel_id' => $request->channel_id,
             'slug' => str_slug($request->slug),
             'name' => $request->name,
             'order' => $request->order
