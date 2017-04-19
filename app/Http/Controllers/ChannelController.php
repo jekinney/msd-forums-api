@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Channel;
 use App\Fractal\Channels;
-use App\Fractal\AllChannels;
+use App\Fractal\ChannelDetails;
 use Illuminate\Http\Request;
 
 class ChannelController extends Controller
@@ -26,7 +26,7 @@ class ChannelController extends Controller
      */
     public function all(Channel $channel)
     {
-        return fractal($channel->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new AllChannels)->respond();
+        return fractal($channel->with('category')->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new ChannelDetails)->respond();
     }
 
     /**
@@ -39,7 +39,7 @@ class ChannelController extends Controller
     {
         $channel->updateOrCreate($request);
 
-        return fractal($channel->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new AllChannels)->respond();
+        return fractal($channel->with('category')->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new ChannelDetails)->respond();
     }
 
     /**
@@ -100,6 +100,6 @@ class ChannelController extends Controller
         $channel->is_hidden = $channel->is_hidden? false:true;
         $channel->save();
 
-        return fractal($channel->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new AllChannels)->respond();
+        return fractal($channel->with('category')->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new ChannelDetails)->respond();
     }
 }
