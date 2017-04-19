@@ -14,9 +14,9 @@ class ChannelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Channel $channel)
+    public function index($categoryId, Channel $channel)
     {
-        return fractal($channel->where('is_hidden', 0)->orderBy('order', 'asc')->get(), new Channels)->respond();
+        return fractal($channel->where('is_hidden', 0)->where('category_id', $categoryId)->orderBy('order', 'asc')->get(), new Channels)->respond();
     }
 
     /**

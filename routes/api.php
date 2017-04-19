@@ -14,8 +14,8 @@ Route::group(['prefix' => 'v1/forums'], function() {
 	Route::post('/category', 'CategoryController@store');
 	Route::delete('/category/{id}', 'CategoryController@destroy');
 
-	Route::get('channels/{category_id}', 'ChannelController@index');
 	Route::get('channels/all', 'ChannelController@all');
+	Route::get('channels/{categoryId}', 'ChannelController@index');
 	Route::get('channel/{id}', 'ChannelController@show');
 	Route::post('/channel', 'ChannelController@store');
 	Route::delete('/channel/{id}', 'ChannelController@destroy');
