@@ -6,6 +6,7 @@ use App\Reply;
 use App\Thread;
 use App\Fractal\Replies;
 use App\Fractal\Threads;
+use App\Fractal\ReplyDetails;
 use Illuminate\Http\Request;
 use App\Http\Requests\Forums\ReplyForm;
 
@@ -37,6 +38,11 @@ class ReplyController extends Controller
             ->find($reply->thread_id), new Threads)
             ->parseIncludes(['channel', 'replies'])
             ->respond();
+    }
+
+    public function edit($id, Reply $reply)
+    {
+        return fractal($reply->find($id), new ReplyDetails)->respond();
     }
 
     /**

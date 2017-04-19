@@ -28,6 +28,7 @@ Route::group(['prefix' => 'v1/forums'], function() {
 	Route::delete('/thread/{id}', 'ThreadController@destroy');
 
 	Route::get('/reply', 'ReplyController@edit');
+	Route::get('/reply/{id}', 'ReplyController@edit');
 	Route::post('/reply', 'ReplyController@store');
 	Route::put('/reply/{id}', 'ReplyController@update');
 	Route::delete('/reply/{id}', 'ReplyController@destroy');
