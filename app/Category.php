@@ -32,7 +32,7 @@ class Category extends Model
     public function updateOrCreate($request)
     {
         if($request->has('id')) {
-            return $this->find($id)->update($this->setDataArray($request));
+            return $this->find($request->id)->update($this->setDataArray($request));
         }
         return $this->create($this->setDataArray($request));
     }

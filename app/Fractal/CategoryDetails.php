@@ -11,6 +11,7 @@ class CategoryDetails extends TransformerAbstract
 	{
 		return [
 			'id' => $category->id,
+			'slug' => $category->slug,
 			'name' => $category->name,
 			'order' => $category->order,
 			'hidden' => $category->is_hidden,
