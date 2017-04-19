@@ -25,4 +25,24 @@ class Category extends Model
     {
         return $this->hasManyThrough(Thread::class, Channel::class);
     }
+
+    /**
+     * Functions
+     */
+    public function updateOrCreate($request)
+    {
+        if($request->has('id')) {
+            return $this->find($id)->update($this->setDataArray($request));
+        }
+        return $this->create($this->setDataArray($request));
+    }
+
+    protected function setDataArray($request)
+    {
+        return [
+            'slug' => str_slug($request->slug),
+            'name' => $request->name,
+            'order' => $request->order,
+        ];
+    }
 }
