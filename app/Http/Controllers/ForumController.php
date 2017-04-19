@@ -12,11 +12,12 @@ use Illuminate\Http\Request;
 
 class ForumController extends Controller
 {
-    public function index()
+    public function index($categoryId)
     {
     	$threads = fractal(
-            Thread::whereHas('channel', function($q) {
+            Thread::whereHas('channel', function($q) use($categoryId) {
                 $q->where('is_hidden', 0);
+                $q->where('category_id', $categoryId)
             })->withCount('replies')
             ->latest()
             ->paginate(10), 
@@ -25,6 +26,7 @@ class ForumController extends Controller
 
     	$channels = fractal(
             Channel::where('is_hidden', false)
+            ->where('category_id', $categoryId)
             ->orderBy('order', 'asc')
             ->get(), 
             new Channels

@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1/forums'], function() {
 
-	Route::get('/forum/setup', 'ForumController@index');
+	Route::get('/forum/setup/{categoryId}', 'ForumController@index');
 	Route::get('/forum/hidden', 'ForumController@hidden');
 
 	Route::post('/user', 'UserController@store');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Category;
 use Illuminate\Http\Request;
 use App\Fractal\CategoriesList;
+use App\Fractal\CategoryDetails;
 
 class CategoryController extends Controller
 {
@@ -19,13 +20,13 @@ class CategoryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function All(Category $category)
     {
-        //
+        return fractal($category->withCount('channels', 'threads')->orderBy('order', 'asc')->get(), new CategoryDetails)->respond();
     }
 
     /**
@@ -34,9 +35,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Category $category)
     {
-        //
+        $category->updateOrCreate($request);
+
+        return fractal($category->withCount('channels', 'threads')->orderBy('order', 'asc')->get(), new CategoryDetails)->respond();
     }
 
     /**
@@ -50,28 +53,6 @@ class CategoryController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Category $category)
-    {
-        //
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -79,8 +60,12 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id, Category $category)
     {
-        //
+        $category = $category->find($id);
+        $category->is_hidden = $category->is_hidden? false:true;
+        $category->save();
+
+        return fractal($category->withCount('channels', 'threads')->orderBy('order', 'asc')->get(), new CategoryDetails)->respond();
     }
 }
