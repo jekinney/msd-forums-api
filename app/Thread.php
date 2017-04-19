@@ -58,9 +58,14 @@ class Thread extends Model
      * @param int $amount
      * @return collection Thread
      */
-    public function newestActive($amount = 10)
+    public function newestActive($categoryId, $amount = 10)
     {
-        return $this->with('channel')->withCount('replies')->where('is_hidden', 0)->latest()->paginate($amount);
+        return $this->whereHas('channel', function($q) use($categoryId) {
+                 $q->where('category_id', $categoryId);
+            })->withCount('replies')
+            ->where('is_hidden', 0)
+            ->latest()
+            ->paginate($amount);
     }
 
      /**

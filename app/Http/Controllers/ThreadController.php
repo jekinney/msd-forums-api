@@ -15,9 +15,9 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Thread $thread)
+    public function index($categoryId, Thread $thread)
     {
-        return fractal($thread->newestActive(), new Threads)->respond();
+        return fractal($thread->newestActive($categoryId), new Threads)->respond();
     }
 
     /**
