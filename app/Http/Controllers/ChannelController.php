@@ -56,37 +56,6 @@ class ChannelController extends Controller
         return fractal($channel, new Channels)->parseIncludes('threads')->respond();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param int $id
-     * @param  \App\Channel  $channel
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id, Channel $channel)
-    {
-        return fractal($channel->find($id), new Channels)->respond();
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Channel  $channel
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Channel $channel)
-    {
-        $channel = $channel->find($request->id);
-        $channel->update([
-            'slug' => str_slug($request->name),
-            'name' => $request->name,
-            'order' => $request->order,
-            'is_hidden' => $request->is_hidden
-        ]);
-
-        return response()->json([], 200);
-    }
 
     /**
      * Remove the specified resource from storage.
