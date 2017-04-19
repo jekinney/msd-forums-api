@@ -9,7 +9,7 @@ class Channel extends Model
 	/**
 	 * Fillable fields for mass assignment
 	 */
-    protected $fillable = ['channel_id', 'slug', 'name', 'is_hidden', 'order'];
+    protected $fillable = ['category_id', 'slug', 'name', 'is_hidden', 'order'];
 
     /**
      * Cast table column to a type
