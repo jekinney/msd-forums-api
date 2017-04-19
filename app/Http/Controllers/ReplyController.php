@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Reply;
+use App\Thread;
 use App\Fractal\Replies;
+use App\Fractal\Threads;
 use Illuminate\Http\Request;
 use App\Http\Requests\Forums\ReplyForm;
 
@@ -27,7 +29,15 @@ class ReplyController extends Controller
      */
     public function store(ReplyForm $request, Reply $reply)
     {
-        return fractal($reply->updateOrCreate($request), new Replies)->respond();
+        $reply = $reply->updateOrCreate($request);
+
+        return fractal(
+            Thread::foind($reply->thread_id)
+            ->with('channel', 'replies', 'user', 'replies.user')
+            ->withCount('replies')
+            ->find($id), new Threads)
+            ->parseIncludes(['channel', 'replies'])
+            ->respond();
     }
 
     /**
