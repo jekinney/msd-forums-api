@@ -32,10 +32,9 @@ class ReplyController extends Controller
         $reply = $reply->updateOrCreate($request);
 
         return fractal(
-            Thread::find($reply->thread_id)
-            ->with('channel', 'replies', 'user', 'replies.user')
+            Thread::with('channel', 'replies', 'user', 'replies.user')
             ->withCount('replies')
-            ->find($id), new Threads)
+            ->find($reply->thread_id), new Threads)
             ->parseIncludes(['channel', 'replies'])
             ->respond();
     }
