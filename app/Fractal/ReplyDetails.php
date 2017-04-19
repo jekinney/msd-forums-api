@@ -5,7 +5,7 @@ namespace App\Fractal;
 use App\Reply;
 use League\Fractal\TransformerAbstract;
 
-class Replies extends TransformerAbstract
+class ReplyDetails extends TransformerAbstract
 {
 	public function transform(Reply $reply)
 	{
