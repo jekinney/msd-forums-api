@@ -37,7 +37,6 @@ class ForumController extends Controller
 
     public function hidden() 
     {
-        dd(Reply::with('thread', 'thread.channel', 'thread.channel.category')->where('is_hidden', true)->latest()->paginate(10));
     	$threads = fractal(Thread::with('channel')->withCount('replies')->where('is_hidden', true)->latest()->paginate(10), new Threads);
     	$replies = fractal(Reply::with('thread', 'thread.channel', 'thread.channel.category')->where('is_hidden', true)->latest()->paginate(10), new HiddenReplies);
 

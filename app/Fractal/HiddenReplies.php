@@ -48,7 +48,7 @@ class HiddenReplies extends TransformerAbstract
      */
     public function includeChannel(Reply $reply)
     {
-        return $this->item($reply->thread->load('channel')->channel, new Channels);
+        return $this->item($reply->thread->channel, new Channels);
     }
 
     /**
@@ -58,6 +58,6 @@ class HiddenReplies extends TransformerAbstract
      */
     public function includeCategory(Reply $reply)
     {
-        return $this->item($reply->thread->load('channel.category')->channel->category, new CategoryDetails);
+        return $this->item($reply->thread->channel->category, new CategoryDetails);
     }
 }
