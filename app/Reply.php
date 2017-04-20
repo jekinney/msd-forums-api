@@ -38,14 +38,13 @@ class Reply extends Model
     public function channel()
     {
         $thread = $this->thread->load('channel');
-        dd($thread->channel);
         return $thread->channel;
     }
 
     public function catagory() 
     {
-        $channel = $this->channel();
-        return $channel->load('category')->get()->category;
+        $channel = $this->channel()->load('category');
+        return $channel->category;
     }
 
      /**
