@@ -66,7 +66,7 @@ class Thread extends Model
     {
         return $this->whereHas('channel', function($q) use($categoryId) {
                  $q->where('category_id', $categoryId);
-            })->withCount('replies')
+            })->withCount('replies', 'attachments')
             ->where('is_hidden', 0)
             ->latest()
             ->paginate($amount);

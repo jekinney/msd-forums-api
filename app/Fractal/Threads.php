@@ -12,7 +12,7 @@ class Threads extends TransformerAbstract
      *
      * @var array
      */
-    protected $availableIncludes = ['replies'];
+    protected $availableIncludes = ['replies', 'attachments'];
 
     protected $defaultIncludes = ['channel', 'author'];
 
@@ -28,6 +28,7 @@ class Threads extends TransformerAbstract
 			'updated' => $thread->created_at == $thread->updated_at? null:$thread->updated_at->toDayDateTimeString(),
 			'hidden' => $thread->is_hidden? true:false,
 			'reply_count' => $thread->replies_count,
+            'attachment_count' => $thread->attachments_count,
 		];
 	}
 
@@ -59,5 +60,15 @@ class Threads extends TransformerAbstract
     public function includeAuthor(Thread $thread)
     {
         return $this->item($thread->user, new Author);
+    }
+
+    /**
+     *  Include Attachments
+     *
+     * @return League\Fractal\ItmeResource
+     */
+    public function includeAttachments(Thread $thread)
+    {
+        return $this->item($thread->attachments, new Attachments);
     }
 }
