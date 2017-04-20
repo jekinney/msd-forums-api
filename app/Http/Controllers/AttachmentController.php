@@ -50,7 +50,7 @@ class AttachmentController extends Controller
     {
         $location = $attachment->uploadFiles($request);
 
-        return response()->json(['location' => $location]);
+        return response()->json($location);
     }
 
     /**
