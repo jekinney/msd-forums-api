@@ -29,4 +29,18 @@ class ReplyForm extends FormRequest
             'reply' => 'required',
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'user_id.required' => 'Application error, please refresh the page. If it coninutes please let us know',
+            'thread_id.required' => 'Application error, please refresh the page. If it coninutes please let us know',
+            'reply.required' => 'Your reply needs to have something!',
+        ];
+    }
 }
