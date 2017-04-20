@@ -37,8 +37,8 @@ class Reply extends Model
      */
     public function channel()
     {
-        $thread = $this->thread()->with('channel')->get();
-        dd($thread->channel);
+        $thread = $this->thread->load('channel');
+        dd($thread);
         return $thread->channel;
     }
 
