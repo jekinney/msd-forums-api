@@ -10,7 +10,7 @@ class Attachments extends TransformerAbstract
 	public function transform(Attachment $attachment)
 	{
 		return [
-			'path' => $attachment->path,
+			'path' => $attachment->full_path,
 			'name' => $attachment->name,
 		];
 	}
