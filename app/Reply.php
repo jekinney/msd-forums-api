@@ -8,6 +8,10 @@ class Reply extends Model
 {
     protected $fillable = ['user_id', 'thread_id', 'reply', 'is_hidden', 'reported'];
 
+    protected $casts = [
+        'is_hidden' => 'boolean',
+    ];
+    
      /**
      * Get the replies author.
      */

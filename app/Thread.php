@@ -11,6 +11,10 @@ class Thread extends Model
      */
     protected $fillable = ['user_id', 'channel_id', 'slug', 'title', 'body', 'is_hidden', 'reports'];
 
+    protected $casts = [
+        'is_hidden' => 'boolean',
+    ];
+    
      /**
      * Get the threads author.
      */

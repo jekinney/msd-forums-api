@@ -79,6 +79,6 @@ class ThreadController extends Controller
         $thread->is_hidden = $thread->is_hidden? false:true;
         $thread->save();
 
-        return fractal($thread->fresh(), new Threads)->respond();
+        return response()->json(['hidden' => $reply->is_hidden]);;
     }
 }
