@@ -46,10 +46,8 @@ class ThreadController extends Controller
     public function show($id, Thread $thread)
     {
         return fractal(
-                $thread->with('channel', 'user', 'replies.user')
-                ->whereHas('replies', function($q) {
-                    $q->where('is_hidden', 0);
-                })->withCount('replies')
+                $thread->with('channel', 'user', 'replies', 'replies.user')
+                ->withCount('replies')
                 ->find($id),
                 new Threads
             )->parseIncludes(['channel', 'replies'])
