@@ -50,7 +50,7 @@ class ThreadController extends Controller
                 ->withCount('replies', 'attachments')
                 ->find($id),
                 new Threads
-            )->parseIncludes(['channel', 'replies'])
+            )->parseIncludes(['channel', 'replies', 'attachments'])
             ->respond();
     }
 
