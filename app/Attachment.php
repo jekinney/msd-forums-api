@@ -32,8 +32,13 @@ class Attachment extends Model
     */
     public function uploadFiles($request)
     {
-        $file = str_replace('public', '', $request->file('attachment')->store('public/attachments/forums'));
-        return $file;
-        //$request->type.::find($request->id)->attachments()->create(['path' => str_replace('public', '', $file)]);
+        $file = $request->file('attachment');
+
+        $path = str_replace('public', '', $file->store('public/attachments/forums'));
+        
+        $class = new studly_case($request->type());
+        $class->find($request->id)->attachments()->create(['path' => $path)]);
+        
+        return $class;
     }
 }
