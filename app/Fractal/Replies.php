@@ -25,7 +25,7 @@ class Replies extends TransformerAbstract
 	/**
      *  Include Author
      *
-     * @return League\Fractal\ItmeResource
+     * @return League\Fractal\ItemResource
      */
     public function includeAuthor(Reply $reply)
     {
@@ -35,10 +35,10 @@ class Replies extends TransformerAbstract
     /**
      *  Include Attachments
      *
-     * @return League\Fractal\ItmeResource
+     * @return League\Fractal\CollectionResource
      */
     public function includeAttachments(Reply $reply)
     {
-        return $this->item($reply->attachments, new Attachments);
+        return $this->collection($reply->attachments, new Attachments);
     }
 }

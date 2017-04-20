@@ -30,10 +30,6 @@ class ThreadController extends Controller
     {
         $thread = $thread->addOrUpdate($request);
 
-        if($request->hasFile('file')) {
-            $locations = $attachment->uploadFiles($thread, $request);
-        }
-
         return fractal($thread->fresh(), new Threads)->respond();
     }
 

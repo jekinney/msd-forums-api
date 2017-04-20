@@ -32,16 +32,6 @@ class Threads extends TransformerAbstract
 		];
 	}
 
-	/**
-     * Include Replies
-     *
-     * @return League\Fractal\ItemResource
-     */
-    public function includeReplies(Thread $thread)
-    {
-        return $this->collection($thread->replies, new Replies);
-    }
-
     /**
      * Include channel
      *
@@ -55,7 +45,7 @@ class Threads extends TransformerAbstract
     /**
      *  Include Author
      *
-     * @return League\Fractal\ItmeResource
+     * @return League\Fractal\ItemResource
      */
     public function includeAuthor(Thread $thread)
     {
@@ -63,12 +53,22 @@ class Threads extends TransformerAbstract
     }
 
     /**
+     * Include Replies
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeReplies(Thread $thread)
+    {
+        return $this->collection($thread->replies, new Replies);
+    }
+
+    /**
      *  Include Attachments
      *
-     * @return League\Fractal\ItmeResource
+     * @return League\Fractal\CollectionResource
      */
     public function includeAttachments(Thread $thread)
     {
-        return $this->item($thread->attachments, new Attachments);
+        return $this->collection($thread->attachments, new Attachments);
     }
 }
