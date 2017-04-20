@@ -72,6 +72,13 @@ class Thread extends Model
             ->paginate($amount);
     }
 
+    public function show($id)
+    {
+        return $this->with('channel', 'user', 'attachments', 'replies', 'replies.user',  'replies.attachments')
+                ->withCount('replies', 'attachments')
+                ->find($id);
+    }
+
      /**
      * Insert or update a thread
      *
