@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Reply;
 use App\Thread;
 use App\Channel;
-use App\Fractal\Replies;
 use App\Fractal\Threads;
 use App\Fractal\Channels;
 use Illuminate\Http\Request;
+use App\Fractal\HiddenReplies;
 
 class ForumController extends Controller
 {
@@ -38,7 +38,7 @@ class ForumController extends Controller
     public function hidden() 
     {
     	$threads = fractal(Thread::with('channel')->withCount('replies')->where('is_hidden', true)->latest()->paginate(10), new Threads);
-    	$replies = fractal(Reply::where('is_hidden', true)->latest()->paginate(10), new Replies);
+    	$replies = fractal(Reply::where('is_hidden', true)->latest()->paginate(10), new HiddenReplies);
 
     	return response()->json(collect(['threads' => $threads, 'replies' => $replies]));
     }
