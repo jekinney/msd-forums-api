@@ -43,7 +43,7 @@ class Reply extends Model
 
     public function catagory() 
     {
-        $channel = $this->channel()->load('category');
+        $channel = $this->thread->load('channel.category');
         dd($channel);
         return $channel->category;
     }
