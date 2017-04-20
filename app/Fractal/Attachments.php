@@ -7,7 +7,7 @@ use League\Fractal\TransformerAbstract;
 
 class Attachments extends TransformerAbstract
 {
-	public function transform(Attachment $thread)
+	public function transform(Attachment $attachment)
 	{
 		return [
 			'path' => $attachment->path,
