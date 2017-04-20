@@ -48,7 +48,6 @@ class HiddenReplies extends TransformerAbstract
      */
     public function includeCategory(Reply $reply)
     {
-    	dd($reply->thread->load('channel.category')->channel->category);
-        return $this->item($reply->thread->load('channel.category')->category, new CategoryDetails);
+        return $this->item($reply->thread->load('channel.category')->channel->category, new CategoryDetails);
     }
 }
