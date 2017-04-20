@@ -32,6 +32,21 @@ class Reply extends Model
         return $this->morphMany(Attachment::class, 'attachable');
     }
 
+    /**
+     * Get the replies channel.
+     */
+    public function channel()
+    {
+        $thread = $this->thread()->load('channel')->get();
+        return $thread->channel;
+    }
+
+    public function catagory() 
+    {
+        $channel = $this->channel();
+        return $channel->load('category')->get()->category;
+    }
+
      /**
      * Get all of the reported replies.
      */
