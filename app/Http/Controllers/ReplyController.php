@@ -57,6 +57,6 @@ class ReplyController extends Controller
         $reply->is_hidden = $reply->is_hidden? false:true;
         $reply->save();
 
-        return fractal($reply, new Replies)->respond();
+        return response()->json(['hidden' => $reply->is_hidden]);
     }
 }
