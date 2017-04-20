@@ -11,7 +11,7 @@ class Attachments extends TransformerAbstract
 	{
 		return [
 			'path' => $attachment->path,
-			'name' => $attachment->name;
+			'name' => $attachment->name,
 		];
 	}
 }

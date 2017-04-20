@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Attachment extends Model
 {
-	protected $fillable = ['user_id', 'name', 'path', 'attachable_id', 'attachable_type', 'hidden'];
+	protected $fillable = ['user_id', 'name', 'path', 'attachable_id', 'attachable_type', 'hidden',];
 
     /**
      * Get all of the owning attachable models.
