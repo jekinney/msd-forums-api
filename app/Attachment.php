@@ -33,6 +33,7 @@ class Attachment extends Model
     public function uploadFiles($request)
     {
         $file = $request->file('attachment')->store('public/attachments/forums');
+        return $file;
         $request->type.::find($request->id)->attachments()->create(['path' => str_replace('public', '', $file)]);
     }
 }
