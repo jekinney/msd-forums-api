@@ -34,7 +34,7 @@ class Attachment extends Model
     {
         $file = $request->file('attachment');
 
-        $path = str_replace('public', '', $file->store('public/attachments/forums'));
+        $path = str_replace('public', '', $file->storeAs('public/attachments/forums', $file->getClientOriginalName()));
         $class = 'App\\'.studly_case($request->type);
         $class = new $class();
         return collect(['id' => $request->id, 'path' => $path]);
