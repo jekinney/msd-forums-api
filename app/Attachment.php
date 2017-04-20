@@ -30,10 +30,11 @@ class Attachment extends Model
     /**
     * Upload file (word, pdf, etc) attached to a thread or reply
     */
-    public function uploadFiles($class, $request)
+    public function uploadFiles($request)
     {
-        foreach($request->file('file') as $file) {
-            $class->attachments()->create(['path' => str_replace('public', '', $file->store('public/files/forums'))]);
+        dd($request->object);
+        foreach($request->file('attachment') as $file) {
+            $this->
         }
         return $locations;
     }

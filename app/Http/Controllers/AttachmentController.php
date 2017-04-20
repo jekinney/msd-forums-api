@@ -36,10 +36,11 @@ class AttachmentController extends Controller
      */
     public function store(Request $request, Attachment $attachment)
     {
-        return response()->json(['hasfile' => $request->hasFile('attachments')]);
-        $location = $attachment->uploadFiles($request);
-
-        return response()->json(['location' => $location]);
+        return $request->object;
+        if($request->hasFile('attachments')) {
+            $location = $attachment->uploadFiles($request);
+        }
+        return response()->json(['error' => 'No File'], 422);
     }
 
     /**
