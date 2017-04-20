@@ -8,7 +8,7 @@ use League\Fractal\TransformerAbstract;
 
 class HiddenReplies extends TransformerAbstract
 {
-	protected $defaultIncludes = ['author', 'channel', 'category'];
+	protected $defaultIncludes = ['author', 'thread', 'channel', 'category'];
 	
 	public function transform(Reply $reply)
 	{
@@ -29,6 +29,16 @@ class HiddenReplies extends TransformerAbstract
     public function includeAuthor(Reply $reply)
     {
         return $this->item($reply->user, new Author);
+    }
+
+    /**
+     *  Include Author
+     *
+     * @return League\Fractal\ItmeResource
+     */
+    public function includeThread(Reply $reply)
+    {
+        return $this->item($reply->thread, new ThreadBasic);
     }
 
     /**
