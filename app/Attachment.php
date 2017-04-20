@@ -33,11 +33,11 @@ class Attachment extends Model
     public function uploadFiles($request)
     {
         $file = $request->file('attachment');
+        $path = $file->storeAs('public/attachments/forums', $file->getClientOriginalName());
 
-        $path = str_replace('public', '', $file->storeAs('public/attachments/forums', $file->getClientOriginalName()));
         $class = 'App\\'.studly_case($request->type);
         $class = new $class();
-        $class->find($request->id)->attachments()->create(['path' => $path]);
+        $class->find($request->id)->attachments()->create(['name' => $file->getClientOriginalName(), 'full_path' => $path]);
         
         return $class;
     }
