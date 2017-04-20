@@ -27,7 +27,19 @@ class AttachmentController extends Controller
         //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeImage(Request $request, Attachment $attachment)
+    {
+        $location = $attachment->uploadImage($request);
 
+        return response()->json(['location' => $location]);
+    }
+    
      /**
      * Store a newly created resource in storage.
      *
@@ -36,11 +48,9 @@ class AttachmentController extends Controller
      */
     public function store(Request $request, Attachment $attachment)
     {
-        if($request->hasFile('attachments')) {
-            $path = $attachment->uploadFiles($request);
-            return $path;
-        }
-        return response()->json(['error' => 'No File'], 422);
+        $location = $attachment->uploadFiles($request);
+
+        return response()->json(['location' => $location]);
     }
 
     /**

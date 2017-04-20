@@ -33,6 +33,7 @@ Route::group(['prefix' => 'v1/forums'], function() {
 	Route::put('/reply/{id}', 'ReplyController@update');
 	Route::delete('/reply/{id}', 'ReplyController@destroy');
 
-	Route::post('/attachment', 'AttachmentController@store');
+	Route::post('/attachment/image', 'AttachmentController@storeImage');
+	Route::post('/attachment/files', 'AttachmentController@storeFiles');
 	Route::delete('/attachment/{id}', 'AttachmentController@destroy');
 });
