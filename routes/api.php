@@ -36,4 +36,6 @@ Route::group(['prefix' => 'v1/forums'], function() {
 	Route::post('/attachment/image', 'AttachmentController@storeImage');
 	Route::post('/attachment/files', 'AttachmentController@storeFiles');
 	Route::delete('/attachment/{id}', 'AttachmentController@destroy');
+
+	Route::post('/search', 'SearchController@index');
 });
