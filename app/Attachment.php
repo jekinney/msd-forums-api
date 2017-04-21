@@ -56,6 +56,6 @@ class Attachment extends Model
             return $name = str_random(5).$name;
         }
 
-        return $name
+        return $name;
     }
 }
