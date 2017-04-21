@@ -90,8 +90,8 @@ class AttachmentController extends Controller
     public function download($name, Attachment $attachment)
     {
         $file = Attachment::where('name', $name)->first();
-        
-        return Response::download($file->full_path, $file->name);
+
+        return response()->download($file->full_path, $file->name);
     }
 
     /**
