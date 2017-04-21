@@ -1,5 +1,5 @@
 <?php
-use App/Attachment
+use App\Attachment;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
