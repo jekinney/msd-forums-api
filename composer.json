@@ -11,8 +11,7 @@
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
         "spatie/laravel-fractal": "^3.5",
-        "superbalist/flysystem-google-storage": "4.0.2",
-        "superbalist/laravel-google-cloud-storage": "^1.0"
+         "nexmo/client": "@beta"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

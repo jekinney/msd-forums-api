@@ -169,7 +169,6 @@ return [
         Laravel\Tinker\TinkerServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
-        Superbalist\LaravelGoogleCloudStorage\GoogleCloudStorageServiceProvider::class,
                 
         /*
          * Application Service Providers...
