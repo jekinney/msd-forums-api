@@ -41,7 +41,7 @@ class Attachment extends Model
             ->attachments()
             ->create([
                 'name' => $file->getClientOriginalName(), 
-                'full_path' => str_replace('public', '', 'https://laravelopers.com/'.$path)
+                'full_path' => $path,
             ]);
         
         return $class;
