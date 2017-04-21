@@ -49,6 +49,6 @@ class AttachmentController extends Controller
         Storage::delete($file->full_path);
         $file->delete();
 
-        return fractal($attachments = Attachment::where('attachable_id', $attachableId)->where('attachable_type', $attachableType)->get();, new Attachments)->respond();
+        return fractal($attachments = Attachment::where('attachable_id', $attachableId)->where('attachable_type', $attachableType)->get(), new Attachments)->respond();
     }
 }
