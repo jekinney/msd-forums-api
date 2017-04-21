@@ -17,6 +17,7 @@ class Author extends TransformerAbstract
 	public function transform(User $user)
 	{
 		return [
+            'id' => $user->id,
 			'name' => $user->name,
 			'company' => $user->company,
 		];
