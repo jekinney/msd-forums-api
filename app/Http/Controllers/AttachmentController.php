@@ -92,7 +92,7 @@ class AttachmentController extends Controller
     {
         $file = Attachment::where('name', $name)->first();
 
-        return response()->download(Storage::get($file->full_path), $file->name);
+        return response()->download(Storage::url($file->full_path), $file->name);
     }
 
     /**
