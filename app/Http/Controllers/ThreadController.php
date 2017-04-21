@@ -55,7 +55,7 @@ class ThreadController extends Controller
      */
     public function edit($id, Thread $thread)
     {
-         return fractal($thread->find($id), new Threads);
+         return fractal($thread->with('attachments')->find($id), new Threads)->parseIncludes(['attachments'])->respond();
     }
 
     /**
