@@ -33,17 +33,29 @@ class Attachment extends Model
     public function uploadFiles($request)
     {
         $file = $request->file('attachment');
-        $path = $file->storeAs('public/attachments/forums', $file->getClientOriginalName());
+        $name = $this->setUniqueFileName($file);
+        $path = $file->storeAs('public/attachments/forums',  $name);
 
         $class = 'App\\'.studly_case($request->type);
         $class = new $class();
         $class->find($request->id)
             ->attachments()
             ->create([
-                'name' => $file->getClientOriginalName(), 
+                'name' => $name, 
                 'full_path' => $path,
             ]);
         
         return $class;
+    }
+
+    protected function setUniqueFileName($file)
+    {
+        $name = $file->getClientOriginalName();
+
+        if(Storage::exists('public/attachments/forums/'.$name)) {
+            return $name = str_random(5).$name;
+        }
+
+        return $name
     }
 }
