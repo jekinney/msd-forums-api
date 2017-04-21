@@ -91,7 +91,7 @@ class AttachmentController extends Controller
     {
         $file = Attachment::where('name', $name)->first();
 
-        return response()->download(str_replace('public', '', $file->full_path), $file->name);
+        return response()->download('https://laravelopers.com'.str_replace('public', '', $file->full_path), $file->name);
     }
 
     /**
