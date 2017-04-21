@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('download/{name}',function() {
+Route::get('download/{name}',function() use($name) {
 	$file = Attachment::where('name', $name)->first();
     Response::download($file->full_path, $file->name);
 });
