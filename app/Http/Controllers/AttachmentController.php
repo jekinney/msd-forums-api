@@ -44,12 +44,11 @@ class AttachmentController extends Controller
     public function destroy($id, Attachment $attachment)
     {
         $file = $attachment->find($id);
+        $attachableId = $file->attachable_id;
+        $attachableType = $file->attachable_type;
         Storage::delete($file->full_path);
-
-        $attachments = Attachment::where('attachable_id', $file->attachable_id)->where('attachable_type', $file->attachable_type)->get();
-
         $file->delete();
 
-        return fractal($attachments, new Attachments)->respond();
+        return fractal($attachments = Attachment::where('attachable_id', $attachableId)->where('attachable_type', $attachableType)->get();, new Attachments)->respond();
     }
 }
