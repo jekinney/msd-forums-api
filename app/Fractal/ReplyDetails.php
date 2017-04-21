@@ -7,6 +7,8 @@ use League\Fractal\TransformerAbstract;
 
 class ReplyDetails extends TransformerAbstract
 {
+	protected $defaultIncludes = ['attachments'];
+
 	public function transform(Reply $reply)
 	{
 		return [
@@ -17,4 +19,14 @@ class ReplyDetails extends TransformerAbstract
 		];
 	}
 
+
+    /**
+     *  Include Attachments
+     *
+     * @return League\Fractal\CollectionResource
+     */
+    public function includeAttachments(Reply $reply)
+    {
+        return $this->collection($reply->attachments, new Attachments);
+    }
 }
