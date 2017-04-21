@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Storage;
 use App\Attachment;
 use Illuminate\Http\Request;
 
@@ -91,7 +92,7 @@ class AttachmentController extends Controller
     {
         $file = Attachment::where('name', $name)->first();
 
-        return response()->download('https://laravelopers.com'.str_replace('public', '', $file->full_path), $file->name);
+        return response()->download(Storage::get($file->full_path), $file->name);
     }
 
     /**
