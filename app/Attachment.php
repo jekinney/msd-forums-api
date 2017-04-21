@@ -37,7 +37,12 @@ class Attachment extends Model
 
         $class = 'App\\'.studly_case($request->type);
         $class = new $class();
-        $class->find($request->id)->attachments()->create(['name' => $file->getClientOriginalName(), 'full_path' => $path]);
+        $class->find($request->id)
+            ->attachments()
+            ->create([
+                'name' => $file->getClientOriginalName(), 
+                'full_path' => str_replace('public', '', 'https://laravelopers.com/'.$path)
+            ]);
         
         return $class;
     }
