@@ -13,7 +13,7 @@ class Search extends Model
     {
     	$categories = Category::where('name', 'LIKE', '%'.$request->search.'%')->get();
     	$channels = Channel::where('name', 'LIKE', '%'.$request->search.'%')->get();
-    	$threads = Threads::where('title', 'LIKE', '%'.$request->search)->where('body', 'LIKE', '%'.$request->search.'%')->get();
+    	$threads = Thread::where('title', 'LIKE', '%'.$request->search)->where('body', 'LIKE', '%'.$request->search.'%')->get();
 
     	return collect(['categories' => $categories, 'channels' => $channels, 'threads' => $threads]);
     }
