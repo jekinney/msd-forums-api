@@ -10,7 +10,7 @@ class Attachments extends TransformerAbstract
 	public function transform(Attachment $attachment)
 	{
 		return [
-			'path' => 'https://laravelopers.com/'.$attachment->full_path,
+			'path' => $attachment->full_path,
 			'name' => $attachment->name,
 		];
 	}
