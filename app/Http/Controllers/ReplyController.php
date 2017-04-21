@@ -42,7 +42,7 @@ class ReplyController extends Controller
 
     public function edit($id, Reply $reply)
     {
-        return fractal($reply->find($id), new ReplyDetails)->respond();
+        return fractal($reply->with('attachments')->find($id), new ReplyDetails)->respond();
     }
 
     /**

@@ -16,6 +16,7 @@ class ReplyDetails extends TransformerAbstract
 			'thread_id' => $reply->thread_id,
 			'user_id' => $reply->user_id,
 			'reply' => $reply->reply,
+			'attachment_count' => $reply->attachments->count(),
 		];
 	}
 
