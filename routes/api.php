@@ -2,6 +2,24 @@
 
 use Illuminate\Http\Request;
 
+Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], function() {
+
+	Route::get('/all', 'NotificationsController@index');
+	Route::get('/past', 'NotificationsController@past');
+	Route::get('/upcoming', 'NotificationsController@upcoming');
+	Route::get('/show', 'NotificationsController@show');
+	Route::get('/{id}/edit', 'NotificationsController@edit');
+
+	Route::post('/', 'NotificationsController@store');
+	Route::patch('/{id}', 'NotificationsController@update');
+	Route::delete('/{id}', 'NotificationsController@destroy');
+
+	Route::get('/recipients', 'RecipientController@index');
+	Route::post('/recipient', 'RecipientController@store');
+	Route::delete('/recipient/{notification_id}', 'RecipientController@destroy');
+});
+
+
 Route::group(['prefix' => 'v1/forums'], function() {
 
 	Route::get('/forum/setup/{categoryId}', 'ForumController@index');
