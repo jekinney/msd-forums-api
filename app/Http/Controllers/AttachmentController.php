@@ -30,9 +30,9 @@ class AttachmentController extends Controller
      */
     public function storeFiles(Request $request, Attachment $attachment)
     {
-        $location = $attachment->uploadFiles($request);
+        $data = $attachment->uploadFiles($request);
 
-        return response()->json($location);
+        return response()->json($data);
     }
 
     /**

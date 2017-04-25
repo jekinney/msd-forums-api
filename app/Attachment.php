@@ -46,7 +46,7 @@ class Attachment extends Model
                 'file_type' => $file->getMimetype(),
             ]);
         
-        return $class;
+        return $request;
     }
 
     protected function setUniqueFileName($file)
