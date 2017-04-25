@@ -59,9 +59,10 @@ class Recipient extends Model
 		return $items;
     }
 
-    public function destroy($notificationId) 
+    public function remove($notificationId) 
     {
-    	foreach($recipient as $this->where('notification_id', $notificationId)->get()) {
+    	$recipients = $this->where('notification_id', $notificationId)->get();
+    	foreach($recipient as $recipients) {
     		$recipient->delete();
     	}
     }

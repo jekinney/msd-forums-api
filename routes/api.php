@@ -4,15 +4,14 @@ use Illuminate\Http\Request;
 
 Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], function() {
 
-	Route::get('/all', 'NotificationsController@index');
-	Route::get('/past', 'NotificationsController@past');
-	Route::get('/upcoming', 'NotificationsController@upcoming');
-	Route::get('/show', 'NotificationsController@show');
-	Route::get('/{id}/edit', 'NotificationsController@edit');
+	Route::get('/all', 'NotificationController@index');
+	Route::get('/past', 'NotificationController@past');
+	Route::get('/upcoming', 'NotificationController@upcoming');
+	Route::get('/show', 'NotificationController@show');
+	Route::get('/{id}/edit', 'NotificationController@edit');
 
-	Route::post('/', 'NotificationsController@store');
-	Route::patch('/{id}', 'NotificationsController@update');
-	Route::delete('/{id}', 'NotificationsController@destroy');
+	Route::post('/', 'NotificationController@store');
+	Route::delete('/{id}', 'NotificationController@destroy');
 
 	Route::get('/recipients', 'RecipientController@index');
 	Route::post('/recipient', 'RecipientController@store');

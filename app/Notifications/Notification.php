@@ -2,14 +2,13 @@
 
 namespace App\Notifications;
 
-use Carbon;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Notification extends Model
 {
     protected $fillable = [
 		'type',
-		'name',
 		'from',
 		'subject',
 		'message',
@@ -31,9 +30,7 @@ class Notification extends Model
     	if($request->has('id')) {
     		$notification = $this->with('recipients')->find($request->id);
     		$notification->update($this->setDataArray($request));
-    		foreach($recipient as $notification->recipients) {
-    			$recipient->delete();
-    		}
+
     	} else {
     		$notification = $this->create($this->setDataArray($request));
     	}
@@ -48,12 +45,11 @@ class Notification extends Model
     {
     	return [
 			'type' => $request->type,
-			'name' => $request->name,
 			'from' => 'Jason',
 			'subject' => $request->subject,
 			'message' => $request->message,
 			'send_at' => $request->has('send_now')? Carbon::now():Carbon::parse($request->send_at),
-			'started_at' => $request->$request->has('send_now')? Carbon::now():null,
+			'started_at' => $request->has('send_now')? Carbon::now():null,
     	];
     }
 }
