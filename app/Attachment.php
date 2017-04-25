@@ -43,7 +43,7 @@ class Attachment extends Model
             ->create([
                 'name' => $name, 
                 'full_path' => $path,
-                'file_type' => $file->getMimetype();
+                'file_type' => $file->getMimetype(),
             ]);
         
         return $class;
