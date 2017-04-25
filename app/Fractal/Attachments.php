@@ -13,6 +13,7 @@ class Attachments extends TransformerAbstract
 			'id' => $attachment->id,
 			'path' => $attachment->full_path,
 			'name' => $attachment->name,
+			'type' => $attachment->file_type,
 		];
 	}
 }
