@@ -7,7 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Recipient extends Model
 {
-    
+    protected $fillable =[
+    	'uid',
+		'notification_id',
+		'name',
+		'connection',
+		'sent_at',
+		'confirmed_at',
+	];
+
     public function upload($file)
     {
     	$path = $file->storeAs('public/notifications/csvs', $file->getClientOriginalName()); 	
@@ -49,5 +57,28 @@ class Recipient extends Model
 
 
 		return $items;
+    }
+
+    public function destroy($notificationId) 
+    {
+    	foreach($recipient as $this->where('notification_id', $notificationId)->get()) {
+    		$recipient->delete();
+    	}
+    }
+
+    public function attachAll($notification, $recipients)
+    {
+    	foreach($recipient as $recipients) {
+    		$this->create($this->setDataArray($notification, $recipient));
+    	}
+    }
+
+    protected function setDataArray($notification, $recipients) {
+    	return [
+	    	'uid' => $notification->type.'-'.str_random(20),
+    		'notification_id' => $notification->id,
+    		'name' => $recipients->name,
+    		'connection' => $notification->type == 'text'? $recipient->phone:$recipient->email
+    	]
     }
 }
