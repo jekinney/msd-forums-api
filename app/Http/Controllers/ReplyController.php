@@ -32,12 +32,7 @@ class ReplyController extends Controller
     {
         $reply = $reply->updateOrCreate($request);
 
-        return fractal(
-            Thread::with('channel', 'replies', 'user', 'replies.user')
-            ->withCount('replies')
-            ->find($reply->thread_id), new Threads)
-            ->parseIncludes(['channel', 'replies'])
-            ->respond();
+        return fractal($reply->load('attachments'), new ReplyDetails)->respond();
     }
 
     public function edit($id, Reply $reply)
