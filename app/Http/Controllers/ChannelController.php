@@ -51,7 +51,7 @@ class ChannelController extends Controller
      */
     public function show($id, Channel $channel)
     {
-        $channel = $channel->with('threads')->find($id);
+        $channel = $channel->with(['threads' => function($q) { $q->orderBy('created_at', 'desc') }])->find($id);
 
         return fractal($channel, new Channels)->parseIncludes('threads')->respond();
     }
