@@ -27,8 +27,8 @@ class Threads extends TransformerAbstract
 			'created' => $thread->created_at->toDayDateTimeString(),
 			'updated' => $thread->created_at == $thread->updated_at? null:$thread->updated_at->toDayDateTimeString(),
 			'hidden' => $thread->is_hidden? true:false,
-			'reply_count' => $thread->replies_count,
-            'attachment_count' => $thread->attachments_count,
+			'reply_count' => $thread->replies->count(),
+            'attachment_count' => $thread->attachments->count(),
 		];
 	}
 
