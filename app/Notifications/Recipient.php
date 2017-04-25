@@ -79,6 +79,6 @@ class Recipient extends Model
     		'notification_id' => $notification->id,
     		'name' => $recipients->name,
     		'connection' => $notification->type == 'text'? $recipient->phone:$recipient->email
-    	]
+    	];
     }
 }
