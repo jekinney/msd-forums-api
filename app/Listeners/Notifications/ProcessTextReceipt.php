@@ -2,11 +2,11 @@
 
 namespace App\Listeners\Notifications;
 
-use App\Events\Notifications;
+use App\Events\Notifications\TextReceipt;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class TextSent
+class ProcessTextReceipt
 {
     /**
      * Create the event listener.
@@ -21,10 +21,10 @@ class TextSent
     /**
      * Handle the event.
      *
-     * @param  Notifications  $event
+     * @param  TextReceipt  $event
      * @return void
      */
-    public function handle(Notifications $event)
+    public function handle(TextReceipt $event)
     {
         //
     }

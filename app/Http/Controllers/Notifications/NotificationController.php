@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Notifications;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Notifications\Notification;
 use App\Http\Controllers\Controller;
+use App\Events\Notifications\ProcessNotification;
 
 class NotificationController extends Controller
 {
@@ -15,7 +17,12 @@ class NotificationController extends Controller
      */
     public function index(Notification $notification)
     {
-        return $notification->get();
+        $notifications = $notification->get();
+
+        return response()->json([
+            'upcoming' => $notifications->where('send_at', '>', Carbon::now()),
+            'past' => $notifications->where('send_at', '<=', Carbon::now())
+        ], 200);
     }
 
     /**
@@ -36,7 +43,13 @@ class NotificationController extends Controller
      */
     public function store(Request $request, Notification $notification)
     {
-        $notification->updateOrCreate($request);
+        $notification = $notification->updateOrCreate($request);
+
+        if($request->has('send_now') && $request->send_now) {
+            event(new ProcessNotification($notification, $request));
+        }
+
+        return response(['success' => 'processing'], 200);
     }
 
     /**

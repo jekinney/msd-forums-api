@@ -2,26 +2,65 @@
 
 namespace App\Notifications;
 
-use Nexmo\Client;
-use Nexmo\Client\Credentials\Basic;
-
+use Nexmo;
+use App\Events\Notifications\SentText;
+use App\Events\Notifications\TextReceipt;
 class Text
 {
-    function __Construct()
+    /**
+     * Send one or many text messages
+     * Data is taken from then notification
+     * object
+     *
+     * @param object $notification
+     */
+    public function sendMany($notification) 
     {
-        $this->client = new Client(new Basic(env('NEXMO_KEY'), env('NEXMO_SECRET')));
+        foreach($notification->recipients as $recipient) {
+            $this->send($recipient, $notification->message);
+            //sleep(1);
+        }
+
+        return $notification->isComplted();
+    }   
+
+    /**
+     * Send one text message with
+     * explicent data sent through
+     *
+     * @param object $recipient
+     * @param string $message
+     */
+    public function send($recipient, $message)
+    {
+        $request = Nexmo::message()->send([
+            'to' => $recipient->connection,
+            'from' => env('NEXMO_PHONE'),
+            'text' => $message
+        ]);
+
+        event(new SentText($request, $recipient));
     }
 
-    public function send($request)
+    /**
+     * Call back from Nexmo for 
+     * incoming SMS/Text
+     */
+    public function incoming($request)
     {
-        $text = $this->client->message()->send([
-			'to' => $request->to,
-			'from' => $request->from,
-			'text' => $request->text,
-		]);
+        if($request->has('messageId') || $request->has('status')) {
+            return $this->receipt($request);
+        }
+        return $this->message($request);
+    }
 
-        event(new TextSent($text));
-        
-		return $text;
+    protected function receipt($request)
+    {
+        return event( new TextReceipt($request));
+    }
+
+    protected function message($request)
+    {
+
     }
 }

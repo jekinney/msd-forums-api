@@ -1,13 +1,14 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Notifications;
 
 use App\Notifications\Notification;
 use Illuminate\Queue\SerializesModels;
 
-class Notifications
+class ProcessNotification
 {
-    public $data;
+    use SerializesModels;
+
     public $notification;
 
     /**
@@ -15,9 +16,8 @@ class Notifications
      *
      * @return void
      */
-    public function __construct($data, Notification $notification)
+    public function __construct(Notification $notification)
     {
-        $this->data = $data;
         $this->notification = $notification;
     }
 }

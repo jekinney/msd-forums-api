@@ -21,6 +21,9 @@ class CreateRecipientsTable extends Migration
             $table->string('connection');
             $table->timestamp('sent_at')->nullable();
             $table->timestamp('confirmed_at')->nullable();
+            $table->string('message_id')->nullable()->index();
+            $table->string('status')->nullable();
+            $table->float('cost', 20, 15)->default(0);
             $table->timestamps();
         });
     }

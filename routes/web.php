@@ -1,5 +1,5 @@
 <?php
-use App\Attachment;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,3 +14,12 @@ use App\Attachment;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Route::get('/nexmo/send', function() {
+// 	 $request = Nexmo::message()->send([
+//             'to' => '13609290280',
+//             'from' => env('NEXMO_PHONE'),
+//             'text' => 'test response'
+//         ]);
+// 	dd($request->getResponseData()['messages'][0]);
+// });

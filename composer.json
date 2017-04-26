@@ -10,8 +10,8 @@
         "google/cloud": "0.20.2",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "spatie/laravel-fractal": "^3.5",
-         "nexmo/client": "@beta"
+        "nexmo/laravel": "^0.4.0",
+        "spatie/laravel-fractal": "^3.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
