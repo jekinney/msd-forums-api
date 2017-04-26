@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Forums;
 
 use Storage;
-use App\Attachment;
-use App\Fractal\Attachments;
+use App\Forums\Attachment;
 use Illuminate\Http\Request;
+use App\Forums\Fractal\Attachments;
+use App\Http\Controllers\Controller;
 
 class AttachmentController extends Controller
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Fractal;
+namespace App\Fourms\Fractal;
 
-use App\Category;
+use App\Fourms\Category;
 use League\Fractal\TransformerAbstract;
 
 class CategoryDetails extends TransformerAbstract

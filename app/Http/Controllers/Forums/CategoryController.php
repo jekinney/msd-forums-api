@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Forums;
 
-use App\Category;
+use App\Forums\Category;
 use Illuminate\Http\Request;
-use App\Fractal\CategoriesList;
-use App\Fractal\CategoryDetails;
+use App\Http\Controllers\Controller;
+use App\Forums\Fractal\CategoriesList;
+use App\Forums\Fractal\CategoryDetails;
+
 
 class CategoryController extends Controller
 {

@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Forums;
 
-use App\Search;
+use App\Forums\Search;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class SearchController extends Controller
 {

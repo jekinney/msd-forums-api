@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Forums;
 
-use App\Reply;
-use App\Thread;
-use App\Channel;
-use App\Fractal\Threads;
-use App\Fractal\Channels;
+use App\Forums\Reply;
+use App\Forums\Thread;
+use App\Forums\Channel;
 use Illuminate\Http\Request;
 use App\Fractal\HiddenReplies;
+use App\Forums\Fractal\Threads;
+use App\Forums\Fractal\Channels;
+use App\Http\Controllers\Controller;
 
 class ForumController extends Controller
 {

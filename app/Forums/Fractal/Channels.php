@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Fractal;
+namespace App\Fourms\Fractal;
 
-use App\Channel;
+use App\Fourms\Channel;
 use League\Fractal\TransformerAbstract;
 
 class Channels extends TransformerAbstract

@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Fractal;
+namespace App\Fourms\Fractal;
 
-use App\Attachment;
+use App\Fourms\Attachment;
 use League\Fractal\TransformerAbstract;
 
 class Attachments extends TransformerAbstract

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Fractal;
+namespace App\Fourms\Fractal;
 
 use App\User;
 use League\Fractal\TransformerAbstract;

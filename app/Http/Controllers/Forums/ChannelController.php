@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Forums;
 
-use App\Channel;
-use App\Fractal\Channels;
-use App\Fractal\ChannelDetails;
+use App\Forums\Channel;
 use Illuminate\Http\Request;
+use App\Forums\Fractal\Channels;
+use App\Http\Controllers\Controller;
+use App\Forums\Fractal\ChannelDetails;
 
 class ChannelController extends Controller
 {

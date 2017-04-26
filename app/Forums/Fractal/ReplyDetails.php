@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Fractal;
+namespace App\Fourms\Fractal;
 
-use App\Reply;
+use App\Fourms\Reply;
 use League\Fractal\TransformerAbstract;
 
 class ReplyDetails extends TransformerAbstract

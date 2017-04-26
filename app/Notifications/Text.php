@@ -18,10 +18,10 @@ class Text
     {
         foreach($notification->recipients as $recipient) {
             $this->send($recipient, $notification->message);
-            //sleep(1);
+            sleep(1);
         }
 
-        return $notification->isComplted();
+        return $notification->isCompleted();
     }   
 
     /**

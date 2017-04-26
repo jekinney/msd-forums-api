@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Forums;
 
-use App\Thread;
-use App\Channel;
-use App\Category;
+use App\Forums\Thread;
+use App\Forums\Channel;
+use App\Forums\Category;
 use Illuminate\Database\Eloquent\Model;
 
 class Search extends Model

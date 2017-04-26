@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Forums;
 
-use App\Thread;
-use App\Attachment;
-use App\Fractal\Threads;
+use App\Forums\Thread;
+use App\Forums\Attachment;
 use Illuminate\Http\Request;
+use App\Forums\Fractal\Threads;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Forums\ThreadForm;
 
 class ThreadController extends Controller

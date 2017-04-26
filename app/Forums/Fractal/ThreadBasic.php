@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Fractal;
+namespace App\Fourms\Fractal;
 
-use App\Thread;
+use App\Fourms\Thread;
 use League\Fractal\TransformerAbstract;
 
 class ThreadBasic extends TransformerAbstract

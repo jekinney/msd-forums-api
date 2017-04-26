@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Forums;
 
-use App\Reported;
+use App\Forums\Reported;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class ReportedController extends Controller
 {

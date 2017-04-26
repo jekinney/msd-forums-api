@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Forums;
 
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
