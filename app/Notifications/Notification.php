@@ -57,7 +57,7 @@ class Notification extends Model
     	];
     }
 
-    protected function attachRecipients($notification, $request)
+    protected function attachRecipientsAndFireEvent($notification, $request)
     {
         foreach($request->recipients as $recipient) {
             $notification->recipients()->create([
