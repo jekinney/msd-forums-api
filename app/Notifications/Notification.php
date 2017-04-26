@@ -15,6 +15,7 @@ class Notification extends Model
 		'send_at',
 		'notes',
 		'started_at',
+        'errors',
 		'completed_at',
     ];
 
@@ -52,6 +53,7 @@ class Notification extends Model
 			'subject' => $request->subject,
 			'message' => $request->message,
 			'send_at' => $request->has('send_now')? Carbon::now():Carbon::parse($request->send_at),
+            'errors' => 'nothing',
     	];
     }
 
