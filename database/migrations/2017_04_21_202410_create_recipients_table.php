@@ -24,6 +24,7 @@ class CreateRecipientsTable extends Migration
             $table->string('message_id')->nullable()->index();
             $table->string('status')->nullable();
             $table->float('cost', 20, 15)->default(0);
+            $table->string('notes')->nullable();
             $table->timestamps();
         });
     }

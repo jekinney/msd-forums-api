@@ -48,7 +48,7 @@ class Notification extends Model
     {
     	return [
 			'type' => $request->type,
-			'from' => 'Jason',
+			'from' => env('NEXMO_PHONE'),
 			'subject' => $request->subject,
 			'message' => $request->message,
 			'send_at' => $request->has('send_now')? Carbon::now():Carbon::parse($request->send_at),

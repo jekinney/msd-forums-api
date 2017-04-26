@@ -20,7 +20,7 @@ class CreateNotificationsTable extends Migration
             $table->string('subject')->nullable();
             $table->mediumText('message');
             $table->timestamp('send_at');
-            $table->mediumText('errors');
+            $table->string('notes')->nullable();
             $table->timestamp('started_at')->nullable();
             $table->timestamp('completed_at')->nullable();
             $table->timestamps();
