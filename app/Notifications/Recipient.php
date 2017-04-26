@@ -17,6 +17,7 @@ class Recipient extends Model
 		'message_id',
 		'status',
 		'cost',
+		'notes',
 	];
 
     public function upload($file)

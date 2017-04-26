@@ -13,7 +13,7 @@ class Notification extends Model
 		'subject',
 		'message',
 		'send_at',
-		'errors',
+		'notes',
 		'started_at',
 		'completed_at',
     ];
