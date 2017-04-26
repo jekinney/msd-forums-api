@@ -37,7 +37,7 @@ class Notification extends Model
     		$notification = $this->create($this->setDataArray($request));
     	}
 
-        return $this->attachRecipientsAndFireEvent($notification, $request);
+        return $this->attachRecipients($notification, $request);
     }
 
     public function isCompleted() 
@@ -57,15 +57,15 @@ class Notification extends Model
     	];
     }
 
-    protected function attachRecipientsAndFireEvent($notification, $request)
+    protected function attachRecipients($notification, $request)
     {
         foreach($request->recipients as $recipient) {
             $notification->recipients()->create([
                 'uid' => $notification->type.'-'.str_random(20),
-                'name' => $recipients->name,
-                'connection' => $notification->type == 'text'? $recipient->phone:$recipient->email
+                'name' =>  $recipient['name'],
+                'connection' => $notification->type == 'text'? $recipient['phone']:$recipient['email']
             ]);
         }
-        return $notification->with('recipients')->fresh();
+        return $notification->load('recipients');
     }
 }

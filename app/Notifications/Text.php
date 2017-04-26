@@ -3,7 +3,7 @@
 namespace App\Notifications;
 
 use Nexmo;
-use App\Events\Notifications\SentText;
+use App\Events\Notifications\TextSent;
 use App\Events\Notifications\TextReceipt;
 class Text
 {
@@ -39,7 +39,7 @@ class Text
             'text' => $message
         ]);
 
-        event(new SentText($request, $recipient));
+        //event(new TextSent($request, $recipient));
     }
 
     /**

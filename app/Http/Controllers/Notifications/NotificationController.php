@@ -17,7 +17,7 @@ class NotificationController extends Controller
      */
     public function index(Notification $notification)
     {
-        $notifications = $notification->get();
+        $notifications = $notification->with('recipients')->get();
 
         return response()->json([
             'upcoming' => $notifications->where('send_at', '>', Carbon::now()),
@@ -42,7 +42,7 @@ class NotificationController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, Notification $notification)
-    {
+    {   
         $notification = $notification->updateOrCreate($request);
 
         if($request->has('send_now') && $request->send_now) {

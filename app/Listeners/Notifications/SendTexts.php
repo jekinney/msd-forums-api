@@ -28,11 +28,11 @@ class SendTexts
      */
     public function handle(ProcessNotification $event)
     {
-        if($this->event->notification->type == 'text') {
+        if($event->notification->type == 'text') {
 
-            $notification->update(['started_at' => Carbon::now()]);
+            $event->notification->update(['started_at' => Carbon::now()]);
 
-            $this->text->sendMany($notification->load('recipients'));
+            $this->text->sendMany($event->notification);
         }
     }
 }
