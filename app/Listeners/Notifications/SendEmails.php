@@ -4,6 +4,7 @@ namespace App\Listeners\Notifications;
 
 use Carbon\Carbon;
 use App\Notifications\Email;
+use Illuminate\Support\Facades\Mail;
 use App\Events\Notifications\ProcessNotification;
 
 class SendEmails
@@ -32,7 +33,22 @@ class SendEmails
 
             $event->notification->update(['started_at' => Carbon::now()]);
 
-            $this->email->sendMany($event->notification->load('recipients'));
+            foreach($notification->recipients as $recipient) {
+
+                $recipient->update(['sent_at' => Carbon::now(), 'status' => 'sending']);
+
+                try(Mail::to($recipient->connection)->send(new Basic($notification, $recipient))) {
+
+                    $recipient->update(['status' => 'sent', 'confirmed_at' => Carbon::now()]);
+
+                } catch (Exception $e) {
+
+                    $recipient->update(['status' => 'error', 'notes' => $mail]);
+                    
+                }
+            }
+
+            $event->notification->update(['completed_at' => Carbon::now()]);
         }
     }
 }

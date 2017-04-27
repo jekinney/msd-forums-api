@@ -14,7 +14,7 @@ class PastNotification extends TransformerAbstract
 			'type' => ucfirst($notification->type),
 			'subject' => $notification->subject,
 			'send_at' => $notification->send_at->toDayDateTimeString(),
-			'started_at' => $notification->started_at->toDayDateTimeString(),
+			'started_at' => $notification->started_at? $notification->started_at->toDayDateTimeString():null,
 			'completed_at' => $notification->completed_at? $notification->completed_at->toDayDateTimeString():null,
 			'has_notes' => $notification->notes? true:false,
 			'recipients_count' => $notification->recipients_count?? null,

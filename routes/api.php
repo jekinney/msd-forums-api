@@ -7,8 +7,7 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 	Route::get('/all', 'NotificationController@index');
 	Route::get('/past', 'NotificationController@past');
 	Route::get('/upcoming', 'NotificationController@upcoming');
-	Route::get('/show', 'NotificationController@show');
-	Route::get('/{id}/edit', 'NotificationController@edit');
+	Route::get('/{id}', 'NotificationController@show');
 
 	Route::post('/', 'NotificationController@store');
 	Route::post('/test', 'NotificationController@test');

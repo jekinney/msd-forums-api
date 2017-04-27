@@ -6,7 +6,7 @@ body, body *:not(html):not(style):not(br):not(tr):not(code) {
 }
 
 body {
-    background-color: #F2F4F6;
+    background-color: #FFFFF0;
     color: #74787E;
     height: 100%;
     line-height: 1.4;
@@ -24,7 +24,7 @@ blockquote {
 }
 
 a {
-    color: #3869D4;
+    color: #bf2e1a;
 }
 
 a img {
@@ -34,7 +34,7 @@ a img {
 /* Typography */
 
 h1 {
-    color: #2F3133;
+    color: #bf2e1a;
     font-size: 19px;
     font-weight: bold;
     margin-top: 0;
@@ -102,7 +102,7 @@ img {
 }
 
 .header a {
-    color: #bbbfc3;
+    color: #bf2e1a;
     font-size: 19px;
     font-weight: bold;
     text-decoration: none;

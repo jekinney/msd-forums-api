@@ -90,16 +90,6 @@ class Notification extends Model
     }
 
     /**
-     * Set as completed
-     *
-     * @return boolean
-     */
-    public function isCompleted() 
-    {
-        return $this->update(['completed_at' => Carbon::now()]);
-    }
-
-    /**
      * Protected helpers
      *
      * Get all upcoming for display

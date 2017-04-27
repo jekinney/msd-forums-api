@@ -8,22 +8,6 @@ use App\Events\Notifications\TextSent;
 use App\Events\Notifications\TextReceipt;
 class Text
 {
-    /**
-     * Send one or many text messages
-     * Data is taken from then notification
-     * object
-     *
-     * @param object $notification
-     */
-    public function sendMany($notification) 
-    {
-        foreach($notification->recipients as $recipient) {
-            $this->send($recipient, $notification->message);
-            sleep(1);
-        }
-
-        return $notification->isCompleted();
-    }   
 
     public function sendTest($notification) 
     {
@@ -32,24 +16,6 @@ class Text
             'from' => env('NEXMO_PHONE'),
             'text' => $notification->message
         ]);
-    }
-
-    /**
-     * Send one text message with
-     * explicent data sent through
-     *
-     * @param object $recipient
-     * @param string $message
-     */
-    public function send($recipient, $message)
-    {
-        $request = Nexmo::message()->send([
-            'to' => $recipient->connection,
-            'from' => env('NEXMO_PHONE'),
-            'text' => $message
-        ]);
-
-        //event(new TextSent($request, $recipient));
     }
 
     /**

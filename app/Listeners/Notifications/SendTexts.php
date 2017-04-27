@@ -30,9 +30,38 @@ class SendTexts
     {
         if($event->notification->type == 'text') {
 
-            $event->notification->update(['started_at' => Carbon::now()]);
+            $event->notification->update(['started_at' => Carbon::now(), 'status' => 'sending']);
 
-            $this->text->sendMany($event->notification);
+            foreach($event->notification->recipients as $recipient) {
+
+                try {
+
+                    $request = Nexmo::message()->send([
+                        'to' => $recipient->connection,
+                        'from' => env('NEXMO_PHONE'),
+                        'text' => $message
+                    ]);
+
+                   $this->setReturnRequest($request, $recipient);
+
+                } catch (Exception $e) {
+                    $recipient->update(['status' => 'Error', 'notes' => $e]);
+                }   
+            }
+
+            $event->notification->update(['completed_at' => Carbon::now(), 'status' => 'Sent']);
         }
+    }
+
+    protected function setReturnRequest($request, $recipient)
+    {
+        $message = $request->getResponseData()['messages'][0];
+
+        $recipient->update([
+            'message_id' => $message['message-id'],
+            'status' => $message['status'],
+            'started_at' => \Carbon\Carbon::now(),
+            'price' => $message['message-price']
+        ]);
     }
 }

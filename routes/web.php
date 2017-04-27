@@ -1,6 +1,9 @@
 <?php
 
-use  App\Helpers\PhoneNumber;
+use App\Notifications\Notification;
+use App\Mail\Notifications\Basic;
+use Illuminate\Support\Facades\Mail;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,6 +20,5 @@ Route::get('/', function () {
 });
 
 Route::get('test', function() {
-	$help = new PhoneNumber();
-	return $help->setForText('360-929-0280');
+	 Mail::to('jkinney@MSDist.com')->send(new Basic(Notification::find(16)));
 });

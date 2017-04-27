@@ -78,30 +78,7 @@ class NotificationController extends Controller
      */
     public function show($id, Notification $notification)
     {
-        return $notification->find($id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Notifications\Notification  $notification
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Notification $notification)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Notifications\Notification  $notification
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Notification $notification)
-    {
-        //
+        return response()->json($notification->with('recipients')->find($id));
     }
 
     /**
