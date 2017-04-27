@@ -3,6 +3,7 @@
 namespace App\Notifications;
 
 use Nexmo;
+use App\Helpers\PhoneNumber;
 use App\Events\Notifications\TextSent;
 use App\Events\Notifications\TextReceipt;
 class Text
@@ -23,6 +24,15 @@ class Text
 
         return $notification->isCompleted();
     }   
+
+    public function sendTest($notification) 
+    {
+        Nexmo::message()->send([
+            'to' => PhoneNumber::setForText($notification->from),
+            'from' => env('NEXMO_PHONE'),
+            'text' => $notification->message
+        ]);
+    }
 
     /**
      * Send one text message with

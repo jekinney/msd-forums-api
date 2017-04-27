@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Notifications\Notification;
 use App\Http\Controllers\Controller;
 use App\Events\Notifications\ProcessNotification;
+use App\Events\Notifications\SendTestNotification;
 
 class NotificationController extends Controller
 {
@@ -17,12 +18,27 @@ class NotificationController extends Controller
      */
     public function index(Notification $notification)
     {
-        $notifications = $notification->with('recipients')->get();
+        return response()->json($notification->getAll());
+    }
 
-        return response()->json([
-            'upcoming' => $notifications->where('send_at', '>', Carbon::now()),
-            'past' => $notifications->where('send_at', '<=', Carbon::now())
-        ], 200);
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function past(Notification $notification)
+    {
+        return $notification->past();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function upcoming(Notification $notification)
+    {
+        return $notification->upcoming();
     }
 
     /**
@@ -30,9 +46,11 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function test(Request $request)
     {
-        
+        event(new SendTestNotification($request));
+
+        return response()->json([], 200);
     }
 
     /**

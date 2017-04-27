@@ -11,6 +11,7 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 	Route::get('/{id}/edit', 'NotificationController@edit');
 
 	Route::post('/', 'NotificationController@store');
+	Route::post('/test', 'NotificationController@test');
 	Route::delete('/{id}', 'NotificationController@destroy');
 
 	Route::get('/recipients', 'RecipientController@index');

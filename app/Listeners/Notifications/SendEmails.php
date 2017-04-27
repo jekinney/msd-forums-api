@@ -28,11 +28,11 @@ class SendEmails
      */
     public function handle(ProcessNotification $event)
     {
-        if($this->event->notification->type == 'email') {
+        if($event->notification->type == 'email') {
 
-            $notification->update(['started_at' => Carbon::now()]);
+            $event->notification->update(['started_at' => Carbon::now()]);
 
-            $this->email->sendMany($notification->load('recipients'));
+            $this->email->sendMany($event->notification->load('recipients'));
         }
     }
 }
