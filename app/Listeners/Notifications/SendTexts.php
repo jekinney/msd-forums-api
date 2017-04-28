@@ -40,7 +40,7 @@ class SendTexts
                     $request = Nexmo::message()->send([
                         'to' => $recipient->connection,
                         'from' => env('NEXMO_PHONE'),
-                        'text' => $message
+                        'text' => $event->notification->message
                     ]);
 
                    $this->setReturnRequest($request, $recipient);
