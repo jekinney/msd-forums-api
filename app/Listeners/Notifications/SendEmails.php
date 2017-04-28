@@ -33,11 +33,11 @@ class SendEmails
 
             $event->notification->update(['started_at' => Carbon::now()]);
 
-            foreach($notification->recipients as $recipient) {
+            foreach($event->$notification->recipients as $recipient) {
 
                 $recipient->update(['sent_at' => Carbon::now(), 'status' => 'sending']);
 
-                try(Mail::to($recipient->connection)->send(new Basic($notification, $recipient))) {
+                try( Mail::to($recipient->connection)->send(new Basic($event->notification, $recipient)) ) {
 
                     $recipient->update(['status' => 'sent', 'confirmed_at' => Carbon::now()]);
 

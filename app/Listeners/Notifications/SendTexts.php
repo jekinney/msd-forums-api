@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Notifications;
 
+use Nexmo;
 use Carbon\Carbon;
 use App\Notifications\Text;
 use App\Events\Notifications\ProcessNotification;
