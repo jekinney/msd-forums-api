@@ -4,6 +4,7 @@ namespace App\Listeners\Notifications;
 
 use Carbon\Carbon;
 use App\Notifications\Email;
+use App\Mail\Notifications\Basic;
 use Illuminate\Support\Facades\Mail;
 use App\Events\Notifications\ProcessNotification;
 
