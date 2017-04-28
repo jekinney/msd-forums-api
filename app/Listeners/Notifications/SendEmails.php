@@ -43,7 +43,7 @@ class SendEmails
 
                 } catch (Exception $e) {
 
-                    $recipient->update(['status' => 'error', 'notes' => $mail]);
+                    $recipient->update(['status' => 'error', 'notes' => $e]);
                     
                 }
             }

@@ -5,6 +5,7 @@ namespace App\Listeners\Notifications;
 use Nexmo;
 use Carbon\Carbon;
 use App\Notifications\Text;
+use App\Helpers\PhoneNumber;
 use App\Events\Notifications\ProcessNotification;
 
 class SendTexts
@@ -38,7 +39,7 @@ class SendTexts
                 try {
 
                     $request = Nexmo::message()->send([
-                        'to' => $recipient->connection,
+                        'to' => PhoneNumber::setForText($recipient->connection),
                         'from' => env('NEXMO_PHONE'),
                         'text' => $event->notification->message
                     ]);
@@ -58,7 +59,7 @@ class SendTexts
     {
         $message = $request->getResponseData()['messages'][0];
 
-        $recipient->update([
+        return $recipient->update([
             'message_id' => $message['message-id'],
             'status' => $message['status'],
             'started_at' => \Carbon\Carbon::now(),
