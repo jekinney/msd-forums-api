@@ -125,10 +125,10 @@ class Notification extends Model
                 $recipient->delete();
             }
         }
-        
+
         foreach($request->recipients as $recipient) {
 
-            if($recipient['connection']) {
+            if(!isset($recipient['connection'])) {
                 $contact = $recipient['connection'];
             } else {
                 $contact = $notification->type == 'text'? $recipient['phone']:$recipient['email'];
