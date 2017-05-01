@@ -121,8 +121,9 @@ class Notification extends Model
     protected function attachRecipients($notification, $request)
     {
         foreach($request->recipients as $recipient) {
-            if($recipient->connection) {
-                $contact = $recipient->connection;
+
+            if($recipient['connection']) {
+                $contact = $recipient['connection'];
             } else {
                 $contact = $notification->type == 'text'? $recipient['phone']:$recipient['email'];
             }
