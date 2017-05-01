@@ -6,9 +6,8 @@ use Carbon\Carbon;
 use App\Mail\Notifications\Test;
 use App\Mail\Notifications\Basic;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Mail\MailServiceProvider;
 
-class Email extends MailServiceProvider
+class Email
 {
 	/**
 	 * Send one plain test email
