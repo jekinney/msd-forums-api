@@ -128,7 +128,7 @@ class Notification extends Model
 
         foreach($request->recipients as $recipient) {
 
-            if(!isset($recipient['connection'])) {
+            if(isset($recipient['connection'])) {
                 $contact = $recipient['connection'];
             } else {
                 $contact = $notification->type == 'text'? $recipient['phone']:$recipient['email'];
