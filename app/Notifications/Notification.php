@@ -120,6 +120,12 @@ class Notification extends Model
      */
     protected function attachRecipients($notification, $request)
     {
+        if($notification->recipients) {
+            foreach($notification->recipients as $recipient) {
+                $recipient->delete();
+            }
+        }
+        
         foreach($request->recipients as $recipient) {
 
             if($recipient['connection']) {
