@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 
+
+Route::post('v1/user', 'UserController@store');
+
 Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], function() {
 
 	Route::get('/all', 'NotificationController@index');
@@ -19,12 +22,10 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 });
 
 
-Route::group(['prefix' => 'v1/forums'], function() {
+Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 
-	Route::get('/forum/setup/{categoryId}', 'ForumController@index');
-	Route::get('/forum/hidden', 'ForumController@hidden');
-
-	Route::post('/user', 'UserController@store');
+	Route::get('/setup/{categoryId}', 'ForumController@index');
+	Route::get('/hidden', 'ForumController@hidden');
 
 	Route::get('categories', 'CategoryController@index');
 	Route::get('categories/all', 'CategoryController@all');

@@ -51,6 +51,14 @@ class Channel extends Model
         return $this->create($this->setDataArray($request));
     }
 
+    public function activeByCategoryId($categoryId)
+    {
+        return $this->where('category_id', $categoryId)
+                ->where('is_hidden', 0)
+                ->orderBy('order', 'asc')
+                ->get();
+    }
+
     protected function setDataArray($request)
     {
         return [

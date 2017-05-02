@@ -55,6 +55,15 @@ class Reply extends Model
         return $this->create($this->setDataArray($request));
     }
 
+    public function activeByThreadId($threadId, $amount = 10)
+    {
+        return $this->with('user', 'attachments')
+                ->where('thread_id', $threadId)
+                ->where('is_hidden', 0)
+                ->orderBy('created_at', 'asc')
+                ->paginate($amount);
+    }
+
     protected function setDataArray($request)
     {
         return [

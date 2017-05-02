@@ -3,21 +3,21 @@
 namespace App\Http\Controllers\Forums;
 
 use App\Forums\Channel;
+use App\Forums\Thread;
 use Illuminate\Http\Request;
-use App\Forums\Fractal\Channels;
 use App\Http\Controllers\Controller;
 use App\Forums\Fractal\ChannelDetails;
+use App\Collections\Pagination;
+use App\Forums\Collections\Channels;
+use App\Forums\Collections\ThreadList;
 
 class ChannelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index($categoryId, Channel $channel)
+    protected $channel;
+
+    function __construct(Channel $channel)
     {
-        return fractal($channel->where('is_hidden', 0)->where('category_id', $categoryId)->orderBy('order', 'asc')->get(), new Channels)->respond();
+        $this->channel = $channel;
     }
 
     /**
@@ -25,9 +25,19 @@ class ChannelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function all(Channel $channel)
+    public function index($categoryId)
     {
-        return fractal($channel->with('category')->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new ChannelDetails)->respond();
+        return fractal($this->channel->where('is_hidden', 0)->where('category_id', $categoryId)->orderBy('order', 'asc')->get(), new Channels)->respond();
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function all()
+    {
+        return fractal($this->channel->with('category')->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new ChannelDetails)->respond();
     }
 
     /**
@@ -36,9 +46,9 @@ class ChannelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Channel $channel)
+    public function store(Request $request)
     {
-        $channel->updateOrCreate($request);
+        $this->channel->updateOrCreate($request);
 
         return fractal($channel->with('category')->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new ChannelDetails)->respond();
     }
@@ -50,11 +60,16 @@ class ChannelController extends Controller
      * @param  \App\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Channel $channel)
+    public function show($id, Thread $thread, Pagination $pagination, ThreadList $ThreadList)
     {
-        $channel = $channel->with(['threads' => function($q) { $q->orderBy('created_at', 'desc'); }])->find($id);
+        $channel = $this->channel->find($id);
+        $threads = $thread->activeByChannelId($id); 
 
-        return fractal($channel, new Channels)->parseIncludes('threads')->respond();
+        return response()->json(collect([
+            'channel' => $channel, 
+            'threads' => $ThreadList->reply($threads), 
+            'threadsPagination' => $pagination->reply($threads)
+        ]));
     }
 
 

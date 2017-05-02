@@ -20,7 +20,7 @@ class Thread extends Model
      */
     public function user()
     {
-    	return $this->belongsTo(User::class);
+    	return $this->belongsTo(\App\User::class);
     }
 
      /**
@@ -62,14 +62,27 @@ class Thread extends Model
      * @param int $amount
      * @return collection Thread
      */
-    public function newestActive($categoryId, $amount = 10)
+    public function activeByCategoryId($categoryId, $amount = 10)
     {
         return $this->whereHas('channel', function($q) use($categoryId) {
-                 $q->where('category_id', $categoryId);
+                $q->where('is_hidden', 0);
+                $q->where('category_id', $categoryId);
             })->withCount('replies', 'attachments')
+            ->with('user')
             ->where('is_hidden', 0)
             ->latest()
             ->paginate($amount);
+    }
+
+    public function activeByChannelId($channelId, $amount = 10)
+    {
+        return $this->with('user')
+                ->withCount('replies', 'attachments')
+                ->where('channel_id', $channelId)
+                ->where('is_hidden', 0)
+                ->latest()
+                ->paginate($amount); 
+
     }
 
     public function show($id)

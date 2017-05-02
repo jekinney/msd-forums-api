@@ -2,23 +2,39 @@
 
 namespace App\Http\Controllers\Forums;
 
+use App\Forums\Reply;
 use App\Forums\Thread;
 use App\Forums\Attachment;
 use Illuminate\Http\Request;
+use App\Collections\Pagination;
+use App\Forums\Collections\ThreadList;
+use App\Forums\Collections\ReplyList;
 use App\Forums\Fractal\Threads;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Forums\ThreadForm;
 
 class ThreadController extends Controller
 {
+    protected $thread;
+
+    protected $reply;
+
+    function __construct(Thread $thread, Reply $reply)
+    {
+        $this->thread = $thread;
+        $this->reply = $reply;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($categoryId, Thread $thread)
+    public function index($categoryId, ThreadList $threadList)
     {
-        return fractal($thread->newestActive($categoryId), new Threads)->respond();
+        return response()->json(collect([
+            'threads' => $threadList->reply($this->thread->newestActive($categoryId))
+        ]));
     }
 
     /**
@@ -27,11 +43,11 @@ class ThreadController extends Controller
      * @param  App\Http\Requests\Forum\ThreadForm  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ThreadForm $request, Thread $thread, Attachment $attachment)
+    public function store(ThreadForm $request)
     {
-        $thread = $thread->addOrUpdate($request);
+        $thread = $this->thread->addOrUpdate($request);
 
-        return fractal($thread->fresh(), new Threads)->respond();
+        return response()->json($thread);
     }
 
     /**
@@ -40,11 +56,15 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Thread $thread)
+    public function show($id, ThreadList $threadList, ReplyList $replyList, Pagination $pagination)
     {
-        return fractal($thread->show($id), new Threads)
-            ->parseIncludes(['channel', 'replies', 'attachments'])
-            ->respond();
+        $replies = $this->reply->activeByThreadId($id);
+
+        return response()->json(collect([
+            'thread' => $threadList->reply($this->thread->with('user', 'attachments')->find($id)), 
+            'replies' => $replyList->reply($replies),
+            'repliesPagination' => $pagination->reply($replies)
+        ]));
     }
 
     /**
@@ -54,9 +74,9 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, Thread $thread)
+    public function edit($id)
     {
-         return fractal($thread->with('attachments')->find($id), new Threads)->parseIncludes(['attachments'])->respond();
+         return response()->json(['thread' => $this->thread->with('attachments')->find($id)]);
     }
 
     /**
@@ -66,9 +86,9 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Thread $thread)
+    public function destroy($id)
     {
-        $thread = $thread->find($id);
+        $thread = $this->thread->find($id);
         $thread->is_hidden = $thread->is_hidden? false:true;
         $thread->save();
 
