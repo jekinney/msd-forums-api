@@ -5,20 +5,30 @@ namespace App\Http\Controllers\Forums;
 use App\Forums\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Forums\Collections\CategoryList;
 use App\Forums\Fractal\CategoriesList;
 use App\Forums\Fractal\CategoryDetails;
 
 
 class CategoryController extends Controller
 {
+    protected $category;
+
+    function __construct(Category $category)
+    {
+        $this->category = $category;
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Category $category)
+    public function index(CategoryList $categoryList)
     {
-        return fractal($category->where('is_hidden', 0)->orderBy('order', 'asc')->get(), new CategoriesList)->respond();
+        $categories = $this->category->active();
+
+        return response()->json(['categories' => $categoryList->reply($categories)]);
     }
 
     /**

@@ -60,11 +60,11 @@ class ThreadController extends Controller
     {
         $replies = $this->reply->activeByThreadId($id);
 
-        return response()->json(collect([
+        return response()->json([
             'thread' => $threadList->reply($this->thread->with('user', 'attachments')->find($id)), 
             'replies' => $replyList->reply($replies),
             'repliesPagination' => $pagination->reply($replies)
-        ]));
+        ]);
     }
 
     /**
@@ -86,12 +86,20 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, ThreadList $threadList)
     {
-        $thread = $this->thread->find($id);
+        $thread = $this->thread->find($request->id);
         $thread->is_hidden = $thread->is_hidden? false:true;
         $thread->save();
 
-        return response()->json(['hidden' => $thread->is_hidden]);;
+        if($request->has('hidden')) {
+            $threads = $this->thread->hidden();
+        } elseif($request->has('channel_id')) {
+            $threads = $this->thread->activeByChannelId($request->channel_id);
+        } elseif($request->has('category_id')) {
+            $threads = $this->thread->activeByCategoryId($request->category_id);
+        }
+
+        return response()->json(['threads' => $threadList->reply($threads)]);;
     }
 }

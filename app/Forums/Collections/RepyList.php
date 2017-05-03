@@ -2,6 +2,7 @@
 
 namespace App\Forums\Collections;
 
+use Carbon\Carbon;
 use App\Collections\BaseCollection;
 
 class ReplyList extends BaseCollection

@@ -37,6 +37,11 @@ class Category extends Model
         return $this->create($this->setDataArray($request));
     }
 
+    public function active()
+    {
+        return $this->where('is_hidden', 0)->orderBy('order', 'asc')->get();
+    }
+
     protected function setDataArray($request)
     {
         return [

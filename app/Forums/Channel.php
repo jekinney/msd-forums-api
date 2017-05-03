@@ -45,10 +45,12 @@ class Channel extends Model
     public function updateOrCreate($request)
     {
         if($request->has('id')) {
-            return $this->find($request->id)->update($this->setDataArray($request));
+            $this->find($request->id)->update($this->setDataArray($request));
         }
 
-        return $this->create($this->setDataArray($request));
+        $this->create($this->setDataArray($request));
+
+        return $this->getAllWithDetails();
     }
 
     public function activeByCategoryId($categoryId)
@@ -57,6 +59,11 @@ class Channel extends Model
                 ->where('is_hidden', 0)
                 ->orderBy('order', 'asc')
                 ->get();
+    }
+
+    public function getAllWithDetails()
+    {
+        return $this->with('category', 'threads.replies')->withCount('threads')->get();
     }
 
     protected function setDataArray($request)

@@ -92,6 +92,15 @@ class Thread extends Model
                 ->find($id);
     }
 
+    public function hidden() 
+    {
+         return $this->with('channel', 'user', 'attachments')
+                ->withCount('replies', 'attachments')
+                ->where('is_hidden', 1)
+                ->orderBy('created_at', 'asc')
+                ->get();
+    }
+
      /**
      * Insert or update a thread
      *

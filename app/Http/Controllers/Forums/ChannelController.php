@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Forums;
 use App\Forums\Channel;
 use App\Forums\Thread;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Forums\Fractal\ChannelDetails;
 use App\Collections\Pagination;
+use App\Http\Controllers\Controller;
 use App\Forums\Collections\Channels;
 use App\Forums\Collections\ThreadList;
+use App\Forums\Collections\ChannelDetails;
 
 class ChannelController extends Controller
 {
@@ -35,9 +35,11 @@ class ChannelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function all()
+    public function all(ChannelDetails $channelDetails)
     {
-        return fractal($this->channel->with('category')->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new ChannelDetails)->respond();
+        $channels = $this->channel->getAllWithDetails();
+
+        return response()->json(['channels' => $channelDetails->reply($channels)]);
     }
 
     /**
@@ -46,11 +48,11 @@ class ChannelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, ChannelDetails $channelDetails)
     {
-        $this->channel->updateOrCreate($request);
+        $channels = $this->channel->updateOrCreate($request);
 
-        return fractal($channel->with('category')->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new ChannelDetails)->respond();
+        return response()->json(['channels' => $channelDetails->reply($channels)]);
     }
 
     /**

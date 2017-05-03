@@ -43,7 +43,7 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::get('/thread/{id}/edit', 'ThreadController@edit');
 	Route::post('/thread', 'ThreadController@store');
 	Route::put('/thread/{id}', 'ThreadController@update');
-	Route::delete('/thread/{id}', 'ThreadController@destroy');
+	Route::patch('/thread', 'ThreadController@destroy');
 
 	Route::get('/reply', 'ReplyController@edit');
 	Route::get('/reply/{id}', 'ReplyController@edit');

@@ -7,10 +7,10 @@ use App\Forums\Thread;
 use App\Forums\Channel;
 use Illuminate\Http\Request;
 use App\Collections\Pagination;
-use App\Fractal\HiddenReplies;
-use App\Forums\Collections\ChannelList;
-use App\Forums\Collections\ThreadList;
 use App\Http\Controllers\Controller;
+use App\Forums\Collections\ReplyList;
+use App\Forums\Collections\ThreadList;
+use App\Forums\Collections\ChannelList;
 
 class ForumController extends Controller
 {
@@ -18,11 +18,15 @@ class ForumController extends Controller
 
     protected $channel;
 
-    function __construct(Thread $thread, Channel $channel)
+    protected $reply;
+
+    function __construct(Thread $thread, Channel $channel, Reply $reply)
     {
         $this->thread = $thread;
         $this->channel = $channel;
+        $this->reply = $reply;
     }
+
     public function index($categoryId, ThreadList $threadList, Pagination $pagination, ChannelList $channelList)
     {
         $threads = $this->thread->activeByCategoryId($categoryId);
@@ -35,11 +39,14 @@ class ForumController extends Controller
         ]);
     }
 
-    public function hidden() 
+    public function hidden(ThreadList $threadList, ReplyList $replyList) 
     {
-    	$threads = fractal(Thread::with('channel')->withCount('replies')->where('is_hidden', true)->latest()->paginate(10), new Threads);
-    	$replies = fractal(Reply::with('thread', 'thread.channel', 'thread.channel.category')->where('is_hidden', true)->latest()->paginate(10), new HiddenReplies);
+        $threads = $this->thread->hidden();
+        $replies = $this->reply->hidden();
 
-    	return response()->json(['threads' => $threads, 'replies' => $replies]);
+        return response()->json([
+            'threads' => $threadList->reply($threads), 
+            'replies' => $replyList->reply($replies)
+        ]);
     }
 }

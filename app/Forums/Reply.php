@@ -17,7 +17,7 @@ class Reply extends Model
      */
     public function user()
     {
-    	return $this->belongsTo(User::class);
+    	return $this->belongsTo(\App\User::class);
     }
     
      /**
@@ -47,12 +47,12 @@ class Reply extends Model
     public function updateOrCreate($request)
     {
         if($request->has('id')) {
-            $reply = $this->find($request->id);
-            $reply->update($this->setDataArray($request));
-            return $reply;
+            $this->find($request->id)->update($this->setDataArray($request));
+        } else {
+             $this->create($this->setDataArray($request));
         }
 
-        return $this->create($this->setDataArray($request));
+        return $this->activeByThreadId($request->thread_id);
     }
 
     public function activeByThreadId($threadId, $amount = 10)
@@ -62,6 +62,14 @@ class Reply extends Model
                 ->where('is_hidden', 0)
                 ->orderBy('created_at', 'asc')
                 ->paginate($amount);
+    }
+
+    public function hidden() 
+    {
+        return $this->with('user', 'attachments', 'thread')
+                ->where('is_hidden', 1)
+                ->orderBy('created_at', 'asc')
+                ->get();
     }
 
     protected function setDataArray($request)
