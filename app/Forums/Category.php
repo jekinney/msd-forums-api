@@ -11,10 +11,6 @@ class Category extends Model
 	 */
     protected $fillable = ['slug', 'name', 'is_hidden', 'order'];
 
-    /**
-     * Cast table column to a type
-     */
-    protected $casts = ['is_hidden' => 'boolean'];
 
     public function channels() 
     {
@@ -32,14 +28,24 @@ class Category extends Model
     public function updateOrCreate($request)
     {
         if($request->has('id')) {
-            return $this->find($request->id)->update($this->setDataArray($request));
+            $this->find($request->id)->update($this->setDataArray($request));
+        } else {
+            $this->create($this->setDataArray($request));
         }
-        return $this->create($this->setDataArray($request));
+
+        return $this->getAll();
     }
 
     public function active()
     {
         return $this->where('is_hidden', 0)->orderBy('order', 'asc')->get();
+    }
+
+    public function getAll()
+    {
+        return $this->with('channels.threads', 'channels.threads.replies')
+                ->withCount('channels')
+                ->get();
     }
 
     protected function setDataArray($request)

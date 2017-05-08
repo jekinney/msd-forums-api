@@ -17,6 +17,21 @@ class ThreadForm extends FormRequest
     }
 
     /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            if(!$this->checkBody()) {
+                $validator->errors()->add('body', 'The thread must have some text');
+            }
+        });
+    }
+
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array
@@ -43,5 +58,10 @@ class ThreadForm extends FormRequest
             'title.max' => 'The title is to long',
             'body.required'  => 'A thread body is required',
         ];
+    }
+
+    protected function checkBody() 
+    {
+        return strip_tags($this->body);
     }
 }

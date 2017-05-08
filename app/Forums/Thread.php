@@ -47,12 +47,12 @@ class Thread extends Model
         return $this->morphMany(Attachment::class, 'attachable');
     }
 
-     /**
-     * Get all of the reported threads.
+    /**
+     * Get all of the threads following users.
      */
-    public function reported()
+    public function followed()
     {
-        return $this->morphMany(Reported::class, 'reportable');
+        return $this->morphMany(Followed::class, 'followable');
     }
 
      /**
@@ -112,9 +112,11 @@ class Thread extends Model
         if($request->has('id')) {
             $thread = $this->find($request->id);
             $thread->update($this->dataArray($request));
-            return $thread;
-        } 
-        return $this->create($this->dataArray($request));
+        } else {
+            $thread = $this->create($this->dataArray($request));
+        }
+        
+        return $thread->load('channel', 'user', 'attachments', 'replies', 'replies.user',  'replies.attachments');
     }
 
     /**

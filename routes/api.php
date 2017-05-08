@@ -51,9 +51,13 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::put('/reply/{id}', 'ReplyController@update');
 	Route::delete('/reply/{id}', 'ReplyController@destroy');
 
+	Route::get('/followed', 'FollowedController@edit');
+	Route::post('/followed', 'FollowedController@store');
+
 	Route::post('/attachment/image', 'AttachmentController@storeImage');
 	Route::post('/attachment/files', 'AttachmentController@storeFiles');
 	Route::delete('/attachment/{id}', 'AttachmentController@destroy');
 
 	Route::post('/search', 'SearchController@index');
 });
+

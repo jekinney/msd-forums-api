@@ -32,9 +32,9 @@ class ThreadController extends Controller
      */
     public function index($categoryId, ThreadList $threadList)
     {
-        return response()->json(collect([
+        return response()->json([
             'threads' => $threadList->reply($this->thread->newestActive($categoryId))
-        ]));
+        ]);
     }
 
     /**
@@ -43,11 +43,11 @@ class ThreadController extends Controller
      * @param  App\Http\Requests\Forum\ThreadForm  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ThreadForm $request)
+    public function store(ThreadForm $request, ThreadList $threadList)
     {
         $thread = $this->thread->addOrUpdate($request);
 
-        return response()->json($thread);
+        return response()->json(['thread' => $threadList->reply($thread)]);
     }
 
     /**
@@ -98,6 +98,8 @@ class ThreadController extends Controller
             $threads = $this->thread->activeByChannelId($request->channel_id);
         } elseif($request->has('category_id')) {
             $threads = $this->thread->activeByCategoryId($request->category_id);
+        } else {
+            return response()->json([], 200);
         }
 
         return response()->json(['threads' => $threadList->reply($threads)]);;

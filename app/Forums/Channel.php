@@ -35,6 +35,14 @@ class Channel extends Model
     }
 
     /**
+     * Get all of the threads following users.
+     */
+    public function followed()
+    {
+        return $this->morphMany(Followed::class, 'followable');
+    }
+
+    /**
     * Get all channels threads
     */
     public function replies()

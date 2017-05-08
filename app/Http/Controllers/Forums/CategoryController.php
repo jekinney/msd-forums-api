@@ -6,8 +6,7 @@ use App\Forums\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Forums\Collections\CategoryList;
-use App\Forums\Fractal\CategoriesList;
-use App\Forums\Fractal\CategoryDetails;
+use App\Forums\Collections\CategoryDetails;
 
 
 class CategoryController extends Controller
@@ -36,9 +35,11 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function All(Category $category)
+    public function All(CategoryDetails $categoryDetails)
     {
-        return fractal($category->withCount('channels', 'threads')->orderBy('order', 'asc')->get(), new CategoryDetails)->respond();
+        $categories = $this->category->getAll();
+
+        return response()->json(['categories' => $categoryDetails->reply($categories)]);
     }
 
     /**
@@ -47,11 +48,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Category $category)
+    public function store(Request $request, CategoryDetails $categoryDetails)
     {
-        $category->updateOrCreate($request);
+        $categories = $this->category->updateOrCreate($request);
 
-        return fractal($category->withCount('channels', 'threads')->orderBy('order', 'asc')->get(), new CategoryDetails)->respond();
+        return response()->json(['categories' => $categoryDetails->reply($categories)]);
     }
 
     /**
