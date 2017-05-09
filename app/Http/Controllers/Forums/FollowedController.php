@@ -9,7 +9,7 @@ class FollowedController extends Controller
 {
     public function index()
     {
-    	return 
+    	
     }
 
     public function store(Request $request)
