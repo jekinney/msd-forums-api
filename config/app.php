@@ -170,6 +170,7 @@ return [
         Spatie\Fractal\FractalServiceProvider::class,
         Barryvdh\Cors\ServiceProvider::class,
         Nexmo\Laravel\NexmoServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
                 
         /*
          * Application Service Providers...
@@ -230,6 +231,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'Nexmo' => \Nexmo\Laravel\Facade\Nexmo::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
     ],
 
 ];
