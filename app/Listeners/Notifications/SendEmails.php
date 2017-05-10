@@ -39,17 +39,8 @@ class SendEmails
 
                 $recipient->update(['sent_at' => Carbon::now(), 'status' => 'sending']);
 
-                try {
-                    Mail::to($recipient->connection)->send(new Basic($event->notification, $recipient));
-                    $recipient->update(['confirmed_at' => Carbon::now()]);
-                } catch (exception $e) {
-                    $recipient->update([
-                        'confirmed_at' => Carbon::now(), 
-                        'status' => 'failed',
-                        'notes' => $e
-                    ]);
-                }
-
+                Mail::to($recipient->connection)->send(new Basic($event->notification, $recipient));
+                
             }
 
             $event->notification->update(['completed_at' => Carbon::now()]);

@@ -3,27 +3,25 @@
 namespace App\Mail\Notifications;
 
 use Illuminate\Mail\Mailable;
-use App\Notifications\Recipient;
 use App\Notifications\Notification;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class Basic extends Mailable
 {
     use SerializesModels;
 
-    public $notification;
 
-    public $recipient;
+    public $notification;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Notification $notification, Recipient $recipient)
+    public function __construct(Notification $notification)
     {
         $this->notification = $notification;
-        $this->recipient = $recipient;
     }
 
     /**
