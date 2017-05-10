@@ -17,7 +17,6 @@ class Email
 	 */
 	public function sendTest($notification)
 	{
-		$mail = Mail::to($notification->from)->send(new Test($notification));
-		Log::info(json_encode($mail));
+		Mail::to($notification->from)->send(new Test($notification));
 	}
 }
