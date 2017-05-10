@@ -20,10 +20,7 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 	Route::post('/recipient', 'RecipientController@store');
 	Route::delete('/recipient/{notification_id}', 'RecipientController@destroy');
 
-	Route::post('mailgun/delievered', 'MailgunController@delievered');
-	Route::post('mailgun/dropped', 'MailgunController@dropped');
-	Route::post('mailgun/bounced', 'MailgunController@bounced');
-	Route::post('mailgun/opens', 'MailgunController@opens');
+	Route::post('mailgun/status', 'MailgunController@update');
 });
 
 

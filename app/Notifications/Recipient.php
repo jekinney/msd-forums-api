@@ -35,6 +35,24 @@ class Recipient extends Model
     	}
     }
 
+    public function updateStatus($request)
+    {
+        $recipients = $this->where('connection', $request->recipient)->get();
+
+        foreach($recipients as $recipient) {
+            if($recipient->message_id == $request->member_id) {
+                return $recipient->update(['status' => $request->event]);
+            }
+        }
+        
+        $recipient = $recipients->orderBy('created_at', 'desc')->first();
+
+        return $recipient->update([
+            'message_id' => $request->message_id, 
+            'status' => $request->event
+        ]);
+    }
+
     protected function setDataArray($notification, $recipients) {
     	return [
 	    	'uid' => $notification->type.'-'.str_random(20),
