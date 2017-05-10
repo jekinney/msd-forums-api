@@ -19,6 +19,11 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 	Route::get('/recipients', 'RecipientController@index');
 	Route::post('/recipient', 'RecipientController@store');
 	Route::delete('/recipient/{notification_id}', 'RecipientController@destroy');
+
+	Route::post('mailgun/delievered', 'MailgunController@delievered');
+	Route::post('mailgun/dropped', 'MailgunController@dropped');
+	Route::post('mailgun/bounced', 'MailgunController@bounced');
+	Route::post('mailgun/opens', 'MailgunController@opens');
 });
 
 
@@ -60,4 +65,6 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 
 	Route::post('/search', 'SearchController@index');
 });
+
+//Mail gun webhooks
 

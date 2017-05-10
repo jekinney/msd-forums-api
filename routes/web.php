@@ -18,7 +18,3 @@ use Illuminate\Support\Facades\Mail;
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('test', function() {
-	 Mail::to('jkinney@MSDist.com')->send(new Basic(Notification::find(16)));
-});

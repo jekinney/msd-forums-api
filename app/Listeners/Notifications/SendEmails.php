@@ -2,6 +2,7 @@
 
 namespace App\Listeners\Notifications;
 
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Notifications\Email;
 use App\Mail\Notifications\Basic;
@@ -38,7 +39,9 @@ class SendEmails
 
                 $recipient->update(['sent_at' => Carbon::now(), 'status' => 'sending']);
 
-                Mail::to($recipient->connection)->send(new Basic($event->notification, $recipient));
+                $mail = Mail::to($recipient->connection)->send(new Basic($event->notification, $recipient));
+
+                Log::info($mail);
 
                 $recipient->update(['status' => 'sent', 'confirmed_at' => Carbon::now()]);
             }

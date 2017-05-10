@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Mail\Notifications\Test;
 use App\Mail\Notifications\Basic;
@@ -16,6 +17,7 @@ class Email
 	 */
 	public function sendTest($notification)
 	{
-		Mail::to($notification->from)->send(new Test($notification));
+		$mail = Mail::to($notification->from)->send(new Test($notification));
+		Log::info(json_encode($mail));
 	}
 }
