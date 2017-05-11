@@ -37,9 +37,7 @@ class SendEmails
 
             foreach($event->notification->recipients as $recipient) {
 
-                $recipient->update(['sent_at' => Carbon::now(), 'status' => 'sending']);
-
-                Mail::to($recipient->connection)->send(new Basic($event->notification, $recipient));
+               $this->email->sendBasic($recipient, $event->notification);
                 
             }
 

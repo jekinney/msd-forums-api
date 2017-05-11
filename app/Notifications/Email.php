@@ -19,4 +19,13 @@ class Email
 	{
 		Mail::to($notification->from)->send(new Test($notification));
 	}
+
+	public function sendBasic($recipient, $notification)
+	{
+		$recipient->update(['sent_at' => Carbon::now(), 'status' => 'sending']);
+
+        Mail::to($recipient->connection)->send(new Basic($notification));
+
+        $recipient->update(['status' => 'sent']);
+	}
 }
