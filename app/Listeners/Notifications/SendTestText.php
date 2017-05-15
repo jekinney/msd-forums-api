@@ -2,23 +2,12 @@
 
 namespace App\Listeners\Notifications;
 
-use App\Notifications\Text;
+use Nexmo;
+use App\Helpers\PhoneNumber;
 use App\Events\Notifications\SendTestNotification;
 
 class SendTestText
 {
-    protected $text;
-
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct(Text $text)
-    {
-        $this->text = $text;
-    }
-
     /**
      * Handle the event.
      *
@@ -29,7 +18,11 @@ class SendTestText
     {
         if($event->request->type == 'text') {
 
-            $this->text->sendTest($event->request);
+             Nexmo::message()->send([
+                'to' => PhoneNumber::setForText($event->request->to),
+                'from' => env('NEXMO_PHONE'),
+                'text' => $event->request->message
+            ]);
         }
     }
 }

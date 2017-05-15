@@ -2,23 +2,12 @@
 
 namespace App\Listeners\Notifications;
 
-use App\Notifications\Email;
+use App\Mail\Notifications\Test;
+use Illuminate\Support\Facades\Mail;
 use App\Events\Notifications\SendTestNotification;
 
 class SendTestEmail
 {
-   protected $email;
-
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct(Email $email)
-    {
-        $this->email = $email;
-    }
-
     /**
      * Handle the event.
      *
@@ -29,7 +18,7 @@ class SendTestEmail
     {
         if($event->request->type == 'email') {
 
-            $this->email->sendTest($event->request);
+            Mail::to($event->request->test_to)->send(new Test($event->request->message));
         }
     }
 }

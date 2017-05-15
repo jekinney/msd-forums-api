@@ -106,7 +106,7 @@ class Notification extends Model
 			'from' => env('NEXMO_PHONE'),
 			'subject' => $request->subject,
 			'message' => $request->message,
-			'send_at' => $request->send_now? Carbon::now():Carbon::parse($request->send_at),
+			'send_at' => $request->send_now? Carbon::now():Carbon::parse($request->send_at['date'].' '.$request->send_at['time']),
     	];
     }
 
