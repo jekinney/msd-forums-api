@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Notifications\Fractal;
+namespace App\Notifications\Collections;
 
-use App\Notifications\Notification;
-use League\Fractal\TransformerAbstract;
+use App\Collections\BaseCollection;
 
-class UpcomingNotification extends TransformerAbstract
+class UpcomingNotifications extends BaseCollection
 {
-	public function transform(Notification $notification)
+	protected function setDataArray($notification)
 	{
 		return [
 			'id' => $notification->id,

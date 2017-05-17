@@ -53,7 +53,9 @@ class Notification extends Model
      */
     public function upcoming()
     {
-        return fractal($this->withCount('recipients')->where('send_at', '>', Carbon::now())->get(), new UpcomingNotification)->toArray();
+        return $this->withCount('recipients')
+                ->where('send_at', '>', Carbon::now())
+                ->get();
     }
 
     /**
@@ -64,7 +66,9 @@ class Notification extends Model
      */
     public function past() 
     {
-        return fractal($this->withCount('recipients')->where('send_at', '<=', Carbon::now())->get(), new PastNotification)->toArray();
+        return $this->withCount('recipients')
+            ->where('send_at', '<=', Carbon::now())
+            ->get();
     }
 
     /**
@@ -86,7 +90,14 @@ class Notification extends Model
 
     	}
 
-        return $this->attachRecipients($notification, $request);
+        return $this->attachRecipients($notification->load('recipients'), $request);
+    }
+
+    public function remove($id) 
+    {
+        $notification = $this->with('recipients')->find($id);
+        $this->detachRecipients($notification);
+        return $notification->delete();
     }
 
     /**
@@ -103,10 +114,9 @@ class Notification extends Model
     {
     	return [
 			'type' => $request->type,
-			'from' => env('NEXMO_PHONE'),
 			'subject' => $request->subject,
 			'message' => $request->message,
-			'send_at' => $request->send_now? Carbon::now():Carbon::parse($request->send_at['date'].' '.$request->send_at['time']),
+			'send_at' => $request->send_now? Carbon::now():Carbon::parse($request->send_at),
     	];
     }
 
@@ -120,28 +130,30 @@ class Notification extends Model
      */
     protected function attachRecipients($notification, $request)
     {
-        if($notification->recipients) {
-            foreach($notification->recipients as $recipient) {
-                $recipient->delete();
-            }
-        }
+        $this->detachRecipients($notification);
 
         foreach($request->recipients as $recipient) {
 
-            if(isset($recipient['connection'])) {
-                $contact = $recipient['connection'];
-            } else {
-                $contact = $notification->type == 'text'? $recipient['phone']:$recipient['email'];
-            }
+            $contact = $notification->type == 'text'? $recipient['phone']:$recipient['email'];
 
             $notification->recipients()->create([
                 'uid' => $notification->type.'-'.str_random(20),
                 'name' =>  $recipient['name'],
-                'connection' => $contact
+                'phone' => $recipient['phone'],
+                'email' => $recipient['email'],
             ]);
 
         }
 
-        return $notification->load('recipients');
+        return $notification;
+    }
+
+    protected function detachRecipients($notification) 
+    {
+         if(count($notification->recipients) > 0) {
+            foreach($notification->recipients as $recipient) {
+                $recipient->delete();
+            }
+        }
     }
 }

@@ -11,7 +11,8 @@ class Recipient extends Model
     	'uid',
 		'notification_id',
 		'name',
-		'connection',
+		'email',
+        'phone',
 		'sent_at',
 		'confirmed_at',
 		'message_id',
@@ -37,7 +38,9 @@ class Recipient extends Model
 
     public function updateStatus($request)
     {
-        $recipients = $this->where('connection', $request->recipient)->get();
+        $recipients = $this->where('email', $request->recipient)
+                        ->where('phone', $request->recipient)
+                        ->get();
 
         foreach($recipients as $recipient) {
             if($recipient->message_id == $request->member_id) {

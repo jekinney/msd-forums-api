@@ -18,7 +18,8 @@ class CreateRecipientsTable extends Migration
             $table->string('uid')->nullable();
             $table->integer('notification_id')->index();
             $table->string('name');
-            $table->string('connection');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->timestamp('sent_at')->nullable();
             $table->timestamp('confirmed_at')->nullable();
             $table->string('message_id')->nullable()->index();

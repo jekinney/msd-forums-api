@@ -8,17 +8,18 @@ use App\Notifications\Notification;
 use App\Http\Controllers\Controller;
 use App\Events\Notifications\ProcessNotification;
 use App\Events\Notifications\SendTestNotification;
+use App\Notifications\Collections\Notifications;
+use App\Notifications\Collections\Recipients;
+use App\Notifications\Collections\PastNotifications;
+use App\Notifications\Collections\UpcomingNotifications;
 
 class NotificationController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(Notification $notification)
+    protected $notification;
+
+    function __construct(Notification $notification) 
     {
-        return response()->json($notification->getAll());
+        $this->notification = $notification;
     }
 
     /**
@@ -26,9 +27,12 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function past(Notification $notification)
+    public function index(PastNotifications $past, UpcomingNotifications $upcoming)
     {
-        return $notification->past();
+        return response()->json([
+            'past' => $past->reply($this->notification->past()),
+            'upcoming' => $upcoming->reply($this->notification->upcoming()),
+        ]);
     }
 
     /**
@@ -36,9 +40,19 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function upcoming(Notification $notification)
+    public function past(PastNotifications $past)
     {
-        return $notification->upcoming();
+        return response()->json($past->reply($this->$notification->past()));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function upcoming(UpcomingNotifications $upcoming)
+    {
+        return response()->json($upcoming->reply($this->notification->upcoming()));
     }
 
     /**
@@ -59,9 +73,9 @@ class NotificationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Notification $notification)
+    public function store(Request $request)
     {   
-        $notification = $notification->updateOrCreate($request);
+        $notification = $this->notification->updateOrCreate($request);
 
         if($request->has('send_now') && $request->send_now) {
             event(new ProcessNotification($notification, $request));
@@ -76,9 +90,14 @@ class NotificationController extends Controller
      * @param  \App\Notifications\Notification  $notification
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Notification $notification)
+    public function show($id, Notifications $notifications, Recipients $recipients)
     {
-        return response()->json($notification->with('recipients')->find($id));
+        $notification = $this->notification->with('recipients')->find($id);
+
+        return response()->json([
+            'notification' => $notifications->reply($notification), 
+            'recipients' => $recipients->reply($notification->recipients)
+        ]);
     }
 
     /**
@@ -87,8 +106,10 @@ class NotificationController extends Controller
      * @param  \App\Notifications\Notification  $notification
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Notification $notification)
+    public function destroy($id)
     {
-        //
+        $this->notification->remove($id);
+
+        return response()->json([], 200);
     }
 }
