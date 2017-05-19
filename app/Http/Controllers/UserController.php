@@ -37,7 +37,9 @@ class UserController extends Controller
     {
         $user = $user->updateOrCreate($request);
         
-        return response()->json($user);
+        return response()->json(collect($user)->except([
+            'banned', 'created_at', 'updated_at', 'remember_token'
+        ]));
     }
 
     /**
