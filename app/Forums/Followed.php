@@ -2,6 +2,7 @@
 
 namespace App\Forums;
 
+use App\User;
 use App\Forums\Collections\ThreadList;
 use Illuminate\Database\Eloquent\Model;
 
@@ -24,6 +25,6 @@ class Followed extends Model
     	} else {
     		$model->followed()->create(['user_id' => $userId]);
     	}
-    	return $model->fresh();
+    	return User::find($userId);
     }
 }

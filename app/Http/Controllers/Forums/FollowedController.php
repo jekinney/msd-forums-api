@@ -6,6 +6,7 @@ use App\Forums\Thread;
 use App\Forums\Channel;
 use App\Forums\Followed;
 use Illuminate\Http\Request;
+use App\Collections\UserData;
 use App\Http\Controllers\Controller;
 use App\Forums\Collections\ThreadList;
 use App\Forums\Collections\ChannelDetails;
@@ -35,17 +36,17 @@ class FollowedController extends Controller
   		return response()->json(['threads' => $threads, 'channels' => $channels]);
     }
 
-    public function thread(Request $request, Thread $thread)
+    public function thread(Request $request, Thread $thread, UserData $userData)
     {
-    	$thread = $this->followed->toggle($thread->with('followed')->find($request->thread_id), $request->user_id);
+    	$user = $this->followed->toggle($thread->with('followed')->find($request->thread_id), $request->user_id);
 
-    	return response()->json([], 200);
+    	return response()->json($userData->reply($user->load('followed')));
     }
 
-    public function channel(Request $request, Channel $channel)
+    public function channel(Request $request, Channel $channel, UserData $userData)
     {
-    	$channel = $this->followed->toggle($channel->with('followed')->find($request->channel_id), $request->user_id);
+    	$user = $this->followed->toggle($channel->with('followed')->find($request->channel_id), $request->user_id);
 
-    	return response()->json([], 200);
+    	return response()->json($userData->reply($user->load('followed')));
     }
 }
