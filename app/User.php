@@ -2,6 +2,10 @@
 
 namespace App;
 
+use App\Forums\Reply;
+use App\Forums\Thread;
+use App\Forums\Followed;
+use App\Forums\Attachment;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -28,6 +32,11 @@ class User extends Authenticatable
     public function attachments()
     {
         return $this->hasMany(Attachment::class);
+    }
+
+    public function followed() 
+    {
+        return $this->hasMany(Followed::class);
     }
 
     public function updateOrCreate($request)

@@ -2,6 +2,7 @@
 
 namespace App\Forums;
 
+use App\Forums\Collections\ThreadList;
 use Illuminate\Database\Eloquent\Model;
 
 class Followed extends Model
@@ -14,5 +15,15 @@ class Followed extends Model
     public function followable()
     {
         return $this->morphTo();
+    }
+
+    public function toggle($model, $userId)
+    {
+    	if($model->followed()->where('user_id', $userId)->count() > 0) {
+    		$model->followed()->where('user_id', $userId)->delete();
+    	} else {
+    		$model->followed()->create(['user_id' => $userId]);
+    	}
+    	return $model->fresh();
     }
 }
