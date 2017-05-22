@@ -15,6 +15,7 @@ class UserData
 		}
 
 		return [
+			'id' => $user->id,
 			'name' => $user->name,
 			'company' => $user->company,
 			'type' => $user->type,
