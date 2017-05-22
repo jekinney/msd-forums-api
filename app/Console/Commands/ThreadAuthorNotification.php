@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class ThreadAuthorNotification extends Command
 {
@@ -11,14 +12,14 @@ class ThreadAuthorNotification extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'notification:threadauthor';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send Replies notifications to threads author';
 
     /**
      * Create a new command instance.
@@ -37,6 +38,6 @@ class ThreadAuthorNotification extends Command
      */
     public function handle()
     {
-        //
+        log::info('Thread Author Fired');
     }
 }

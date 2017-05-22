@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use Illuminate\Support\Facades\Log;
 use Illuminate\Console\Command;
 
 class ChannelNotification extends Command
@@ -11,14 +12,14 @@ class ChannelNotification extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'notification:channels';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Send channel updates weekly (sunday night)';
 
     /**
      * Create a new command instance.
@@ -37,6 +38,6 @@ class ChannelNotification extends Command
      */
     public function handle()
     {
-        //
+        Log::info('channel noification fired')
     }
 }
