@@ -29,11 +29,24 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeFiles(Request $request, Attachment $attachment)
+    public function reply(Request $request, Attachment $attachment)
     {
-        $data = $attachment->uploadFiles($request);
+        $threadId = $attachment->uploadReplyFile($request);
 
-        return response()->json($data);
+        return response()->json(['thread' => $threadId]);
+    }
+
+      /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function thread(Request $request, Attachment $attachment)
+    {        
+        $threadId = $attachment->uploadThreadFile($request);
+
+        return response()->json(['thread' => $threadId]);
     }
 
     /**

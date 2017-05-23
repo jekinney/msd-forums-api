@@ -47,7 +47,7 @@ class ThreadController extends Controller
     {
         $thread = $this->thread->addOrUpdate($request);
 
-        return response()->json(['thread' => $threadList->reply($thread)]);
+        return response()->json(['thread' => $thread->id]);
     }
 
     /**

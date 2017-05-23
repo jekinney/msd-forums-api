@@ -58,7 +58,7 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::post('/follow/channel', 'FollowedController@channel');
 
 	Route::post('/attachment/image', 'AttachmentController@storeImage');
-	Route::post('/attachment/files', 'AttachmentController@storeFiles');
+	Route::post('/attachment/thread', 'AttachmentController@thread');
 	Route::delete('/attachment/{id}', 'AttachmentController@destroy');
 
 	Route::post('/search', 'SearchController@index');
