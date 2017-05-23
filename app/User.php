@@ -41,7 +41,7 @@ class User extends Authenticatable
 
     public function updateOrCreate($request)
     {
-        if($user = $this->where('nav_id', $request->no)->first()) {
+        if($user = $this->where('nav_id', $request->nav_id)->first()) {
             $user->update($this->setDataArray($request));
             return $user;
         }
@@ -52,7 +52,7 @@ class User extends Authenticatable
     protected function setDataArray($request)
     {
         return [
-            'nav_id' => $request->no,
+            'nav_id' => $request->nav_id,
             'name' => $request->name,
             'email' => $request->email,
             'company' => $request->company,
