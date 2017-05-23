@@ -15,9 +15,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\DropTables::class,
         Commands\CheckToSendNotification::class,
-        Commands\ThreadAuthorNotification::class,
-        Commands\ThreadNotification::class,
-        Commands\ChannelNotification::class,
+        // Commands\ThreadAuthorNotification::class,
+        // Commands\ThreadNotification::class,
+        // Commands\ChannelNotification::class,
     ];
 
     /**
@@ -29,9 +29,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('notification:check')->everyFiveMinutes();
-        $schedule->command('notification:threadauthor')->everyTenMinutes();
-        $schedule->command('notification:threads')->weekdays()->at('23:30');
-        $schedule->command('notification:channels')->sundays('23:30');
+        // $schedule->command('notification:threadauthor')->everyTenMinutes();
+        // $schedule->command('notification:threads')->weekdays()->at('23:30');
+        // $schedule->command('notification:channels')->sundays('23:30');
     }
 
     /**
