@@ -6,6 +6,8 @@ class UserData
 {
 	public function reply($user)
 	{
+		$following = ['threads', 'channels'];
+
 		foreach($user->followed as $follow) {
 			if (str_contains($follow->followable_type, 'Thread')) {
 				$following['threads'][] = $follow->followable_id;
@@ -16,6 +18,7 @@ class UserData
 
 		return [
 			'id' => $user->id,
+			'nav_id' => $user->nav_id,
 			'name' => $user->name,
 			'company' => $user->company,
 			'type' => $user->type,
