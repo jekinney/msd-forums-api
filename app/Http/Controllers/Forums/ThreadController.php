@@ -2,14 +2,9 @@
 
 namespace App\Http\Controllers\Forums;
 
-use App\Forums\Reply;
 use App\Forums\Thread;
-use App\Forums\Attachment;
 use Illuminate\Http\Request;
-use App\Collections\Pagination;
 use App\Forums\Collections\ThreadList;
-use App\Forums\Collections\ReplyList;
-use App\Forums\Fractal\Threads;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Forums\ThreadForm;
 
@@ -17,12 +12,9 @@ class ThreadController extends Controller
 {
     protected $thread;
 
-    protected $reply;
-
-    function __construct(Thread $thread, Reply $reply)
+    function __construct(Thread $thread)
     {
         $this->thread = $thread;
-        $this->reply = $reply;
     }
 
     /**
@@ -30,11 +22,19 @@ class ThreadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($categoryId, ThreadList $threadList)
+    public function index($categoryId)
     {
-        return response()->json([
-            'threads' => $threadList->reply($this->thread->newestActive($categoryId))
-        ]);
+        return response()->json($this->thread->activeByCategoryId($categoryId));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function hidden()
+    {
+        return response()->json($this->thread->hidden());
     }
 
     /**
@@ -43,11 +43,9 @@ class ThreadController extends Controller
      * @param  App\Http\Requests\Forum\ThreadForm  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ThreadForm $request, ThreadList $threadList)
+    public function store(ThreadForm $request)
     {
-        $thread = $this->thread->addOrUpdate($request);
-
-        return response()->json(['thread' => $thread->id]);
+        return response()->json($this->thread->addOrUpdate($request));
     }
 
     /**
@@ -56,15 +54,9 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function show($id, ThreadList $threadList, ReplyList $replyList, Pagination $pagination)
+    public function show($id)
     {
-        $replies = $this->reply->activeByThreadId($id);
-
-        return response()->json([
-            'thread' => $threadList->reply($this->thread->with('user', 'attachments')->find($id)), 
-            'replies' => $replyList->reply($replies),
-            'repliesPagination' => $pagination->reply($replies)
-        ]);
+        return response()->json($this->thread->show($id));
     }
 
     /**
@@ -76,7 +68,7 @@ class ThreadController extends Controller
      */
     public function edit($id)
     {
-         return response()->json(['thread' => $this->thread->with('attachments')->find($id)]);
+         return response()->json($this->thread->edit($id));
     }
 
     /**
@@ -86,22 +78,8 @@ class ThreadController extends Controller
      * @param  \App\Thread  $thread
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request, ThreadList $threadList)
+    public function destroy(Request $request)
     {
-        $thread = $this->thread->find($request->id);
-        $thread->is_hidden = $thread->is_hidden? false:true;
-        $thread->save();
-
-        if($request->has('hidden')) {
-            $threads = $this->thread->hidden();
-        } elseif($request->has('channel_id')) {
-            $threads = $this->thread->activeByChannelId($request->channel_id);
-        } elseif($request->has('category_id')) {
-            $threads = $this->thread->activeByCategoryId($request->category_id);
-        } else {
-            return response()->json([], 200);
-        }
-
-        return response()->json(['threads' => $threadList->reply($threads)]);;
+        return response()->json($this->thread->toggleHidden($request->id));
     }
 }

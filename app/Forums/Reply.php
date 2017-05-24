@@ -2,6 +2,7 @@
 
 namespace App\Forums;
 
+use App\Forums\Collections\ReplyList;
 use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
@@ -12,9 +13,9 @@ class Reply extends Model
         'is_hidden' => 'boolean',
     ];
     
-     /**
+    /**
      * Get the replies author.
-     */
+    */
     public function user()
     {
     	return $this->belongsTo(\App\User::class);
@@ -46,13 +47,14 @@ class Reply extends Model
 
     public function updateOrCreate($request)
     {
-        if($request->has('id')) {
-            $this->find($request->id)->update($this->setDataArray($request));
-        } else {
-             $this->create($this->setDataArray($request));
-        }
+        $replyList = new ReplyList();
 
-        return $this->activeByThreadId($request->thread_id);
+        if($request->has('id')) {
+            $reply = $this->find($request->id);
+            $reply->update($this->setDataArray($request));
+            return $replyList->reply($reply);
+        } 
+        return $replyList->reply($this->create($this->setDataArray($request)));
     }
 
     public function activeByThreadId($threadId, $amount = 10)
@@ -61,7 +63,8 @@ class Reply extends Model
                 ->where('thread_id', $threadId)
                 ->where('is_hidden', 0)
                 ->orderBy('created_at', 'asc')
-                ->paginate($amount);
+                ->get();
+                //->paginate($amount);
     }
 
     public function hidden() 

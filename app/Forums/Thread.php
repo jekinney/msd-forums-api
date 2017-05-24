@@ -2,6 +2,9 @@
 
 namespace App\Forums;
 
+use App\Forums\Collections\ThreadList;
+use App\Forums\Collections\ThreadShow;
+use App\Forums\Collections\ThreadEdit;
 use Illuminate\Database\Eloquent\Model;
 
 class Thread extends Model
@@ -9,7 +12,11 @@ class Thread extends Model
      /**
      * Fillable fields for mass assignment
      */
-    protected $fillable = ['user_id', 'channel_id', 'slug', 'title', 'body', 'is_hidden', 'reports'];
+    protected $fillable = [
+        'user_id', 'channel_id',
+        'slug', 'title', 'body', 
+        'is_hidden', 'reports'
+    ];
 
     protected $casts = [
         'is_hidden' => 'boolean',
@@ -64,41 +71,85 @@ class Thread extends Model
      */
     public function activeByCategoryId($categoryId, $amount = 10)
     {
-        return $this->whereHas('channel', function($q) use($categoryId) {
+        $threadList = new ThreadList();
+
+        $threads = $this->whereHas('channel', function($q) use($categoryId) {
                 $q->where('is_hidden', 0);
                 $q->where('category_id', $categoryId);
             })->withCount('replies', 'attachments')
             ->with('user')
             ->where('is_hidden', 0)
             ->latest()
-            ->paginate($amount);
+            ->get();
+
+        return $threadList->reply($threads);
     }
 
     public function activeByChannelId($channelId, $amount = 10)
     {
+        $threadList = new ThreadList();
+
         return $this->with('user')
                 ->withCount('replies', 'attachments')
                 ->where('channel_id', $channelId)
                 ->where('is_hidden', 0)
                 ->latest()
-                ->paginate($amount); 
+                ->get();
 
+        return $threadList->reply($threads);
     }
 
-    public function show($id)
-    {
-        return $this->with('channel', 'user', 'attachments', 'replies', 'replies.user',  'replies.attachments')
-                ->withCount('replies', 'attachments')
-                ->find($id);
-    }
-
+    /**
+     * Get all hidden threads
+     */
     public function hidden() 
-    {
-         return $this->with('channel', 'user', 'attachments')
+    {   
+        $threadShow = new ThreadShow();
+
+        $threads = $this->with('channel', 'user', 'attachments')
                 ->withCount('replies', 'attachments')
                 ->where('is_hidden', 1)
                 ->orderBy('created_at', 'asc')
                 ->get();
+
+        return $threadShow->reply($threads);
+    }
+
+    /**
+     * Get a thread to show user 
+     */
+    public function show($id)
+    {
+        $threadShow = new ThreadShow();
+
+        $thread = $this->with('channel', 'user', 'attachments')
+                ->withCount('replies', 'attachments')
+                ->find($id);
+
+        return $threadShow->reply($thread);
+    }
+
+    /**
+     * Get a thread for editing (minimum data)
+     */
+    public function edit($id)
+    {
+        $threadEdit = new ThreadEdit();
+
+        $thread = $this->with('channel', 'attachments')->find($id);
+
+        return $threadEdit->reply($thread);
+    }
+
+    public function toggleHidden($id) 
+    {
+        $threadShow = new ThreadShow();
+
+        $thread = $this->thread->find($id);
+        $thread->is_hidden = $thread->is_hidden? false:true;
+        $thread->save();
+
+        return $threadShow->reply($thread->fresh());
     }
 
      /**
@@ -109,6 +160,8 @@ class Thread extends Model
      */
     public function addOrUpdate($request)
     {
+        $threadList = new ThreadList();
+
         if($request->has('id')) {
             $thread = $this->find($request->id);
             $thread->update($this->dataArray($request));
@@ -116,7 +169,7 @@ class Thread extends Model
             $thread = $this->create($this->dataArray($request));
         }
         
-        return $thread->load('channel', 'user', 'attachments', 'replies', 'replies.user',  'replies.attachments');
+        return $threadList->reply($thread->load('channel', 'user', 'attachments'));
     }
 
     /**

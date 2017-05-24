@@ -40,8 +40,9 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::post('/channel', 'ChannelController@store');
 	Route::delete('/channel/{id}', 'ChannelController@destroy');
 
+	Route::get('/threads/hidden', 'ThreadController@hidden');
 	Route::get('/threads/{categoryId}', 'ThreadController@index');
-	Route::get('/thread/{id}', 'ThreadController@show');
+	Route::get('/thread/{id}/show', 'ThreadController@show');
 	Route::get('/thread/{id}/edit', 'ThreadController@edit');
 	Route::post('/thread', 'ThreadController@store');
 	Route::put('/thread/{id}', 'ThreadController@update');

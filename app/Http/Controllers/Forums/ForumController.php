@@ -27,16 +27,11 @@ class ForumController extends Controller
         $this->reply = $reply;
     }
 
-    public function index($categoryId, ThreadList $threadList, Pagination $pagination, ChannelList $channelList)
+    public function index($categoryId, ChannelList $channelList)
     {
-        $threads = $this->thread->activeByCategoryId($categoryId);
         $channels = $this->channel->activeByCategoryId($categoryId);
 
-    	return response()->json([
-            'threads' =>  $threadList->reply($threads), 
-            'threadsPagination' => $pagination->reply($threads), 
-            'channels' => $channelList->reply($channels)
-        ]);
+    	return response()->json(['channels' => $channelList->reply($channels)]);
     }
 
     public function hidden(ThreadList $threadList, ReplyList $replyList) 

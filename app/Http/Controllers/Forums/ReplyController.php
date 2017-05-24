@@ -7,7 +7,6 @@ use App\Forums\Thread;
 use Illuminate\Http\Request;
 use App\Forums\Fractal\Replies;
 use App\Forums\Fractal\Threads;
-use App\Forums\Collections\ReplyList;
 use App\Forums\Fractal\ReplyDetails;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Forums\ReplyForm;
@@ -31,11 +30,9 @@ class ReplyController extends Controller
      * @param  App\Http\Request\Forums\ReplyForm  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ReplyForm $request, Reply $reply, ReplyList $replyList)
+    public function store(ReplyForm $request, Reply $reply)
     {
-        $replies = $reply->updateOrCreate($request);
-
-        return response()->json(['replies' => $replyList->reply($replies)]);
+        return response()->json($reply->updateOrCreate($request));
     }
 
     public function edit($id, Reply $reply)
