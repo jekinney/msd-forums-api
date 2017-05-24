@@ -3,6 +3,7 @@
 namespace App\Forums;
 
 use App\Forums\Collections\ReplyList;
+use App\Forums\Collections\ReplyEdit;
 use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
@@ -45,6 +46,28 @@ class Reply extends Model
         return $this->morphMany(Reported::class, 'reportable');
     }
 
+    public function activeByThreadId($threadId)
+    {
+        $replyList = new ReplyList();
+
+        $replies = $this->with('user', 'attachments')
+                    ->where('thread_id', $threadId)
+                    ->where('is_hidden', 0)
+                    ->latest()
+                    ->get();
+
+        return $replyList->reply($replies);
+    }
+
+    public function edit($id)
+    {
+        $replyList = new ReplyEdit();
+
+        $reply = $this->with('user', 'attachments')->find($id);
+
+        return $replyList->reply($reply);
+    }
+
     public function updateOrCreate($request)
     {
         $replyList = new ReplyList();
@@ -55,16 +78,6 @@ class Reply extends Model
             return $replyList->reply($reply);
         } 
         return $replyList->reply($this->create($this->setDataArray($request)));
-    }
-
-    public function activeByThreadId($threadId, $amount = 10)
-    {
-        return $this->with('user', 'attachments')
-                ->where('thread_id', $threadId)
-                ->where('is_hidden', 0)
-                ->orderBy('created_at', 'asc')
-                ->get();
-                //->paginate($amount);
     }
 
     public function hidden() 

@@ -2,10 +2,9 @@
 
 namespace App\Forums\Collections;
 
-use Carbon\Carbon;
 use App\Collections\BaseCollection;
 
-class ReplyList extends BaseCollection
+class ReplyEdit extends BaseCollection
 {
 	protected function setDataArray($reply)
 	{
@@ -13,14 +12,9 @@ class ReplyList extends BaseCollection
 			'id' => $reply['id'],
 			'thread_id' => $reply['thread_id'],
 			'user_id' => $reply['user_id'],
-			'author' => $reply['user']->name,
-			'author_company' => $reply['user']->company,
 			'reply' => $reply['reply'],
-			'hidden' => $reply['is_hidden']? true:false,
 			'attachment_count' => $reply['attachments']->count(),
-			'attachments' => $this->setAttachments($reply['attachments']),
-			'created' => $reply['created_at'] > Carbon::now()->addDay()? $reply['created_at']->diffForHumans:$reply['created_at']->toDayDateTimeString(),
-			'updated' => $reply['created_at'] != $reply['updated_at']? $reply['updated_at']->toDayDateTimeString():null,
+			'attachments' => $this->setAttachments($thread['attachments']),
 		];
 	}
 

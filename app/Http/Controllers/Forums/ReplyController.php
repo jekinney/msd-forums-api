@@ -3,25 +3,33 @@
 namespace App\Http\Controllers\Forums;
 
 use App\Forums\Reply;
-use App\Forums\Thread;
 use Illuminate\Http\Request;
-use App\Forums\Fractal\Replies;
-use App\Forums\Fractal\Threads;
-use App\Forums\Fractal\ReplyDetails;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Forums\ReplyForm;
 
 
 class ReplyController extends Controller
 {
+    protected $reply;
+
+    function __construct(Reply $reply)
+    {
+        $this->reply = $reply;
+    }
+
+    public function index($threadId) 
+    {
+        return response()->json($this->reply->activeByThreadId($threadId));
+    }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function hidden(Reply $reply)
+    public function hidden()
     {
-        return fractal($reply->hidden(), new Replies)->respond();
+        return response()->json($reply->hidden());
     }
 
     /**
@@ -35,9 +43,9 @@ class ReplyController extends Controller
         return response()->json($reply->updateOrCreate($request));
     }
 
-    public function edit($id, Reply $reply)
+    public function edit($id)
     {
-        return fractal($reply->with('attachments')->find($id), new ReplyDetails)->respond();
+        return response()->json($this->reply->edit($id));
     }
 
     /**
@@ -46,12 +54,12 @@ class ReplyController extends Controller
      * @param  \App\Reply  $reply
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Reply $reply)
+    public function destroy($id)
     {
-        $reply = $reply->find($id);
+        $reply = $this->reply->find($id);
         $reply->is_hidden = $reply->is_hidden? false:true;
         $reply->save();
 
-        return response()->json(['hidden' => $reply->is_hidden]);
+        return response()->json($reply);
     }
 }
