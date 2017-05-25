@@ -3,13 +3,8 @@
 namespace App\Http\Controllers\Forums;
 
 use App\Forums\Channel;
-use App\Forums\Thread;
 use Illuminate\Http\Request;
-use App\Collections\Pagination;
 use App\Http\Controllers\Controller;
-use App\Forums\Collections\Channels;
-use App\Forums\Collections\ThreadList;
-use App\Forums\Collections\ChannelDetails;
 
 class ChannelController extends Controller
 {
@@ -27,7 +22,7 @@ class ChannelController extends Controller
      */
     public function index($categoryId)
     {
-        return fractal($this->channel->where('is_hidden', 0)->where('category_id', $categoryId)->orderBy('order', 'asc')->get(), new Channels)->respond();
+        return response()->json($this->channel->menuList($categoryId));
     }
 
     /**
@@ -37,9 +32,7 @@ class ChannelController extends Controller
      */
     public function all(ChannelDetails $channelDetails)
     {
-        $channels = $this->channel->getAllWithDetails();
-
-        return response()->json(['channels' => $channelDetails->reply($channels)]);
+        return response()->json($this->channel->getAllWithDetails());
     }
 
     /**
@@ -50,9 +43,7 @@ class ChannelController extends Controller
      */
     public function store(Request $request, ChannelDetails $channelDetails)
     {
-        $channels = $this->channel->updateOrCreate($request);
-
-        return response()->json(['channels' => $channelDetails->reply($channels)]);
+        return response()->json($this->channel->updateOrCreate($request));
     }
 
     /**
@@ -62,16 +53,9 @@ class ChannelController extends Controller
      * @param  \App\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function show($id, Thread $thread, Pagination $pagination, ThreadList $ThreadList)
+    public function show($id)
     {
-        $channel = $this->channel->find($id);
-        $threads = $thread->activeByChannelId($id); 
-
-        return response()->json(collect([
-            'channel' => $channel, 
-            'threads' => $ThreadList->reply($threads), 
-            'threadsPagination' => $pagination->reply($threads)
-        ]));
+        return response()->json($this->channel->findById($id));
     }
 
 
@@ -81,7 +65,7 @@ class ChannelController extends Controller
      * @param  \App\Channel  $channel
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Channel $channel)
+    public function destroy($id)
     {
         $channel = $channel->find($id);
         $channel->is_hidden = $channel->is_hidden? false:true;

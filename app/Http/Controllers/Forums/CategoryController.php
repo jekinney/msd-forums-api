@@ -35,11 +35,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function All(CategoryDetails $categoryDetails)
+    public function all()
     {
-        $categories = $this->category->getAll();
-
-        return response()->json(['categories' => $categoryDetails->reply($categories)]);
+        return response()->json($this->category->getAll());
     }
 
     /**

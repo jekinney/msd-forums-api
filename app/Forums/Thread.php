@@ -69,7 +69,7 @@ class Thread extends Model
      * @param int $amount
      * @return collection Thread
      */
-    public function activeByCategoryId($categoryId, $amount = 10)
+    public function categoryId($categoryId, $amount = 10)
     {
         $threadList = new ThreadList();
 
@@ -85,7 +85,7 @@ class Thread extends Model
         return $threadList->reply($threads);
     }
 
-    public function activeByChannelId($channelId, $amount = 10)
+    public function channelId($channelId, $amount = 10)
     {
         $threadList = new ThreadList();
 

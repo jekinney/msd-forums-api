@@ -30,6 +30,28 @@ class ThreadController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param int $categoryId
+     * @return \Illuminate\Http\Response
+     */
+    public function category($categoryId)
+    {
+        return response()->json($this->thread->categoryId($categoryId));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param int $channelId
+     * @return \Illuminate\Http\Response
+     */
+    public function channel($channelId)
+    {
+        return response()->json($this->thread->channelId($channelId));
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
      * @return \Illuminate\Http\Response
      */
     public function hidden()

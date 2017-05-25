@@ -41,7 +41,8 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::delete('/channel/{id}', 'ChannelController@destroy');
 
 	Route::get('/threads/hidden', 'ThreadController@hidden');
-	Route::get('/threads/{categoryId}', 'ThreadController@index');
+	Route::get('/threads/category/{categoryId}', 'ThreadController@category');
+	Route::get('/threads/channel/{channelId}', 'ThreadController@channel');
 	Route::get('/thread/{id}/show', 'ThreadController@show');
 	Route::get('/thread/{id}/edit', 'ThreadController@edit');
 	Route::post('/thread', 'ThreadController@store');

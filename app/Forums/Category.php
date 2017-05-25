@@ -3,6 +3,7 @@
 namespace App\Forums;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Forums\Collections\CategoryDetails;
 
 class Category extends Model
 {
@@ -43,9 +44,13 @@ class Category extends Model
 
     public function getAll()
     {
-        return $this->with('channels.threads', 'channels.threads.replies')
+        $catDetails = new CategoryDetails();
+
+        $categories = $this->with('channels.threads', 'channels.threads.replies')
                 ->withCount('channels')
                 ->get();
+
+        return $catDetails->reply($categories);
     }
 
     protected function setDataArray($request)

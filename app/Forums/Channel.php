@@ -2,7 +2,9 @@
 
 namespace App\Forums;
 
+use App\Forums\Collections\ChannelList;
 use Illuminate\Database\Eloquent\Model;
+use App\Forums\Collections\ChannelDetails;
 
 class Channel extends Model
 {	
@@ -61,17 +63,32 @@ class Channel extends Model
         return $this->getAllWithDetails();
     }
 
-    public function activeByCategoryId($categoryId)
+    public function menuList($categoryId)
     {
-        return $this->where('category_id', $categoryId)
+        $channelList = new ChannelList();
+
+        $channels = $this->where('category_id', $categoryId)
                 ->where('is_hidden', 0)
                 ->orderBy('order', 'asc')
                 ->get();
+
+        return $channelList->reply($channels);
     }
 
     public function getAllWithDetails()
     {
-        return $this->with('category', 'threads.replies')->withCount('threads')->get();
+        $channelDetails = new ChannelDetails();
+        
+        $channels = $this->with('category', 'threads.replies')->withCount('threads')->get();
+
+        return $channelDetails->reply($channels);
+    }
+
+    public function findById($id)
+    {
+        $channelDetails = new ChannelDetails();
+
+        return $channelDetails->reply($this->with('category', 'threads.replies')->withCount('threads')->find($id));
     }
 
     protected function setDataArray($request)
