@@ -30,7 +30,7 @@ class ChannelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function all(ChannelDetails $channelDetails)
+    public function all()
     {
         return response()->json($this->channel->getAllWithDetails());
     }
