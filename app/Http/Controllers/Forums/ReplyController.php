@@ -61,10 +61,6 @@ class ReplyController extends Controller
      */
     public function destroy($id)
     {
-        $reply = $this->reply->find($id);
-        $reply->is_hidden = $reply->is_hidden? false:true;
-        $reply->save();
-
-        return response()->json($reply);
+        return response()->json($this->reply->remove($id));
     }
 }

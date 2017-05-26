@@ -70,9 +70,9 @@ class Reply extends Model
 
     public function submit($request)
     {
-        $replyList = new ReplyList();
+        $this->create($this->setDataArray($request));
 
-        return $replyList->reply($this->create($this->setDataArray($request)));
+        return $this->activeByThreadId($request->thread_id);
     }
 
     public function edited($request)
@@ -83,6 +83,15 @@ class Reply extends Model
         $reply->update(['reply' => $request->reply]);
 
         return $replyEdit->reply($reply);
+    }
+
+    public function remove($id) 
+    {
+        $reply = $this->find($id);
+        $threadId = $reply->thread_id;
+        $reply->delete();
+
+        return $this->activeByThreadId($threadId);
     }
 
     public function hidden() 

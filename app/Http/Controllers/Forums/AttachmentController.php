@@ -10,15 +10,21 @@ use App\Http\Controllers\Controller;
 
 class AttachmentController extends Controller
 {
+    protected $attachment;
+
+    function __construct(Attachment $attachment)
+    {
+        $this->attachment = $attachment;
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function storeImage(Request $request, Attachment $attachment)
+    public function storeImage(Request $request)
     {
-        $location = $attachment->uploadImage($request);
+        $location = $this->attachment->uploadImage($request);
 
         return response()->json(['location' => $location]);
     }
@@ -29,11 +35,9 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function reply(Request $request, Attachment $attachment)
+    public function reply($replyId)
     {
-        $threadId = $attachment->uploadReplyFile($request);
-
-        return response()->json(['thread' => $threadId]);
+        return response()->json($this->attachment->findByReplyId($replyId));
     }
 
       /**
@@ -42,11 +46,9 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function thread(Request $request, Attachment $attachment)
+    public function thread($threadId)
     {        
-        $threadId = $attachment->uploadThreadFile($request);
-
-        return response()->json(['thread' => $threadId]);
+        return response()->json($this->attachment->findByThreadId($threadId));
     }
 
     /**

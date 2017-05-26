@@ -2,9 +2,12 @@
 
 namespace App\Forums;
 
+use App\Forums\Reply;
+use App\Forums\Thread;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
+use App\Forums\Collections\AttachmentsList;
 
 class Attachment extends Model
 {
@@ -65,6 +68,24 @@ class Attachment extends Model
             ]);
         
         return $request;
+    }
+
+    public function findByThreadId($threadId) 
+    {
+        $thread = Thread::with('attachments')->find($threadId);
+
+        $attachList = new AttachmentsList();
+
+        return $attachList->reply($thread->attachments);
+    }
+
+       public function findByReplyId($replyId) 
+    {
+        $reply = Reply::with('attachments')->find($replyId);
+
+        $attachList = new AttachmentsList();
+
+        return $attachList->reply($reply->attachments);
     }
 
     protected function setUniqueFileName($file)

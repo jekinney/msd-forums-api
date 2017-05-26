@@ -60,6 +60,9 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::post('/follow/thread', 'FollowedController@thread');
 	Route::post('/follow/channel', 'FollowedController@channel');
 
+	Route::get('/attachments/thread/{threadId}', 'AttachmentController@thread');
+	Route::get('/attachments/reply/{replyId}', 'AttachmentController@reply');
+	
 	Route::post('/attachment/image', 'AttachmentController@storeImage');
 	Route::post('/attachment/thread', 'AttachmentController@thread');
 	Route::delete('/attachment/{id}', 'AttachmentController@destroy');
