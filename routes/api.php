@@ -50,10 +50,10 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::patch('/thread', 'ThreadController@destroy');
 
 	Route::get('/replies/{threadId}', 'ReplyController@index');
-	Route::get('/reply', 'ReplyController@edit');
-	Route::get('/reply/{id}', 'ReplyController@edit');
+	Route::get('/reply/{id}/edit', 'ReplyController@edit');
 	Route::post('/reply', 'ReplyController@store');
-	Route::put('/reply/{id}', 'ReplyController@update');
+	Route::patch('/reply', 'ReplyController@update');
+	Route::put('/reply/{id}', 'ReplyController@toggle');
 	Route::delete('/reply/{id}', 'ReplyController@destroy');
 
 	Route::get('/followed/{userId}', 'FollowedController@index');

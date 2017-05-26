@@ -40,12 +40,17 @@ class ReplyController extends Controller
      */
     public function store(ReplyForm $request, Reply $reply)
     {
-        return response()->json($reply->updateOrCreate($request));
+        return response()->json($reply->submit($request));
     }
 
     public function edit($id)
     {
         return response()->json($this->reply->edit($id));
+    }
+
+    public function update(Request $request)
+    {
+        return response()->json($this->reply->edited($request));
     }
 
     /**

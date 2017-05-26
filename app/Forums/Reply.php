@@ -63,21 +63,26 @@ class Reply extends Model
     {
         $replyList = new ReplyEdit();
 
-        $reply = $this->with('user', 'attachments')->find($id);
+        $reply = $this->with('thread')->find($id);
 
         return $replyList->reply($reply);
     }
 
-    public function updateOrCreate($request)
+    public function submit($request)
     {
         $replyList = new ReplyList();
 
-        if($request->has('id')) {
-            $reply = $this->find($request->id);
-            $reply->update($this->setDataArray($request));
-            return $replyList->reply($reply);
-        } 
         return $replyList->reply($this->create($this->setDataArray($request)));
+    }
+
+    public function edited($request)
+    {
+        $replyEdit = new ReplyEdit();
+
+        $reply = $this->find($request->id);
+        $reply->update(['reply' => $request->reply]);
+
+        return $replyEdit->reply($reply);
     }
 
     public function hidden() 

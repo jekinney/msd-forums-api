@@ -46,11 +46,9 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, CategoryDetails $categoryDetails)
+    public function store(Request $request)
     {
-        $categories = $this->category->updateOrCreate($request);
-
-        return response()->json(['categories' => $categoryDetails->reply($categories)]);
+        return response()->json($this->category->updateOrCreate($request));
     }
 
     /**

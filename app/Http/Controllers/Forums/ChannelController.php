@@ -41,7 +41,7 @@ class ChannelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, ChannelDetails $channelDetails)
+    public function store(Request $request)
     {
         return response()->json($this->channel->updateOrCreate($request));
     }
