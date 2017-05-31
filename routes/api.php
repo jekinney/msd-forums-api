@@ -46,7 +46,7 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::get('/thread/{id}/show', 'ThreadController@show');
 	Route::get('/thread/{id}/edit', 'ThreadController@edit');
 	Route::post('/thread', 'ThreadController@store');
-	Route::put('/thread/{id}', 'ThreadController@update');
+	Route::put('/thread', 'ThreadController@update');
 	Route::patch('/thread', 'ThreadController@destroy');
 
 	Route::get('/replies/{threadId}', 'ReplyController@index');
@@ -59,9 +59,6 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::get('/followed/{userId}', 'FollowedController@index');
 	Route::post('/follow/thread', 'FollowedController@thread');
 	Route::post('/follow/channel', 'FollowedController@channel');
-
-	Route::get('/attachments/thread/{threadId}', 'AttachmentController@thread');
-	Route::get('/attachments/reply/{replyId}', 'AttachmentController@reply');
 	
 	Route::post('/attachment/image', 'AttachmentController@storeImage');
 	Route::post('/attachment/thread', 'AttachmentController@thread');

@@ -67,7 +67,7 @@ class ThreadController extends Controller
      */
     public function store(ThreadForm $request)
     {
-        return response()->json($this->thread->addOrUpdate($request));
+        return response()->json($this->thread->submitAdd($request));
     }
 
     /**
@@ -91,6 +91,18 @@ class ThreadController extends Controller
     public function edit($id)
     {
          return response()->json($this->thread->edit($id));
+    }
+
+     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param int $id
+     * @param  \App\Thread  $thread
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
+    {
+        return response()->json($this->thread->submitUpdate($request));
     }
 
     /**

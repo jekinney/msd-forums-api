@@ -35,9 +35,9 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function reply($replyId)
+    public function reply(Request $request)
     {
-        return response()->json($this->attachment->findByReplyId($replyId));
+        return response()->json($this->attachment->uploadReplyFile($request));
     }
 
       /**
@@ -46,9 +46,9 @@ class AttachmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function thread($threadId)
+    public function thread(Request $request)
     {        
-        return response()->json($this->attachment->findByThreadId($threadId));
+        return response()->json($this->attachment->uploadThreadFile($request));
     }
 
     /**
@@ -60,11 +60,11 @@ class AttachmentController extends Controller
     public function destroy($id, Attachment $attachment)
     {
         $file = $attachment->find($id);
-        $attachableId = $file->attachable_id;
-        $attachableType = $file->attachable_type;
+
         Storage::delete($file->full_path);
+
         $file->delete();
 
-        return fractal($attachments = Attachment::where('attachable_id', $attachableId)->where('attachable_type', $attachableType)->get(), new Attachments)->respond();
+        return response()->json([], 200);
     }
 }

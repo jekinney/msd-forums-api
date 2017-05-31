@@ -93,10 +93,10 @@ class Attachment extends Model
         $name = str_slug(explode('.', $file->getClientOriginalName())[0]);
 
         if(Storage::exists('public/attachments/forums/'.$name.'.'.$file->getClientOriginalExtension())) {
-            return $name = str_random(5).$name;
+            return $name = str_random(5).$name.'.'.$file->getClientOriginalExtension();
         }
 
-        return $name;
+        return $name. '.' .$file->getClientOriginalExtension();
     }
 
     protected function setFileType($file)

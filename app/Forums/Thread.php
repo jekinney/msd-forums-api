@@ -153,21 +153,32 @@ class Thread extends Model
     }
 
      /**
-     * Insert or update a thread
+     * Insert a thread
      *
      * @param  \Illuminate\Http\Request  $request
      * @return object Thread
      */
-    public function addOrUpdate($request)
+    public function submitAdd($request)
     {
         $threadList = new ThreadList();
 
-        if($request->has('id')) {
-            $thread = $this->find($request->id);
-            $thread->update($this->dataArray($request));
-        } else {
-            $thread = $this->create($this->dataArray($request));
-        }
+        $thread = $this->create($this->dataArray($request));
+        
+        return $threadList->reply($thread->load('channel', 'user', 'attachments'));
+    }
+
+     /**
+     *update a thread
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return object Thread
+     */
+    public function submitUpdate($request)
+    {
+        $threadList = new ThreadList();
+
+        $thread = $this->find($request->id);
+        $thread->update($this->dataArray($request));
         
         return $threadList->reply($thread->load('channel', 'user', 'attachments'));
     }
