@@ -32,13 +32,13 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	Route::get('categories', 'CategoryController@index');
 	Route::get('categories/all', 'CategoryController@all');
 	Route::post('/category', 'CategoryController@store');
-	Route::delete('/category/{id}', 'CategoryController@destroy');
+	Route::put('/category/{id}', 'CategoryController@destroy');
 
 	Route::get('channels/all', 'ChannelController@all');
 	Route::get('channels/{categoryId}', 'ChannelController@index');
 	Route::get('channel/{id}', 'ChannelController@show');
 	Route::post('/channel', 'ChannelController@store');
-	Route::delete('/channel/{id}', 'ChannelController@destroy');
+	Route::put('/channel/{id}', 'ChannelController@destroy');
 
 	Route::get('/threads/hidden', 'ThreadController@hidden');
 	Route::get('/threads/category/{categoryId}', 'ThreadController@category');

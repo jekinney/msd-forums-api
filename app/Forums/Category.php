@@ -53,6 +53,15 @@ class Category extends Model
         return $catDetails->reply($categories);
     }
 
+    public function toggleHidden($id)
+    {
+        $category = $this->find($id);
+        $category->is_hidden = $category->is_hidden? false:true;
+        $category->save();
+
+        return $this->getAll();
+    }
+
     protected function setDataArray($request)
     {
         return [

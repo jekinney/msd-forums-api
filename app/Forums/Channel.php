@@ -56,10 +56,10 @@ class Channel extends Model
     {
         if($request->has('id')) {
             $this->find($request->id)->update($this->setDataArray($request));
+        } else {
+            $this->create($this->setDataArray($request));
         }
-
-        $this->create($this->setDataArray($request));
-
+        
         return $this->getAllWithDetails();
     }
 
@@ -89,6 +89,15 @@ class Channel extends Model
         $channelDetails = new ChannelDetails();
 
         return $channelDetails->reply($this->with('category', 'threads.replies')->withCount('threads')->find($id));
+    }
+
+    public function toggleHidden($id)
+    {
+        $channel = $this->find($id);
+        $channel->is_hidden = $channel->is_hidden? false:true;
+        $channel->save();
+
+        return $this->getAllWithDetails();
     }
 
     protected function setDataArray($request)

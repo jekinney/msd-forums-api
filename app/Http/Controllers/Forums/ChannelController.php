@@ -67,10 +67,6 @@ class ChannelController extends Controller
      */
     public function destroy($id)
     {
-        $channel = $channel->find($id);
-        $channel->is_hidden = $channel->is_hidden? false:true;
-        $channel->save();
-
-        return fractal($channel->with('category')->withCount('threads', 'replies')->orderBy('order', 'asc')->get(), new ChannelDetails)->respond();
+        return response()->json($this->channel->toggleHidden($id));
     }
 }

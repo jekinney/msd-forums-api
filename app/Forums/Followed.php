@@ -20,7 +20,7 @@ class Followed extends Model
 
     public function toggle($model, $userId)
     {
-    	if($model->followed()->where('user_id', $userId)->count() > 0) {
+    	if($model->followed()->where('user_id', $userId)->exists()) {
     		$model->followed()->where('user_id', $userId)->delete();
     	} else {
     		$model->followed()->create(['user_id' => $userId]);

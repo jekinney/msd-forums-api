@@ -16,6 +16,7 @@ class ChannelDetails extends BaseCollection
 
 		return [
 			'id' => $channel['id'],
+			'category_id' => $channel['category_id'],
 			'category_name' => $channel['category']['name'],
 			'name' => $channel['name'],
 			'slug' => $channel['slug'],

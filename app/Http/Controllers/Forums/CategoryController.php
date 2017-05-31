@@ -69,12 +69,8 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id, Category $category)
+    public function destroy($id)
     {
-        $category = $category->find($id);
-        $category->is_hidden = $category->is_hidden? false:true;
-        $category->save();
-
-        return fractal($category->withCount('channels', 'threads')->orderBy('order', 'asc')->get(), new CategoryDetails)->respond();
+       return response()->json($this->category->toggleHidden($id));
     }
 }
