@@ -39,13 +39,13 @@ trait NeximoTexts
             foreach($text->recipients as $person) {
                 $person->update(['sent_at' => Carbon::now(), 'status' => 'sending']);
 
-                Nexmo::message()->send([
+                $response = Nexmo::message()->send([
                     'to' => PhoneNumber::setForText($person->phone),
                     'from' => env('NEXMO_PHONE'),
                     'text' => $text->message
                 ]);
 
-                $person->update(['status' => 'sent']);
+                $person->update(['status' => 'sent', 'message_id' => $response['messages'][0]['message-id']]);
             }
 
             $text->update(['completed_at' => Carbon::now(), 'notes' => 'Completed']);
