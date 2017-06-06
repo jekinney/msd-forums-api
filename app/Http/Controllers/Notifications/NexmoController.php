@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Notifications;
 
-use App\Notifications\InboundText;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class NexmoController extends Controller
 {
@@ -12,7 +12,7 @@ class NexmoController extends Controller
         return respond([], 200);
     }
 
-    public function outGoing(Request $request)
+    public function outGoing()
     {
         return respond([], 200);
     }
