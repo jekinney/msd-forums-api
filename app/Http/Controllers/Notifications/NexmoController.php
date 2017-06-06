@@ -9,11 +9,11 @@ class NexmoController extends Controller
 {
     public function inGoing(Request $request)
     {
-        return respond([], 200);
+        return response([], 200);
     }
 
     public function outGoing()
     {
-        return respond([], 200);
+        return response([], 200);
     }
 }
