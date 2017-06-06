@@ -29,6 +29,8 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 	Route::delete('/recipient/{notification_id}', 'RecipientController@destroy');
 
 	Route::post('mailgun/status', 'MailgunController@update');
+
+	Route::post('/nexmo', 'NeximoController@incoming');
 });
 
 
