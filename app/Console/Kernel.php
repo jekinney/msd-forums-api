@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //$schedule->command('notification:check')->everyFiveMinutes();
+        $schedule->command('notifications:check')->everyFiveMinutes();
         // $schedule->command('notification:threadauthor')->everyTenMinutes();
         // $schedule->command('notification:threads')->weekdays()->at('23:30');
         // $schedule->command('notification:channels')->sundays('23:30');
