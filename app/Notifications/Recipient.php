@@ -19,15 +19,15 @@ class Recipient extends Model
 
         foreach($recipients as $recipient) {
             if($recipient->message_id == $request->member_id) {
-                return $recipient->update(['status' => $request->event]);
+                $recipient->update(['status' => $request->event]);
             }
         }
         
-        $recipient = $recipients->orderBy('created_at', 'desc')->first();
+        //$recipient = $recipients->orderBy('created_at', 'desc')->first();
 
-        return $recipient->update([
-            'message_id' => $request->message_id, 
-            'status' => $request->event
-        ]);
+        // return $recipient->update([
+        //     'message_id' => $request->message_id, 
+        //     'status' => $request->event
+        // ]);
     }
 }
