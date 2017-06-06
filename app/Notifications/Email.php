@@ -2,30 +2,49 @@
 
 namespace App\Notifications;
 
-use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
-use App\Mail\Notifications\Test;
-use App\Mail\Notifications\Basic;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Model;
+use App\Notifications\Traits\Recipients;
+use App\Notifications\Traits\MailgunEmail;
+use App\Notifications\Collections\EmailPast;
+use App\Notifications\Collections\EmailShow;
+use App\Notifications\Collections\EmailEdit;
+use App\Notifications\Collections\EmailUpcoming;
 
-class Email
+class Email extends Model
 {
-	/**
-	 * Send one plain test email
-	 *
-	 * @param object $notification
-	 */
-	public function sendTest($notification)
-	{
-		Mail::to($notification->from)->send(new Test($notification));
-	}
+	use MailgunEmail, Recipients;
 
-	public function sendBasic($recipient, $notification)
-	{
-		$recipient->update(['sent_at' => Carbon::now(), 'status' => 'sending']);
+	protected $guarded = [];
+	
+	protected $dates = ['send_at', 'started_at', 'completed_at'];
 
-        Mail::to($recipient->connection)->send(new Basic($notification));
+    public function getAll()
+    {
+    	$upcoming = new EmailUpcoming();
+    	$past = new EmailPast();
 
-        $recipient->update(['status' => 'sent']);
-	}
+        return [
+        	'upcoming' => $upcoming->reply(
+        		$this->withCount('recipients')->whereDate('send_at', '>', Carbon::now())->get()
+        	),
+        	'past' => $past->reply(
+        		$this->withCount('recipients')->whereDate('send_at', '<', Carbon::now())->get()
+        	)
+        ];
+    }
+
+    public function findByIdForEdit($id) 
+    {
+    	$email = new EmailEdit();
+
+    	return $email->reply($this->with('recipients')->find($id));
+    }
+
+    public function findByIdForShow($id) 
+    {
+    	$email = new EmailShow();
+
+    	return $email->reply($this->with('recipients')->find($id));
+    }
 }

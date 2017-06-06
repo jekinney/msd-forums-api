@@ -15,6 +15,7 @@ class CreateTextsTable extends Migration
     {
         Schema::create('texts', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('user_id')->nullable();
             $table->mediumText('message');
             $table->timestamp('send_at');
             $table->boolean('send_now')->default(false);

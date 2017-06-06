@@ -1,7 +1,7 @@
 @component('mail::message')
 Dear {{ $recipient->name }},<br>
 
-{!! $notification->message !!}
+{!! $email->message !!}
 
 Thank You,<br>
 Mid States Distributing

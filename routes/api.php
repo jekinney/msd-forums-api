@@ -16,6 +16,14 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 	Route::delete('/text/{id}', 'TextsController@delete');
 
 
+	Route::get('/email', 'EmailsController@index');
+	Route::get('/email/{id}/show', 'EmailsController@show');
+	Route::get('/email/{id}/edit', 'EmailsController@edit');
+	Route::post('/email', 'EmailsController@store');
+	Route::post('/email/test', 'EmailsController@test');
+	Route::patch('email/{id}', 'EmailsController@update');
+	Route::delete('/email/{id}', 'EmailsController@delete');
+
 	Route::get('/recipients', 'RecipientController@index');
 	Route::post('/recipient', 'RecipientController@store');
 	Route::delete('/recipient/{notification_id}', 'RecipientController@destroy');

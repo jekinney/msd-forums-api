@@ -35,21 +35,21 @@ class TextsController extends Controller
     public function store(Request $request)
     {
         $text = $this->text->create($this->setDataArray());
-
-        $this->addRecipients($text);
+        $text->addRecipients(request('recipients'));
 
         return response([], 200);
     }
 
     /**
-     * Call back url for confirmation messages
+     * Send Test messages
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function confirmation()
+    public function test()
     {
+        $this->text->sendTest();
 
+        return response([], 200);
     }
 
     /**
@@ -60,7 +60,7 @@ class TextsController extends Controller
      */
     public function show($id)
     {
-        return response()->json();
+        return response()->json($this->text->findByIdForShow($id));
     }
 
     /**
@@ -71,7 +71,7 @@ class TextsController extends Controller
      */
     public function edit($id)
     {
-        return response()->json();
+        return response()->json($this->text->findByIdForEdit($id));
     }
 
     /**
@@ -84,8 +84,7 @@ class TextsController extends Controller
     {
         $text = $this->text->find($id);
         $text->update($this->setDataArray());
-        $text->recipients()->each->delete();
-        $this->addRecipients($text);
+        $text->addRecipients(request('recipients'));
 
         return response([], 200);
     }
@@ -118,16 +117,5 @@ class TextsController extends Controller
             'send_at' => request('send_at')? Carbon::parse(request('send_at')):Carbon::now(),
             'send_now' => request('send_now')
         ];
-    }
-
-    protected function addRecipients($text)
-    {
-        foreach(request('recipients') as $person) {
-            $text->recipients()->create([
-                'name' => $person->name,
-                'email' => $person->email,
-                'phone' => $person->phone
-            ]);
-        }
     }
 }

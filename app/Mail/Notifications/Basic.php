@@ -3,7 +3,8 @@
 namespace App\Mail\Notifications;
 
 use Illuminate\Mail\Mailable;
-use App\Notifications\Notification;
+use App\Notifications\Email;
+use App\Notifications\Recipient;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -12,16 +13,17 @@ class Basic extends Mailable
     use SerializesModels;
 
 
-    public $notification;
+    public $email, $recipient;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Notification $notification)
+    public function __construct(Email $email, Recipient $recipient)
     {
-        $this->notification = $notification;
+        $this->email = $email;
+        $this->recipient = $recipient;
     }
 
     /**
@@ -31,6 +33,6 @@ class Basic extends Mailable
      */
     public function build()
     {
-        return $this->subject($this->notification->subject)->markdown('emails.notifications.basic');
+        return $this->subject($this->email->subject)->markdown('emails.notifications.basic');
     }
 }
