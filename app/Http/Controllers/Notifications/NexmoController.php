@@ -7,8 +7,13 @@ use Illuminate\Http\Request;
 
 class NexmoController extends Controller
 {
-    public function incoming(Request $request)
+    public function inGoing(Request $request)
     {
-        return $request->all();
+        return respond([], 200);
+    }
+
+    public function outGoing(Request $request)
+    {
+        return respond([], 200);
     }
 }
