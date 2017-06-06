@@ -10,7 +10,7 @@ use App\Events\Notifications\ProcessNotification;
 use App\Events\Notifications\SendTestNotification;
 use App\Notifications\Collections\Notifications;
 use App\Notifications\Collections\Recipients;
-use App\Notifications\Collections\PastNotifications;
+use App\Notifications\Collections\TextNotifications;
 use App\Notifications\Collections\UpcomingNotifications;
 
 class NotificationController extends Controller
@@ -27,7 +27,7 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(PastNotifications $past, UpcomingNotifications $upcoming)
+    public function email(PastNotifications $past, UpcomingNotifications $upcoming)
     {
         return response()->json([
             'past' => $past->reply($this->notification->past()),
@@ -40,9 +40,9 @@ class NotificationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function past(PastNotifications $past)
+    public function text()
     {
-        return response()->json($past->reply($this->$notification->past()));
+        return response()->json($this->notification->text());
     }
 
     /**

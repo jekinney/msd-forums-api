@@ -4,9 +4,8 @@ namespace App\Notifications;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use App\Notifications\Fractal\PastNotification;
-use App\Notifications\Fractal\NotificationDetails;
-use App\Notifications\Fractal\UpcomingNotification;
+use App\Notifications\Collections\TextPastNotifications;
+use App\Notifications\Collections\TextUpcomingNotifications;
 
 class Notification extends Model
 {
@@ -16,6 +15,7 @@ class Notification extends Model
 		'subject',
 		'message',
 		'send_at',
+        'end_now',
 		'notes',
 		'started_at',
         'errors',
@@ -29,21 +29,6 @@ class Notification extends Model
     	return $this->hasMany(Recipient::class);
     }
 
-    /**
-     * Queries
-     *
-     * Get all notifications in two groups
-     * Past and upcoming for display
-     *
-     * @return collection
-     */
-    public function getAll()
-    {
-        return collect([
-            'upcoming' => $this->upcoming(),
-            'past' => $this->past()
-        ]);
-    }
 
     /**
      * Get all upcoming for display
@@ -59,16 +44,19 @@ class Notification extends Model
     }
 
     /**
-     * Get all past for display
-     * transformed with fractal
+     * Get all text for display
      *
      * @return array
      */
-    public function past() 
+    public function text() 
     {
-        return $this->withCount('recipients')
-            ->where('send_at', '<=', Carbon::now())
+        $upcoming = new TextUpcomingNotifications();
+
+        $texts = $this->withCount('recipients')
+            ->where('type', 'text')
             ->get();
+
+        return ['upcoming' => $upcoming->reply($texts->where('send_at', '<=', Carbon::now())) ];
     }
 
     /**
@@ -116,7 +104,8 @@ class Notification extends Model
 			'type' => $request->type,
 			'subject' => $request->subject,
 			'message' => $request->message,
-			'send_at' => $request->send_now? Carbon::now():Carbon::parse($request->send_at),
+			'send_at' => $request->send_at? Carbon::parse($request->send_at):null,
+            'send_now' => $request->send_now
     	];
     }
 

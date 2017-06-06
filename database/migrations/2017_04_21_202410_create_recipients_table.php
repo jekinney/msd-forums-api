@@ -16,7 +16,8 @@ class CreateRecipientsTable extends Migration
         Schema::create('recipients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('uid')->nullable();
-            $table->integer('notification_id')->index();
+            $table->integer('recipients_id');
+            $table->string('recipients_type');
             $table->string('name');
             $table->string('email')->nullable();
             $table->string('phone')->nullable();
@@ -24,7 +25,6 @@ class CreateRecipientsTable extends Migration
             $table->timestamp('confirmed_at')->nullable();
             $table->string('message_id')->nullable()->index();
             $table->string('status')->nullable();
-            $table->float('cost', 20, 15)->default(0);
             $table->string('notes')->nullable();
             $table->timestamps();
         });

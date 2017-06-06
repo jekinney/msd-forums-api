@@ -2,41 +2,40 @@
 
 namespace App\Notifications;
 
-use Nexmo;
-use App\Helpers\PhoneNumber;
-use App\Events\Notifications\TextSent;
-use App\Events\Notifications\TextReceipt;
-class Text
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
+use App\Notifications\Traits\NeximoTexts;
+use App\Notifications\Collections\TextPastNotifications;
+use App\Notifications\Collections\TextUpcomingNotifications;
+
+class Text extends Model
 {
+	use NeximoTexts;
 
-    public function sendTest($notification) 
+    protected $guarded = [];
+
+    protected $dates = ['send_at', 'started_at', 'completed_at'];
+
+    public function recipients()
     {
-        Nexmo::message()->send([
-            'to' => PhoneNumber::setForText($notification->from),
-            'from' => env('NEXMO_PHONE'),
-            'text' => $notification->message
-        ]);
+        return $this->morphMany(Recipient::class, 'recipients');
     }
 
-    /**
-     * Call back from Nexmo for 
-     * incoming SMS/Text
-     */
-    public function incoming($request)
+    public function getAll()
     {
-        if($request->has('messageId') || $request->has('status')) {
-            return $this->receipt($request);
-        }
-        return $this->message($request);
-    }
+    	$upcoming = new TextUpcomingNotifications();
+    	$past = new TextPastNotifications();
 
-    protected function receipt($request)
-    {
-        return event( new TextReceipt($request));
-    }
+        $texts = $this->withCount('recipients')
+            ->get();
 
-    protected function message($request)
-    {
-
+        return [
+        	'upcoming' => $upcoming->reply(
+        		$this->withCount('recipients')->whereDate('send_at', '>', Carbon::now())->get()
+        	),
+        	'past' => $past->reply(
+        		$this->withCount('recipients')->whereDate('send_at', '<', Carbon::now())->get()
+        	)
+        ];
     }
 }

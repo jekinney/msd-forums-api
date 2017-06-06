@@ -7,14 +7,14 @@ Route::post('v1/user', 'UserController@store');
 
 Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], function() {
 
-	Route::get('/all', 'NotificationController@index');
-	Route::get('/past', 'NotificationController@past');
-	Route::get('/upcoming', 'NotificationController@upcoming');
-	Route::get('/{id}', 'NotificationController@show');
+	Route::get('/text', 'TextsController@index');
+	Route::get('/text/{id}/show', 'TextsController@show');
+	Route::get('/text/{id}/edit', 'TextsController@edit');
+	Route::post('/text', 'TextsController@store');
+	Route::post('/text/test', 'TextsController@test');
+	Route::patch('text/{id}', 'TextsController@update');
+	Route::delete('/text/{id}', 'TextsController@delete');
 
-	Route::post('/', 'NotificationController@store');
-	Route::post('/test', 'NotificationController@test');
-	Route::delete('/{id}', 'NotificationController@destroy');
 
 	Route::get('/recipients', 'RecipientController@index');
 	Route::post('/recipient', 'RecipientController@store');
