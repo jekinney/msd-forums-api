@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Notifications;
 
+use Carbon\Carbon;
+
 use Nexmo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -12,7 +14,7 @@ class NexmoController extends Controller
     public function inGoing(Request $request)
     {
         Log::info(json_encode($request->all()));
-        
+
         return response([], 200);
     }
 
@@ -30,13 +32,6 @@ class NexmoController extends Controller
 
     public function testing()
     {
-        $request = Nexmo::message()->send([
-            'to' => 13609290280,
-            'from' => env('NEXMO_PHONE'),
-            'text' => 'call back test',
-            'callback' => 'https://laravelopers.com/api/v1/notifications/nexmo/confirmation'
-        ]);
-
-        dd($request['messages'][0]['message-id']);
+        return response(Carbon::now()->toRssString());
     }
 }
