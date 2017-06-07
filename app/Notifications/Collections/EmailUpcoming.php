@@ -13,6 +13,7 @@ class EmailUpcoming extends BaseCollection
 			'subject' => $email->subject,
 			'send_at' => $email->send_at->toDayDateTimeString(),
 			'recipients_count' => $email->recipients_count?? null,
+			'created_at' => $email->created_at->toDayDateTimeString();
 		];
 	}
 }
