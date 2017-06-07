@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Notifications;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Notifications\Text;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Notifications\TextForm;
 
 class TextsController extends Controller
 {
@@ -32,7 +32,7 @@ class TextsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TextForm $request)
     {
         $text = $this->text->create($this->setDataArray());
         $text->addRecipients(request('recipients'));
@@ -80,7 +80,7 @@ class TextsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update($id, TextForm $request)
     {
         $text = $this->text->find($id);
         $text->update($this->setDataArray());

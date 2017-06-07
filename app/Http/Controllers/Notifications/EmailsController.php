@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Notifications;
 
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use App\Notifications\Email;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Notifications\EmailForm;
 
 class EmailsController extends Controller
 {
@@ -26,17 +26,6 @@ class EmailsController extends Controller
         return response()->json($this->email->getAll());
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function test(Request $request)
-    {
-        event(new SendTestNotification($request));
-
-        return response()->json([], 200);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,8 +33,9 @@ class EmailsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(EmailForm $request)
     {   
+        
         $email = $this->email->create($this->setDataArray());
         $email->addRecipients(request('recipients'));
 
