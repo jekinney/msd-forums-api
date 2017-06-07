@@ -13,7 +13,7 @@ class TextUpcoming extends BaseCollection
 			'message' => $notification->message,
 			'send_at' => $notification->send_at->toDayDateTimeString(),
 			'recipients_count' => $notification->recipients_count?? null,
-			'created_at' => $email->created_at->toDayDateTimeString();
+			'created_at' => $email->created_at->toDayDateTimeString(),
 		];
 	}
 }

@@ -20,7 +20,7 @@ class EmailShow extends BaseCollection
 			'notes' => $email->notes,
 			'send_now' => $email->send_now? true:false,
 			'recipients' => $recipients->reply($email->recipients),
-			'created_at' => $email->created_at->toDayDateTimeString();
+			'created_at' => $email->created_at->toDayDateTimeString(),
 		];
 	}
 }
