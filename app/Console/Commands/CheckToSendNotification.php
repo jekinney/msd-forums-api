@@ -45,7 +45,7 @@ class CheckToSendNotification extends Command
      */
     public function handle()
     {
-        $stop = Carbon::now()->addMinute(5)->toDateTimeString();
+        $stop = Carbon::now()->addMinute(1)->toDateTimeString();
 
         $emailsCount = $this->email->checkAndSend($stop);
 

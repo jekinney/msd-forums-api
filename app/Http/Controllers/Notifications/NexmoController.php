@@ -11,11 +11,15 @@ class NexmoController extends Controller
 {
     public function inGoing(Request $request)
     {
+        Log::info(json_encode($request->all()));
+        
         return response([], 200);
     }
 
-    public function outGoing()
+    public function outGoing(Request $request)
     {
+        Log::info(json_encode($request->all()));
+
         return response([], 200);
     }
 
