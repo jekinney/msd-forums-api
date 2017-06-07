@@ -26,10 +26,10 @@ class Email extends Model
 
         return [
         	'upcoming' => $upcoming->reply(
-        		$this->withCount('recipients')->whereDate('send_at', '>', Carbon::now())->get()
+        		$this->withCount('recipients')->where('send_at', '>', Carbon::now())->get()
         	),
         	'past' => $past->reply(
-        		$this->withCount('recipients')->whereDate('send_at', '<', Carbon::now())->get()
+        		$this->withCount('recipients')->where('send_at', '<', Carbon::now())->get()
         	)
         ];
     }
