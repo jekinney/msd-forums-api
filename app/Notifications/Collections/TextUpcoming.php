@@ -6,14 +6,14 @@ use App\Collections\BaseCollection;
 
 class TextUpcoming extends BaseCollection
 {
-	protected function setDataArray($notification)
+	protected function setDataArray($text)
 	{
 		return [
-			'id' => $notification->id,
-			'message' => $notification->message,
-			'send_at' => $notification->send_at->toDayDateTimeString(),
-			'recipients_count' => $notification->recipients_count?? null,
-			'created_at' => $email->created_at->toDayDateTimeString(),
+			'id' => $text->id,
+			'message' => $text->message,
+			'send_at' => $text->send_at->toDayDateTimeString(),
+			'recipients_count' => $text->recipients_count?? null,
+			'created_at' => $text->created_at->toDayDateTimeString(),
 		];
 	}
 }
