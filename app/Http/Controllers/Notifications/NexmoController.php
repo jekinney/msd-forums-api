@@ -26,9 +26,9 @@ class NexmoController extends Controller
 
                 $emails = [
                     'jkinneys@msdist.com',
-                    'AReynolds@MSDist.com',
-                    'PSoules@MSDist.com',
-                    'CThompson@MSDist.com',
+                    // 'AReynolds@MSDist.com',
+                    // 'PSoules@MSDist.com',
+                    // 'CThompson@MSDist.com',
                 ];
 
                 foreach($emails as $email) {
