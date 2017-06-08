@@ -17,7 +17,7 @@ class NexmoController extends Controller
      */
     public function reply(Request $request)
     {
-        Log::info($request[0]['msiddn']);
+        Log::info($request[0]);
 
         return response([], 200);
 
