@@ -2,7 +2,11 @@
 
 
 <article>
-	@foreach($request as $key => $value) 
-		<p>{{ $value }}</p>
-	@endforeach
+	<p>A reply to a text was recieved from <strong>{{ $recipient->name }}</strong>.</p>
+	<p>{{ $recipient->text }}</p>
+	<p>Contact information is:</p>
+	<ul>
+		<li>Email: {{ $recipient->email }}</li>
+		<li>Phone: {{ $recipient->phone }}</li>
+	</ul>
 </article>

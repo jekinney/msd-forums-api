@@ -17,13 +17,12 @@ class NexmoController extends Controller
      */
     public function reply(Request $request)
     {
-        if($request['msisdn'] != 13609290280) { //'19033059009') {
+        if($request['msisdn'] == 19033059009) {
+            $this->tellAustinOff();
+        } else {
             $recipient = Recipient::where('phone', $request['msisdn'])->first();
 
             $this->sendMail(array_add($recipient, 'text', $request['text']));
-            
-        } else {
-            $this->tellAustinOff();
         }
 
         return response([], 200);
@@ -43,13 +42,15 @@ class NexmoController extends Controller
             'CThompson@MSDist.com',
         ];
 
-        Mail::to($emails)->send(new TextResponse($response));
+        foreach($emails as $email) {
+            Mail::to($email)->send(new TextResponse($response));
+        }
     }
 
     protected function tellAustinOff() 
     {
         return Nexmo::message()->send([
-            'to' => 13069290280, // 19033059009,
+            'to' => 19033059009,
             'from' => env('NEXMO_PHONE'),
             'text' => 'Stop it private, you are wasting money!!!!!!!'
         ]);

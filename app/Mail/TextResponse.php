@@ -9,16 +9,15 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 class TextResponse extends Mailable
 {
-    use Queueable, SerializesModels;
-
+    protected $recipient;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($recipient)
     {
-        //
+        $this->recipient = $recipient;
     }
 
     /**
@@ -28,6 +27,6 @@ class TextResponse extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.text.response');
+        return $this->subject('reply to text message')->view('emails.text.response');
     }
 }
