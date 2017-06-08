@@ -17,7 +17,9 @@ class NexmoController extends Controller
      */
     public function reply(Request $request)
     {
-        Log::info($request[0]);
+        $reply = json_decode($request->all(), true);
+
+        Log::info($reply);
 
         return response([], 200);
 
