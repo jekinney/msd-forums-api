@@ -4,7 +4,6 @@ namespace App\Mail;
 
 use Illuminate\Mail\Mailable;
 use App\Notifications\Recipient;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
 
 class TextResponse extends Mailable
@@ -29,8 +28,6 @@ class TextResponse extends Mailable
      */
     public function build()
     {
-        Log::info($this->recipient);
-
         return $this->subject('reply to text message')
             ->markdown('emails.text.response')
             ->with([
