@@ -17,14 +17,12 @@ class NexmoController extends Controller
      */
     public function reply(Request $request)
     {
-        $reply = json_encode($request->all());
-
-        Log::info(json_decode($reply)['msisdn']);
+        Log::info($request['msisdn']);
 
         return response([], 200);
 
         if($request['msisdn'] != '13609290280') { //'19033059009') {
-            $recipient = Recipient::where('phone', $request['msisdn'])->where('message_id', $request['emssageId'])->first();
+            $recipient = Recipient::where('phone', $request['msisdn'])->first();
 
             $this->sendMail(array_add($recipient, 'text', $request['text']));
             
