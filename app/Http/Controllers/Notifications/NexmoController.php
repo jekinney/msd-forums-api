@@ -7,6 +7,7 @@ use App\Mail\TextResponse;
 use Illuminate\Http\Request;
 use App\Notifications\Recipient;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class NexmoController extends Controller
@@ -16,6 +17,10 @@ class NexmoController extends Controller
      */
     public function reply(Request $request)
     {
+        Log::info($request->msiddn);
+
+        return response([], 200);
+        
         if($request['msisdn'] != '13609290280') { //'19033059009') {
             $recipient = Recipient::where('phone', $request['msisdn'])->where('message_id', $request['emssageId'])->first();
 
