@@ -8,6 +8,7 @@ use Nexmo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
+use App\Mail\TextResponse;
 
 class NexmoController extends Controller
 {
