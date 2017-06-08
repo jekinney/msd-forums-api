@@ -7,14 +7,10 @@ use App\Mail\TextResponse;
 use Illuminate\Http\Request;
 use App\Notifications\Recipient;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 
 class NexmoController extends Controller
 {
-    /**
-     * {"msisdn":"13609290280","to":"18889932512","messageId":"0C00000039F054AF","text":"Help","type":"text","keyword":"HELP","message-timestamp":"2017-06-08 19:57:10"} 
-     */
     public function reply(Request $request)
     {
         if($request['msisdn'] == 19033059009 || $request['msisdn'] == '19033059009') {
