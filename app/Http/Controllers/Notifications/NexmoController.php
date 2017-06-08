@@ -15,13 +15,14 @@ class NexmoController extends Controller
 
     public function reply(Request $request)
     {
-
+        Log::info(json_encode($request->all()));
         return response([], 200);
     }
 
     public function confirmation(Request $request)
     {
         Log::info(json_encode($request->all()));
+        return response([], 200);
     }
 
     public function testing()
