@@ -145,7 +145,7 @@ class Thread extends Model
     {
         $threadShow = new ThreadShow();
 
-        $thread = $this->thread->find($id);
+        $thread = $this->find($id);
         $thread->is_hidden = $thread->is_hidden? false:true;
         $thread->save();
 

@@ -4,6 +4,7 @@ namespace App\Forums;
 
 use App\Forums\Collections\ChannelList;
 use Illuminate\Database\Eloquent\Model;
+use App\Forums\Collections\ChannelShow;
 use App\Forums\Collections\ChannelDetails;
 
 class Channel extends Model
@@ -33,7 +34,7 @@ class Channel extends Model
     */
     public function threads()
     {
-    	return $this->hasMany(Thread::class);
+    	return $this->hasMany(Thread::class)->latest();
     }
 
     /**
@@ -50,6 +51,13 @@ class Channel extends Model
     public function replies()
     {
         return $this->hasManyThrough(Reply::class, Thread::class);
+    }
+
+    public function findByIdForShow($id)
+    {
+        $channel = new ChannelShow();
+
+        return $channel->reply($this->with('threads')->find($id));
     }
 
     public function updateOrCreate($request)

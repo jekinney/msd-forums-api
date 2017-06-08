@@ -57,17 +57,14 @@ class Attachment extends Model
         $name = $this->setUniqueFileName($file);
         $path = $file->storeAs('public/attachments/forums',  $name);
 
-        $class = 'App\\'.studly_case($request->type);
-        $class = new $class();
-        $class->find($request->id)
-            ->attachments()
-            ->create([
+        Reply::find($request->id)
+            ->attachments()->create([
                 'name' => $name, 
                 'full_path' => $path,
                 'file_type' => $this->setFileType($request->file('attachment')),
             ]);
         
-        return $request;
+        return $request->id;
     }
 
     public function findByThreadId($threadId) 

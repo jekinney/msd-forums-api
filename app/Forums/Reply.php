@@ -70,9 +70,7 @@ class Reply extends Model
 
     public function submit($request)
     {
-        $this->create($this->setDataArray($request));
-
-        return $this->activeByThreadId($request->thread_id);
+        return $this->create($this->setDataArray($request));
     }
 
     public function edited($request)

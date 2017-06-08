@@ -39,18 +39,17 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 
 Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 
-	Route::get('/setup/{categoryId}', 'ForumController@index');
-	Route::get('/hidden', 'ForumController@hidden');
-
 	Route::get('categories', 'CategoryController@index');
 	Route::get('categories/all', 'CategoryController@all');
+	Route::get('/category/{id}', 'CategoryController@show');
 	Route::post('/category', 'CategoryController@store');
+	Route::patch('/category/{id}', 'CategoryController@update');
 	Route::put('/category/{id}', 'CategoryController@destroy');
 
-	Route::get('channels/all', 'ChannelController@all');
-	Route::get('channels/{categoryId}', 'ChannelController@index');
+	Route::get('channels', 'ChannelController@index');
 	Route::get('channel/{id}', 'ChannelController@show');
 	Route::post('/channel', 'ChannelController@store');
+	Route::patch('/channel/{id}', 'ChannelController@update');
 	Route::put('/channel/{id}', 'ChannelController@destroy');
 
 	Route::get('/threads/hidden', 'ThreadController@hidden');
@@ -75,6 +74,7 @@ Route::group(['prefix' => 'v1/forums', 'namespace' => 'Forums'], function() {
 	
 	Route::post('/attachment/image', 'AttachmentController@storeImage');
 	Route::post('/attachment/thread', 'AttachmentController@thread');
+	Route::post('/attachment/reply', 'AttachmentController@reply');
 	Route::delete('/attachment/{id}', 'AttachmentController@destroy');
 
 	Route::post('/search', 'SearchController@index');

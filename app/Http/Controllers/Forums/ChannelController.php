@@ -20,17 +20,7 @@ class ChannelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($categoryId)
-    {
-        return response()->json($this->channel->menuList($categoryId));
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function all()
+    public function index()
     {
         return response()->json($this->channel->getAllWithDetails());
     }
@@ -55,7 +45,7 @@ class ChannelController extends Controller
      */
     public function show($id)
     {
-        return response()->json($this->channel->findById($id));
+        return response()->json($this->channel->findByIdForShow($id));
     }
 
 

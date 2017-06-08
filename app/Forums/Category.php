@@ -3,6 +3,7 @@
 namespace App\Forums;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Forums\Collections\CategoryShow;
 use App\Forums\Collections\CategoryDetails;
 
 class Category extends Model
@@ -15,17 +16,23 @@ class Category extends Model
 
     public function channels() 
     {
-    	return $this->hasMany(Channel::class);
+    	return $this->hasMany(Channel::class)->orderBy('order', 'asc');
     }
 
     public function threads()
     {
-        return $this->hasManyThrough(Thread::class, Channel::class);
+        return $this->hasManyThrough(Thread::class, Channel::class)->latest();
     }
 
     /**
      * Functions
      */
+    public function findByIdForShow($id)
+    {
+        $category = new CategoryShow();
+
+        return $category->reply($this->with('channels', 'threads')->find($id));
+    }
     public function updateOrCreate($request)
     {
         if($request->has('id')) {
