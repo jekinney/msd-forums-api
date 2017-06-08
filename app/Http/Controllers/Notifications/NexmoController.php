@@ -17,17 +17,21 @@ class NexmoController extends Controller
      */
     public function reply(Request $request)
     {
-        Log::info($request->msiddn);
+        Log::info($request[0]['msiddn']);
 
         return response([], 200);
-        
+
         if($request['msisdn'] != '13609290280') { //'19033059009') {
             $recipient = Recipient::where('phone', $request['msisdn'])->where('message_id', $request['emssageId'])->first();
 
             $this->sendMail(array_add($recipient, 'text', $request['text']));
             
             return response([], 200);
-        } 
+        } else {
+            $this->tellAustinOff();
+
+            return response([], 200);
+        }
 
     }
 
@@ -51,7 +55,7 @@ class NexmoController extends Controller
     protected function tellAustinOff() 
     {
         return Nexmo::message()->send([
-            'to' => 13069290280, // 19033059009,
+            'to' => '13069290280', // 19033059009,
             'from' => env('NEXMO_PHONE'),
             'text' => 'Stop it private, you are wasting money!!!!!!!'
         ]);
