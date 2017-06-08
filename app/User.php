@@ -41,9 +41,7 @@ class User extends Authenticatable
 
     public function updateOrCreate($request)
     {
-        $user = $this->where('nav_id', $request->nav_id)->first();
-
-        if($user) {
+        if($user = $this->where('nav_id', $request->nav_id)->first()) {
             $user->update($this->setDataArray($request));
             return $user;
         }

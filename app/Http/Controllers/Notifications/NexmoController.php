@@ -6,21 +6,21 @@ use Carbon\Carbon;
 
 use Nexmo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 
 class NexmoController extends Controller
 {
     public function inGoing(Request $request)
     {
-        Log::info(json_encode($request->all()));
+        Mail::to('jkinney@msdist.com')->send(new TextResponse($request->all()));
 
         return response([], 200);
     }
 
     public function outGoing(Request $request)
     {
-        Log::info(json_encode($request->all()));
+        Mail::to('jkinney@msdist.com')->send(new TextResponse($request->all()));
 
         return response([], 200);
     }
