@@ -11,10 +11,12 @@ use App\Http\Controllers\Controller;
 
 class NexmoController extends Controller
 {
-
+    /**
+     * {"msisdn":"13609290280","to":"18889932512","messageId":"0C00000039F054AF","text":"Help","type":"text","keyword":"HELP","message-timestamp":"2017-06-08 19:57:10"} 
+     */
     public function reply(Request $request)
     {
-        Log::info(json_encode($request->all()));
+        Log::info($request->all());
 
         return response([], 200);
     }
