@@ -1,3 +1,4 @@
+@component('mail::message')
 <h1>Text Reply</h1>
 
 
@@ -10,3 +11,7 @@
 		<li>Phone: {{ $phone }}</li>
 	</ul>
 </article>
+
+Thank You,<br>
+Mid States Distributing
+@endcomponent

@@ -21,10 +21,10 @@ class NexmoController extends Controller
                 $recipient->update(['notes' => $request['text']]);
 
                 $emails = [
-                    'jkinneys@msdist.com',
-                    // 'AReynolds@MSDist.com',
-                    // 'PSoules@MSDist.com',
-                    // 'CThompson@MSDist.com',
+                    'jkinney@msdist.com',
+                    'AReynolds@MSDist.com',
+                    'PSoules@MSDist.com',
+                    'CThompson@MSDist.com',
                 ];
 
                 foreach($emails as $email) {
