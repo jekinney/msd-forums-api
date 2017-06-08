@@ -12,16 +12,9 @@ use App\Mail\TextResponse;
 
 class NexmoController extends Controller
 {
-    public function inGoing(Request $request)
-    {
-        Mail::to('jkinney@msdist.com')->send(new TextResponse($request->all()));
 
-        return response([], 200);
-    }
-
-    public function outGoing(Request $request)
+    public function reply(Request $request)
     {
-        Mail::to('jkinney@msdist.com')->send(new TextResponse($request->all()));
 
         return response([], 200);
     }

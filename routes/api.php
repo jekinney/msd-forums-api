@@ -30,8 +30,7 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 
 	Route::post('mailgun/status', 'MailgunController@update');
 
-	Route::get('/nexmo', 'NexmoController@outGoing');
-	Route::post('/nexmo', 'NexmoController@inGoing');
+	Route::post('/nexmo', 'NexmoController@reply');
 	Route::post('/nexmo/confirmation', 'NexmoController@confirmation');
 });
 
