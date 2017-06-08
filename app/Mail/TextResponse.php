@@ -30,9 +30,9 @@ class TextResponse extends Mailable
     public function build()
     {
         Log::info($this->recipient);
-        
+
         return $this->subject('reply to text message')
-            ->view('emails.text.response')
+            ->markdown('emails.text.response')
             ->with([
                 'name' => $this->recipient->name,
                 'phone' => $this->recipient->phone,
