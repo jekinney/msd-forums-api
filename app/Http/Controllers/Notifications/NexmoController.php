@@ -23,7 +23,17 @@ class NexmoController extends Controller
             $recipient = Recipient::where('phone', $request['msisdn'])->first();
             $recipient->update(['notes' => $request['text']]);
 
-            $this->sendMail($recipient);
+            Log::info($recipient->toArray());
+
+            $emails = [
+                'jkinneys@msdist.com',
+                'AReynolds@MSDist.com',
+                'PSoules@MSDist.com',
+                'CThompson@MSDist.com',
+            ];
+
+        foreach($emails as $email) {
+            Mail::to($email)->send(new TextResponse($recipient));
         }
 
         return response([], 200);
@@ -32,20 +42,6 @@ class NexmoController extends Controller
     public function confirmation(Request $request)
     {
         return response([], 200);
-    }
-
-    protected function sendMail($response) 
-    {
-        $emails = [
-            'jkinneys@msdist.com',
-            'AReynolds@MSDist.com',
-            'PSoules@MSDist.com',
-            'CThompson@MSDist.com',
-        ];
-
-        foreach($emails as $email) {
-            Mail::to($email)->send(new TextResponse($response));
-        }
     }
 
     protected function tellAustinOff() 
