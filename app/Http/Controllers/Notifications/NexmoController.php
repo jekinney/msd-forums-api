@@ -21,8 +21,9 @@ class NexmoController extends Controller
             $this->tellAustinOff();
         } else {
             $recipient = Recipient::where('phone', $request['msisdn'])->first();
+            $recipient->update(['notes' => $request['text']]);
 
-            $this->sendMail(array_add($recipient, 'text', $request['text']));
+            $this->sendMail($recipient);
         }
 
         return response([], 200);

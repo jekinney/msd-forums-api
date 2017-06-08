@@ -3,7 +3,7 @@
 
 <article>
 	<p>A reply to a text was recieved from <strong>{{ $recipient->name }}</strong>.</p>
-	<p>{{ $recipient->text }}</p>
+	<p>{{ $recipient->notes }}</p>
 	<p>Contact information is:</p>
 	<ul>
 		<li>Email: {{ $recipient->email }}</li>

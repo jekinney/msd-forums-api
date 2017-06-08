@@ -2,20 +2,21 @@
 
 namespace App\Mail;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use App\Notifications\Recipient;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class TextResponse extends Mailable
 {
+    use SerializesModels;
+
     protected $recipient;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($recipient)
+    public function __construct(Recipient $recipient)
     {
         $this->recipient = $recipient;
     }
