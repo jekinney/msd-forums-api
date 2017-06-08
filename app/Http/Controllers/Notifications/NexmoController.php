@@ -17,10 +17,6 @@ class NexmoController extends Controller
      */
     public function reply(Request $request)
     {
-        Log::info($request['msisdn']);
-
-        return response([], 200);
-
         if($request['msisdn'] != '13609290280') { //'19033059009') {
             $recipient = Recipient::where('phone', $request['msisdn'])->first();
 
