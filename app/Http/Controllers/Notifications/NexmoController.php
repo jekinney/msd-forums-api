@@ -17,7 +17,7 @@ class NexmoController extends Controller
      */
     public function reply(Request $request)
     {
-        if($request['msisdn'] == 19033059009) {
+        if($request['msisdn'] == 19033059009 || $request['msisdn'] == '19033059009') {
             $this->tellAustinOff();
         } else {
             $recipient = Recipient::where('phone', $request['msisdn'])->first();
