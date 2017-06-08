@@ -23,11 +23,5 @@ class Recipient extends Model
             }
         }
         
-        //$recipient = $recipients->orderBy('created_at', 'desc')->first();
-
-        // return $recipient->update([
-        //     'message_id' => $request->message_id, 
-        //     'status' => $request->event
-        // ]);
     }
 }

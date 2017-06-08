@@ -2,6 +2,7 @@
 
 namespace App\Notifications\Traits;
 
+use App\Helpers\PhoneNumber;
 use App\Notifications\Recipient;
 
 trait Recipients
@@ -53,7 +54,7 @@ trait Recipients
         return [
             'name' => $recipient['name'],
             'email' => $recipient['email'],
-            'phone' => $recipient['phone'],
+            'phone' => PhoneNumber::setForText($recipient['phone']),
         ];
     }
 }

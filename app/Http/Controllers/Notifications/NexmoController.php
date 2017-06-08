@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Notifications;
 use Nexmo;
 use App\Mail\TextResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use App\Notifications\Recipient;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller;
 
@@ -16,14 +16,39 @@ class NexmoController extends Controller
      */
     public function reply(Request $request)
     {
-        Log::info($request->all());
+        if($request['msisdn'] != '13609290280') { //'19033059009') {
+            $recipient = Recipient::where('phone', $request['msisdn'])->where('message_id', $request['emssageId'])->first();
 
-        return response([], 200);
+            $this->sendMail(array_add($recipient, 'text', $request['text']));
+            
+            return response([], 200);
+        } 
+
     }
 
     public function confirmation(Request $request)
     {
-        Log::info(json_encode($request->all()));
         return response([], 200);
+    }
+
+    protected function sendMail($response) 
+    {
+        $emails = [
+            'jkinneys@msdist.com',
+            'AReynolds@MSDist.com',
+            'PSoules@MSDist.com',
+            'CThompson@MSDist.com',
+        ];
+
+        Mail::to($emails)->send(new TextResponse($response));
+    }
+
+    protected function tellAustinOff() 
+    {
+        return Nexmo::message()->send([
+            'to' => 13069290280, // 19033059009,
+            'from' => env('NEXMO_PHONE'),
+            'text' => 'Stop it private, you are wasting money!!!!!!!'
+        ]);
     }
 }
