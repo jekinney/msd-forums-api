@@ -32,8 +32,9 @@ class NexmoController extends Controller
                 'CThompson@MSDist.com',
             ];
 
-        foreach($emails as $email) {
-            Mail::to($email)->send(new TextResponse($recipient));
+            foreach($emails as $email) {
+                Mail::to($email)->send(new TextResponse($recipient));
+            }
         }
 
         return response([], 200);
