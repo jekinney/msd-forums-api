@@ -21,19 +21,19 @@ class NexmoController extends Controller
             $this->tellAustinOff();
         } else {
             $recipient = Recipient::where('phone', $request['msisdn'])->first();
-            $recipient->update(['notes' => $request['text']]);
+            if($recipient) {
+                $recipient->update(['notes' => $request['text']]);
 
-            Log::info($recipient->toArray());
+                $emails = [
+                    'jkinneys@msdist.com',
+                    'AReynolds@MSDist.com',
+                    'PSoules@MSDist.com',
+                    'CThompson@MSDist.com',
+                ];
 
-            $emails = [
-                'jkinneys@msdist.com',
-                'AReynolds@MSDist.com',
-                'PSoules@MSDist.com',
-                'CThompson@MSDist.com',
-            ];
-
-            foreach($emails as $email) {
-                Mail::to($email)->send(new TextResponse($recipient));
+                foreach($emails as $email) {
+                    Mail::to($email)->send(new TextResponse($recipient));
+                }
             }
         }
 

@@ -28,6 +28,11 @@ class TextResponse extends Mailable
      */
     public function build()
     {
-        return $this->subject('reply to text message')->view('emails.text.response');
+        return $this->subject('reply to text message')->view('emails.text.response')->with([
+            'name' => $this->recipient->name,
+            'phone' => $this->recipient->phone,
+            'email' => $this->recipient->email,
+            'text' => $this->recipient->notes,
+        ]);
     }
 }
