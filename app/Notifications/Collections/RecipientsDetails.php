@@ -13,8 +13,9 @@ class RecipientsDetails extends BaseCollection
 			'name' => $recipient->name,
 			'phone' => PhoneNumber::setForText($recipient->phone),
 			'email' => $recipient->email,
+			'message_id' => $recipient->message_id,
 			'sent_at' => $recipient->sent_at? $recipient->sent_at->toDayDateTimeString():null,
-			'consfirmed_at' => $recipient->confirmed_at? $recipient->confirmed_at->toDayDateTimeString():null,
+			'confirmed_at' => $recipient->confirmed_at? $recipient->confirmed_at->toDayDateTimeString():null,
 			'status' => $recipient->status,
 			'notes' => $recipient->notes,
 		];
