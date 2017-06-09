@@ -7,4 +7,4 @@
 </article>
 
 <p>Thank you,</p>
-<p>Mid States Distributing</p>
+<p>Mid-States Distributing</p>
