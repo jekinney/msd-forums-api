@@ -25,7 +25,7 @@ class EmailForm extends FormRequest
     {
         return [
             'subject' => 'required|between:4,64',
-            'message' => 'required|between:5,120',
+            'message' => 'required',
             'send_at' => 'required|date',
             'recipients' => 'required',
         ];

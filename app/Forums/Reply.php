@@ -53,7 +53,7 @@ class Reply extends Model
         $replies = $this->with('user', 'attachments')
                     ->where('thread_id', $threadId)
                     ->where('is_hidden', 0)
-                    ->latest()
+                    ->orderBy('created_at', 'asc')
                     ->get();
 
         return $replyList->reply($replies);

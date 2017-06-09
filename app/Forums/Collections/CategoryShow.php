@@ -15,7 +15,7 @@ class CategoryShow extends BaseCollection
 			'id' => $category->id,
 			'name' => $category->name,
 			'channels' => $channel->reply($category->channels),
-			'threads' => $thread->reply($category->threads),			
+			'threads' => $thread->reply($category->threads->where('is_hidden', 0)),			
 		];
 	}
 }

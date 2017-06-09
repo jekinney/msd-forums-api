@@ -13,7 +13,7 @@ class ChannelShow extends BaseCollection
 		return [
 			'id' => $channel->id,
 			'name' => $channel->name,
-			'threads' => $thread->reply($channel->threads),
+			'threads' => $thread->reply($channel->threads->where('is_hidden', 0)),
 		];
 	}
 }

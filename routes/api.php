@@ -20,7 +20,6 @@ Route::group(['prefix' => 'v1/notifications', 'namespace' => 'Notifications'], f
 	Route::get('/email/{id}/show', 'EmailsController@show');
 	Route::get('/email/{id}/edit', 'EmailsController@edit');
 	Route::post('/email', 'EmailsController@store');
-	Route::post('/email/test', 'EmailsController@test');
 	Route::patch('email/{id}', 'EmailsController@update');
 	Route::delete('/email/{id}', 'EmailsController@delete');
 
