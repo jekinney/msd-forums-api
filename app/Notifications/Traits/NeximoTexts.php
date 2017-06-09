@@ -37,17 +37,27 @@ trait NeximoTexts
             $text->update(['started_at' => Carbon::now()]);
 
             foreach($text->recipients as $person) {
-                $person->update(['sent_at' => Carbon::now(), 'status' => 'sending']);
+                $person->sent_at = Carbon::now();
+                $person->save();
 
-                $response = Nexmo::message()->send([
-                    'to' => PhoneNumber::setForText($person->phone),
-                    'from' => env('NEXMO_PHONE'),
-                    'text' => $text->message
-                ]);
+                try {
 
-                $person->update(['status' => 'sent', 'message_id' => $response['messages'][0]['message-id']]);
+                    $response = Nexmo::message()->send([
+                        'to' => PhoneNumber::setForText($person->phone),
+                        'from' => env('NEXMO_PHONE'),
+                        'text' => $text->message
+                    ]);
+
+                    $person->status = 'sent';
+                    $person->message_id = $response['messages'][0]['message-id'];
+                    $person->save();
+
+                } catch (Exception $e) {
+                    $person->status = 'error';
+                    $person->notes = $e;
+                    $person->save();
+                }
             }
-
             $text->update(['completed_at' => Carbon::now(), 'notes' => 'Completed']);
         }
 

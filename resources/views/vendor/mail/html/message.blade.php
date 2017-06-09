@@ -21,7 +21,7 @@
     {{-- Footer --}}
     @slot('footer')
         @component('mail::footer')
-            &copy; {{ date('Y') }} Mid States Distributing. All rights reserved.
+            &copy; {{ date('Y') }} Mid-States Distributing. All rights reserved.
         @endcomponent
     @endslot
 @endcomponent

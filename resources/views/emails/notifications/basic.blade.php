@@ -4,5 +4,5 @@ Dear {{ $recipient->name }},<br>
 {!! $email->message !!}
 
 Thank You,<br>
-Mid States Distributing
+Mid-States Distributing
 @endcomponent
