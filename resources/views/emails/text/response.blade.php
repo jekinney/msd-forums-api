@@ -10,5 +10,5 @@
 </ul>
 
 Thank You,<br>
-Your Friendly Mid States Distributing IT Department
+Your Friendly Mid-States Distributing IT Department
 @endcomponent
