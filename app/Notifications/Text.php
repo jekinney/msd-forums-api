@@ -34,6 +34,18 @@ class Text extends Model
         ];
     }
 
+    /**
+    * A notification (text, email) has recipients.
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+    */
+    public function recipientsWithPhone() 
+    {
+        return $this->morphMany(Recipient::class, 'recipients')->where('phone', '<>', null);
+    }
+
+
+
     public function findByIdForEdit($id) 
     {
     	$text = new TextEdit();

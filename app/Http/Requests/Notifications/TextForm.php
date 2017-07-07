@@ -24,7 +24,7 @@ class TextForm extends FormRequest
     public function rules()
     {
         return [
-            'message' => 'required|between:5,120',
+            'message' => 'required|between:5,220',
             'send_at' => 'required|date',
             'recipients' => 'required',
         ];

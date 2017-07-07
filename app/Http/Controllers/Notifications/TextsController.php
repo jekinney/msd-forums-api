@@ -112,9 +112,15 @@ class TextsController extends Controller
      */
     protected function setDataArray()
     {
+        if(request('send_at') == true) {
+            $send_at = Carbon::now()->subMinutes(5);
+        } else {
+            $send_at = Carbon::parse(request('send_at'))
+        }
+
         return [
             'message' => request('message'),
-            'send_at' => request('send_at')? Carbon::parse(request('send_at')):Carbon::now(),
+            'send_at' => $send_at,
             'send_now' => request('send_now')
         ];
     }

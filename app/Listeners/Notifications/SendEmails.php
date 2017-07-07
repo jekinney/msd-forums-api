@@ -36,9 +36,9 @@ class SendEmails
             $event->notification->update(['started_at' => Carbon::now()]);
 
             foreach($event->notification->recipients as $recipient) {
-
-               $this->email->sendBasic($recipient, $event->notification);
-                
+                if(strlen($recipient->email) > 4) {
+                    $this->email->sendBasic($recipient, $event->notification);
+                }                
             }
 
             $event->notification->update(['completed_at' => Carbon::now()]);

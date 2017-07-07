@@ -36,19 +36,21 @@ class SendTexts
 
             foreach($event->notification->recipients as $recipient) {
 
-                try {
+                if(strlen($recipient->phone) > 9) {
+                    try {
 
-                    $request = Nexmo::message()->send([
-                        'to' => PhoneNumber::setForText($recipient->connection),
-                        'from' => env('NEXMO_PHONE'),
-                        'text' => $event->notification->message
-                    ]);
+                        $request = Nexmo::message()->send([
+                            'to' => PhoneNumber::setForText($recipient->connection),
+                            'from' => env('NEXMO_PHONE'),
+                            'text' => $event->notification->message
+                        ]);
 
-                   $this->setReturnRequest($request, $recipient);
+                       $this->setReturnRequest($request, $recipient);
 
-                } catch (Exception $e) {
-                    $recipient->update(['status' => 'Error', 'notes' => $e]);
-                }   
+                    } catch (Exception $e) {
+                        $recipient->update(['status' => 'Error', 'notes' => $e]);
+                    }   
+                }
             }
 
             $event->notification->update(['completed_at' => Carbon::now(), 'status' => 'Sent']);
