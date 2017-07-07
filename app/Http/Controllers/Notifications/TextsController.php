@@ -115,7 +115,7 @@ class TextsController extends Controller
         if(request('send_at') == true) {
             $send_at = Carbon::now()->subMinutes(5);
         } else {
-            $send_at = Carbon::parse(request('send_at'))
+            $send_at = Carbon::parse(request('send_at'));
         }
 
         return [
